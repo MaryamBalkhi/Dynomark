@@ -1,0 +1,520 @@
+/*general*/
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+/*top headline*/
+
+.top-headline {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; /* keeps everything aligned */
+  height: 60px;
+  background-color: rgb(255, 255, 255);
+  padding: 0 15px;
+  z-index: 100;
+  transition: opacity 0.5s ease;
+}
+
+.the-text h1 {
+  margin: 0;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.info-and-languages-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px; /* space between phone + dealership */
+}
+
+.info a {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between icon + text */
+  color: black;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.info a p {
+  margin: 0; /* remove default spacing */
+}
+
+.info img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.media {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.media img {
+  width: 25px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.media img:hover {
+  transform: scale(1.1);
+}
+
+.separator {
+  width: 1px;
+  height: 30px;
+  background-color: gray;
+}
+
+
+/* styles.css */
+  .language-selector {
+      position: relative;
+      display: inline-block;
+      color: red;
+    }
+
+    .custom-select {
+      position: relative;
+      width: 110px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .custom-select .selected {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      gap: 8px;
+    }
+
+    .custom-select .selected img.flag {
+      width: 25px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border-radius: 50%;
+    }
+
+    .custom-select .options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      z-index: 10;
+      margin-top: 2px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .custom-select .options li {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      gap: 8px;
+    }
+
+
+    .custom-select .options li img.flag {
+      width: 25px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border-radius: 50%;
+    }
+
+    .custom-select .options li:hover {
+      background: #f0f0f0;
+      color: rgb(255, 72, 0);
+    }
+
+/*header*/
+/* Sticky Header */
+header {
+  position: sticky;
+  top: 0;
+  height: 60px; 
+  line-height: 60px;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 0 30px;
+}
+
+header img {
+  height: 40px;
+}
+
+/* Navigation */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #ff0000;
+}
+
+/* Responsive for top-headline */
+@media (max-width: 992px) {
+  /* Keep H1 visible */
+  .the-text h1 {
+    display: flex; /* ensure it's visible */
+  }
+
+  /* Hide other .the-text elements if there were any */
+  .the-text > :not(h1) {
+    display: none;
+  }
+
+  /* Hide info links (phone, dealership) */
+  .info-and-languages-options .info {
+    display: none;
+  }
+
+  /* Keep language selector and media icons visible */
+  .info-and-languages-options .language,
+  .info-and-languages-options .media {
+    display: flex;
+  }
+}
+
+/* On larger screens, show all normally */
+@media (min-width: 993px) {
+  .the-text,
+  .info-and-languages-options .info,
+  .info-and-languages-options .language,
+  .info-and-languages-options .media {
+    display: flex;
+  }
+}
+
+
+/* Dropdown Menus */
+nav ul li ul {
+  position: absolute;
+  top: 100%; /* dropdown appears below header/parent li */
+  left: 0;
+  background: #ffffff;
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 0; /* remove extra space from ul */
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+nav ul li ul li a {
+  color: #222; /* black text */
+  padding: 10px 16px; /* spacing for each item */
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #ccc; /* line between items */
+  line-height: normal; /* remove extra height */
+  transition: background 0.3s, color 0.3s;
+}
+
+nav ul li ul li:last-child a {
+  border-bottom: none; /* remove line for last item */
+}
+
+/* Show submenu on hover */
+nav ul li:hover ul {
+  display: flex;
+}
+
+
+    /* Hamburger Menu */
+    .hamburger {
+      width: 30px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 2100;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.4s ease;
+    }
+
+    /* Animate to X */
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Drop Menu Full Screen */
+    .drop-menu {
+      position: fixed;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(54, 54, 54, 0.25); /* semi-transparent white */
+  backdrop-filter: blur(8px);           /* blur effect */
+  -webkit-backdrop-filter: blur(8px);   /* for Safari support */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+      z-index: 2000;
+      overflow-y: auto;
+      transition: top 0.5s ease;
+        overflow: hidden; /* remove scroll */
+    }
+
+
+    .drop-menu.active {
+      top: 0;
+    }
+
+    /* Close button inside drop-menu */
+    .drop-menu .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    .drop-menu .close-btn span {
+      background: #000; /* dark bars on white bg */
+    }
+
+    .drop-menu > div.logo-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 60px; /* leave space for close button */
+      margin-bottom: 20px;
+    }
+
+    .drop-menu > div.logo-box img {
+      height: 60px;
+    }
+
+    .drop-menu h1 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #ff0000;
+      padding-top: 20px;
+    }
+
+    .drop-menu .separator {
+      width: 100%;
+      height: 2px;
+      background: #e8e8e8;
+      margin: 20px 0;
+    }
+
+    .capitalcites-and-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .capitalcites-and-options section h2 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff0000;
+      margin-bottom: 10px;
+    }
+
+    .capitalcites-and-options section a {
+      display: block;
+      margin: 4px 0;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .capitalcites-and-options section a:hover{
+      color: rgb(255, 72, 0);
+    }
+    
+
+.drop-menu-contact-icons {
+  display: flex;
+  gap: 20px; /* spacing between items */
+  justify-content: center;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0; /* initial gap between icon and hidden text */
+  overflow: hidden; /* hides text when collapsed */
+  transition: gap 0.3s ease;
+  cursor: pointer;
+}
+
+.contact-item img {
+  width: 24px;
+  height: 24px;
+}
+
+.contact-item span {
+  white-space: nowrap;
+  max-width: 0; /* hide text initially */
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
+}
+
+/* On hover, reveal text and push next item */
+.contact-item:hover {
+  gap: 10px; /* spacing between icon and text */
+}
+
+.contact-item:hover span {
+  max-width: 300px; /* adjust according to text length */
+  opacity: 1;
+  margin-left: 5px;
+}
+
+
+
+
+    /* Hide the nav on smaller screens */
+@media (max-width: 992px) {
+  nav {
+    display: none; /* hide full menu */
+  }
+
+  .hamburger {
+    display: flex; /* make sure hamburger is visible */
+  }
+}
+
+/* Optional: on larger screens, show nav and hide hamburger if needed */
+@media (min-width: 993px) {
+  nav {
+    display: flex;
+  }
+}
+
+
+
+/*section 1 - image slides and search input*/
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100vh; /* full page height */
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .slides img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+.btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none; /* removed background */
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.btn img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  transition: transform 0.3s ease; /* smooth enlargement */
+}
+
+/* Enlarge only the arrow image on hover */
+.btn img:hover {
+  transform: scale(1.2);
+}
+
+.btn.left { left: 20px; }
+.btn.right { right: 20px; }
+
+
+

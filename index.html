@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNOMARK AUTO EXPERTISE</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+
+    <link rel="stylesheet" href="stuff/styles/home.css">
+</head>
+<body>
+    
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>Pre-Notary<span style="color: red;">&nbsp;Dynomark&nbsp;</span>Assurance</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+    <div class="info">
+      <a href="#"><img src="stuff/icons/phone-call.png"><p>0850 532 0356</p></a>
+      <a href="#"><img src="stuff/icons/wirte.png"><p>Dealership Application</p></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="English" class="flag" />
+      <span>English</span>
+    </div>
+    <ul class="options">
+      <li data-value="en"><img src="stuff/icons/united-states-flag.png" class="flag"> English</li>
+      <li data-value="fa"><img src="stuff/icons/afghanistan-flag.png" class="flag"> Persian</li>
+      <li data-value="ps"><img src="stuff/icons/afghanistan-flag.png" class="flag"> Pashto</li>
+      <li data-value="fr"><img src="stuff/icons/frence-flag.png" class="flag"> French</li>
+      <li data-value="tr"><img src="stuff/icons/turkey-flag.png" class="flag"> Turkish</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+
+<!--header-->
+<script>
+let lastScrollY = window.scrollY;
+const header = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > lastScrollY) {
+    // scrolling down → fade out
+    header.style.opacity = "0";
+  } else {
+    // scrolling up → fade in
+    header.style.opacity = "1";
+  }
+  lastScrollY = window.scrollY;
+});
+</script>
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="logo">
+  
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li>
+        <a href="#">Corporate</a>
+        <ul>
+          <li><a href="#">Who we are</a></li>
+          <li><a href="#">Photo Gallery</a></li>
+          <li><a href="#">News From Us</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Packets</a></li>
+      <li><a href="#">Auto Expertise</a></li>
+      <li><a href="#">Checkpoints</a></li>
+      <li>
+        <a href="#">Our Dealers</a>
+        <ul>
+          <li><a href="#">Domestic Dealers</a></li>
+          <li><a href="#">Overseas Dealers</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Franchise</a>
+        <ul>
+          <li><a href="#">Franchise/Dealership Application</a></li>
+          <li><a href="#">Frequently Asked Questions</a></li>
+          <li><a href="#">Regional Dealership Application</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="logo-dark">
+    <h1>ALL BRANCHES</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>DÜZCE</h2>
+      <a href="#">Duzce Auto Expertise</a>
+
+      <h2>UŞAK</h2>
+      <a href="#">Usak Auto Expertise</a>
+
+      <h2>TOKAT</h2>
+      <a href="#">Tokat/Erbaa Auto Expertise</a>
+
+      <h2>TEKIRDAĞ</h2>
+      <a href="#">Çorlu Auto Expertise</a>
+    </section>
+
+    <section>
+      <h2>SAMSUN</h2>
+      <a href="#">Vezirköprü Auto Expertise</a>
+
+      <h2>ORDU</h2>
+      <a href="#">Ünye Auto Expertise</a>
+      <a href="#">Dynomark Ordu Auto Expertise</a>
+      <a href="#">Fatsa Auto Expertise</a>
+
+      <h2>KÜTAHYA</h2>
+      <a href="#">Simav Auto Expertise</a>
+
+      <h2>KOCAELI</h2>
+      <a href="#">Kocaeli/Izmit Auto Expertise</a>
+    </section>
+
+    <section>
+      <h2>KARS</h2>
+      <a href="#">Kars Auto Expertise</a>
+
+      <h2>IZMIR</h2>
+      <a href="#">Menderes Auto Expertise</a>
+
+      <h2>ISTANBUL</h2>
+      <a href="#">Beylikduzu Auto Expertise</a>
+
+      <h2>HATAY</h2>
+      <a href="#">Hatay Auto Expertise</a>
+
+      <h2>GAZIANTEP</h2>
+      <a href="#">Gaziantep Auto Expertise</a>
+
+      <h2>ARTVIN</h2>
+      <a href="#">Hopa Auto Expertise</a>
+      <a href="#">Artvin Auto Expertise</a>
+
+      <h2>ANTALYA</h2>
+      <a href="#">Antalya/Kepez Auto Expertise</a>
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Address">
+    <span>Fulya Mah. Büyükdere /İSTANBUL</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Phone">
+    <span>0850 532 0356</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="Email">
+    <span>info@dynomark.com.tr</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+<section class="slider">
+    <div class="slides">
+      <img src="stuff/images/image-1.jpg" alt="Slide 1">
+      <img src="stuff/images/image-2.jpg" alt="Slide 2">
+    </div>
+    <button class="btn left"><img src="stuff/icons/left-arrow.png" alt="Prev"></button>
+    <button class="btn right"><img src="stuff/icons/right-arrow.png" alt="Next"></button>
+  </section>
+
+  <script>
+    const slides = document.querySelector('.slides');
+    const images = document.querySelectorAll('.slides img');
+    const prevBtn = document.querySelector('.btn.left');
+    const nextBtn = document.querySelector('.btn.right');
+    let index = 0;
+    const total = images.length;
+
+    function showSlide(i) {
+      index = (i + total) % total; // loop around
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      showSlide(index - 1);
+      resetAutoSlide();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      showSlide(index + 1);
+      resetAutoSlide();
+    });
+
+    // Auto slide every 3s
+    let autoSlide = setInterval(() => {
+      showSlide(index + 1);
+    }, 3000);
+
+    function resetAutoSlide() {
+      clearInterval(autoSlide);
+      autoSlide = setInterval(() => {
+        showSlide(index + 1);
+      }, 3000);
+    }
+  </script>
+ 
+
+
+<!--translate with google transalte script-->
+<div id="google_translate_element" style="display:none;"></div>
+
+<script type="text/javascript">
+  // Initialize Google Translate
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+  }
+
+  // Load Google Translate
+  var script = document.createElement("script");
+  script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  document.body.appendChild(script);
+
+  // Custom dropdown functionality
+  const customSelect = document.querySelector(".custom-select");
+  const selected = customSelect.querySelector(".selected");
+  const optionsContainer = customSelect.querySelector(".options");
+
+  selected.addEventListener("click", () => {
+    optionsContainer.style.display = optionsContainer.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!customSelect.contains(e.target)) {
+      optionsContainer.style.display = "none";
+    }
+  });
+
+  // Trigger Google Translate
+  function triggerTranslate(lang) {
+    const gtFrame = document.querySelector('iframe.goog-te-menu-frame');
+    if (gtFrame) {
+      const langLink = gtFrame.contentWindow.document.querySelector(`a[lang="${lang}"]`);
+      if (langLink) langLink.click();
+    } else {
+      alert("Please wait a moment for Google Translate to load.");
+    }
+  }
+
+  optionsContainer.querySelectorAll("li").forEach(option => {
+    option.addEventListener("click", () => {
+      const flag = option.querySelector("img").src;
+      const name = option.textContent.trim();
+      const lang = option.getAttribute("data-value");
+
+      selected.querySelector("img").src = flag;
+      selected.querySelector("span").textContent = name;
+      optionsContainer.style.display = "none";
+
+      triggerTranslate(lang);
+    });
+  });
+</script>
+
+</body>
+</html>
