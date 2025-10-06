@@ -754,3 +754,336 @@ footer .media{
 .modal-content h2 { color:#e10613; margin-top:0; }
 .modal-content p { line-height:1.6; margin-bottom:1rem; }
 .modal-content ul { list-style: disc; padding-left: 20px; }
+
+
+
+/* =========================================================
+   🌐 RESPONSIVE ADJUSTMENTS — PHONES & TABLETS (INNER PAGES)
+   ========================================================= */
+
+
+/* ============= Tablet View (max-width: 992px) ============= */
+@media (max-width: 992px) {
+
+  /* ---------- Top Headline ---------- */
+  .top-headline {
+    height: 50px;
+    padding: 0 10px;
+  }
+    .info-and-languages-options{
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .the-text h1 {
+    font-size: 16px;
+  }
+
+  .info-and-languages-options {
+    gap: 10px;
+  }
+
+  .info a {
+    font-size: 13px;
+  }
+
+  .info img, .media img {
+    width: 18px;
+    height: 18px;
+  }
+
+
+  /* keep nav visible, centered */
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- Drop Menu ---------- */
+  .hamburger {
+    width: 28px;
+    height: 18px;
+  }
+
+  .drop-menu {
+    padding: 30px 15px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .drop-menu .logo-box img {
+    height: 50px;
+  }
+
+  .drop-menu h1 {
+    font-size: 24px;
+  }
+
+  .capitalcites-and-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 95%;
+  }
+
+  .capitalcites-and-options section h2 {
+    font-size: 16px;
+  }
+
+  .capitalcites-and-options section a {
+    font-size: 14px;
+  }
+
+  .drop-menu-contact-icons {
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 60px;
+  }
+
+  .contact-item img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .contact-item span {
+    font-size: 14px;
+  }
+
+  /* ---------- Title of Page ---------- */
+  .title-of-page {
+    height: 160px;
+    gap: 10px;
+  }
+
+  .title-of-page h1 {
+    font-size: 24px;
+  }
+
+  .title-of-page-p {
+    font-size: 14px;
+  }
+
+  /* ---------- Cards Grid ---------- */
+  .grid-section {
+    padding: 1rem;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .grid-card {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 15px;
+  }
+
+  .footer-contents {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .arrow-list li {
+    font-size: 14px;
+  }
+
+  .footer-media p {
+    font-size: 9px;
+  }
+}
+
+
+/* ============= Phone View (max-width: 600px) ============= */
+@media (max-width: 600px) {
+
+  /* ---------- Top Headline ---------- */
+  .top-headline {
+    flex-direction: column;
+    height: auto;
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .the-text h1 {
+    font-size: 14px;
+  }
+
+  .info-and-languages-options {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .info a {
+    font-size: 12px;
+  }
+
+  .info img, .media img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    padding: 0 8px;
+    height: 50px;
+    overflow: hidden;
+  }
+
+  header img {
+    height: 26px;
+  }
+
+  nav ul {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav ul li a {
+    font-size: 12px;
+    padding: 3px 5px;
+  }
+
+  .hamburger {
+    width: 26px;
+    height: 16px;
+  }
+
+  /* ---------- Drop Menu ---------- */
+  .drop-menu {
+    padding: 20px 10px;
+    align-items: center;
+  }
+
+  .drop-menu .close-btn {
+    top: 10px;
+    right: 15px;
+  }
+
+  .drop-menu .logo-box {
+    margin-top: 40px;
+    gap: 6px;
+  }
+
+  .drop-menu .logo-box img {
+    height: 40px;
+  }
+
+  .drop-menu h1 {
+    font-size: 20px;
+    padding-top: 10px;
+  }
+
+  .capitalcites-and-options {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .capitalcites-and-options section h2 {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .capitalcites-and-options section a {
+    font-size: 13px;
+  }
+
+  .drop-menu-contact-icons {
+    margin-top: 40px;
+    gap: 12px;
+  }
+
+  .contact-item img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .contact-item span {
+    font-size: 13px;
+  }
+
+  /* ---------- Title of Page ---------- */
+  .title-of-page {
+    height: 130px;
+    padding: 15px;
+    gap: 8px;
+  }
+
+  .title-of-page h1 {
+    font-size: 20px;
+  }
+
+  .title-of-page-p {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* ---------- Cards Grid ---------- */
+  .grid-section {
+    padding: 1rem;
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .grid-card {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  .card-btn {
+    width: 45px;
+    height: 45px;
+  }
+
+  .card-btn img {
+    width: 22px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 10px;
+  }
+
+  .footer-contents {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .arrow-list li {
+    font-size: 13px;
+  }
+
+  .footer-media p {
+    font-size: 9px;
+  }
+}
+
