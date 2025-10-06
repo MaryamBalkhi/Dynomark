@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPERTISE AUTOMOBILE DYNOMARK</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/packets.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline" style="z-index: 3000;">
+  <div class="the-text">
+    <h1>Garantie <span style="color: red;">&nbsp;Dynomark&nbsp;</span> avant notaire</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Icône de téléphone" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">OU</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="Anglais" class="flag" />
+      <span>Anglais</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="packets.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="Anglais" /> Anglais
+      </li>
+      <li data-value="fa" data-url="packets.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persan" /> Persan
+      </li>
+      <li data-value="ps" data-url="packets.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pachto" /> Pachto
+      </li>
+      <li data-value="fr" data-url="packets.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="Français" /> Français
+      </li>
+      <li data-value="tr" data-url="packets.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turc" /> Turc
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="Logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fr.html">Accueil</a></li>
+      <li>
+        <a href="#">Entreprise &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fr.html">Qui sommes-nous</a></li>
+          <li><a href="photo-gallery.fr.html">Galerie de photos</a></li>
+          <li><a href="news-from-us.fr.html">Nos actualités</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fr.html">Forfaits</a></li>
+      <li><a href="auto-expertise.fr.html">Expertise automobile</a></li>
+      <li><a href="checkpoints.fr.html">Points de contrôle</a></li>
+      
+      <li><a href="contact.fr.html">Contactez-nous</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="Logo sombre">
+    <h1>FILIALES INTERNATIONALES</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>EUROPE</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+     
+    </section>
+
+    <section>
+      <h2>TURQUIE</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+    </section>
+
+    <section>
+      <h2>MOYEN-ORIENT</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Adresse">
+    <span>Kulola Poshta, en face de la banque FMFB, 4e district</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Téléphone">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="E-mail">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">FORFAITS</h1>
+    <p class="title-of-page-p"><a href="index.fr.html"><b>Accueil &sol;</b></a> Forfaits</p>
+</div>
+
+
+<div class="packets container">
+  <!-- LEFT: Cards grid -->
+  <div id="react-grid" class="grid-wrapper"></div>
+
+  <!-- RIGHT: Text section -->
+  <div class="why-dynomark">
+    <h2>Nos forfaits</h2>
+    <p>
+      Une voiture avec des composants internes défectueux peut engendrer des coûts futurs.
+      Grâce à une détection précoce des dysfonctionnements des composants, vous pouvez éviter d’acheter
+      un véhicule inapproprié et d’éventuelles dépenses futures. Les applications d’expertise
+      sur les parties internes et externes des véhicules peuvent varier en fonction des
+      segments des véhicules et des équipements qu’ils possèdent. Grâce à ces tests,
+      il est possible d’identifier les dysfonctionnements matériels qui vous font hésiter à acheter
+      un véhicule d’occasion. Le <b>contrôle des pièces de rechange du véhicule</b> est également appliqué
+      au véhicule dans ce processus.
+    </p>
+    <p>
+      Avec le contrôle de <b>l’expertise du moteur du véhicule</b>, un examen détaillé est effectué sur
+      le moteur de votre véhicule. Toutes les pièces de votre véhicule sont testées, du bruit de fonctionnement
+      du moteur aux fuites d’huile. À la suite du test d’expertise automobile, vous obtiendrez des informations
+      sur l’état de santé du moteur. Vous serez informé de la détection des dysfonctionnements et des dommages,
+      le cas échéant, et vous prendrez une décision grâce au rapport sur le véhicule que vous envisagez d’acheter.
+      Avec le <b>contrôle sous le véhicule</b>, vous pouvez être sûr de conduire votre véhicule en toute sécurité.
+    </p>
+  </div>
+</div>
+
+<script type="text/babel">
+const packages = [
+  {
+    title: "Forfait Micro Expertise Automobile",
+    ribbon: "ÉCONOMIQUE",
+    ribbonColor: "#099140",
+    img: "stuff/icons/mikro-paket-oto-ekspertiz_k_2.png",
+    price: "3 500 AFN",
+    detailUrl: "micro-package-auto-expertise.fr.html",
+    features: [
+      "Test de performance du moteur",
+      "Expertise mécanique du moteur",
+      "Test de mesure de la batterie",
+      "Test de mesure de l’antigel",
+      "Test de fuite de joint",
+      "Rapport",
+    ],
+  },
+  {
+    title: "Forfait Contrôle Airbag",
+    img: "stuff/icons/pro-plus-paket-oto-ekspertiz_k_33.png",
+    price: "5 100 AFN",
+    detailUrl: "airbag-control-package.fr.html",
+    features: [
+      "Vérification physique des airbags",
+      "Contrôle électronique des airbags",
+    ],
+  },
+  {
+    title: "Forfait Or Plus Expertise Automobile",
+    ribbon: "EXPORT",
+    ribbonColor: "#e10613",
+    img: "stuff/icons/gold-paket-oto-ekspertiz_k_5.png",
+    price: "6 700 AFN",
+    detailUrl: "gold-plus-package-auto-expertise.fr.html",
+    features: [
+      "Test mécanique du moteur",
+      "Test de performance du moteur",
+      "Évaluation de la carrosserie",
+      "Évaluation de la peinture",
+      "Contrôle des poteaux-châssis-panneaux",
+      "Contrôle mécanique avant et sous le véhicule sur pont élévateur",
+      "Test de fuite de joint",
+      "Test du cerveau OBD",
+      "Test de suspension",
+      "Test de cisaillement latéral",
+      "Test de freinage",
+      "Test de frein à main",
+      "Rapport",
+    ],
+  },
+  {
+    title: "Forfait Pro Expertise Automobile",
+    img: "stuff/icons/pro-paket-oto-ekspertiz_k_52.png",
+    price: "5 100 AFN",
+    detailUrl: "pro-package-auto-expertise.fr.html",
+    features: [
+      "Test de performance du moteur",
+      "Évaluation de la carrosserie",
+      "Évaluation de la peinture",
+      "Contrôle des poteaux-châssis-panneaux",
+      "Rapport",
+    ],
+  },
+  {
+    title: "Forfait Or Expertise Automobile",
+    img: "stuff/icons/pro-paket-oto-ekspertiz_k_52.png",
+    price: "5 100 AFN",
+    detailUrl: "gold-package-auto-expertise.fr.html",
+    features: [
+      "Test de performance du moteur",
+      "Évaluation de la carrosserie",
+      "Évaluation de la peinture",
+      "Contrôle des poteaux-châssis-panneaux",
+      "Rapport",
+      "Contrôle mécanique avant et sous le véhicule sur pont élévateur",
+      "Test de suspension",
+      "Test de cisaillement latéral",
+      "Test de freinage",
+      "Test de frein à main",
+      "Rapport",
+    ],
+  },
+  {
+    title: "Forfait Pro Plus Expertise Automobile",
+    ribbon: "POPULAIRE",
+    ribbonColor: "#0cc6c9",
+    img: "stuff/icons/pro-plus-paket-oto-ekspertiz_k_33.png",
+    price: "5 100 AFN",
+    detailUrl: "gold-plus-package-auto-expertise.fr.html",
+    features: [
+      "Test mécanique du moteur",
+      "Test de performance du moteur",
+      "Évaluation de la carrosserie",
+      "Évaluation de la peinture",
+      "Contrôle des poteaux-châssis-panneaux",
+      "Contrôle mécanique avant et sous le véhicule sur pont élévateur",
+      "Test de fuite de joint",
+      "Test du cerveau OBD",
+      "Test de suspension",
+      "Test de cisaillement latéral",
+      "Test de freinage",
+      "Test de frein à main",
+      "Rapport",
+    ],
+  },
+];
+
+function PackageGrid() {
+  return (
+    <div className="carousel-track grid-view">
+      {packages.map((pkg, i) => (
+        <div className="carousel-card" key={i}>
+          {pkg.ribbon && (
+            <div className="ribbon-card" style={{ background: pkg.ribbonColor }}>
+              {pkg.ribbon}
+            </div>
+          )}
+          <div className="card-inner">
+            <img src={pkg.img} alt={pkg.title} />
+            <b>{pkg.title}</b>
+            <ul>{pkg.features.map((f, idx) => <li key={idx}>{f}</li>)}</ul>
+            <div className="card-footer">
+              <div>
+                <button className="detail-btn" style={{ marginRight: 10 }}>
+                <a href={pkg.detailUrl}>Détails</a>
+                </button>
+              </div>
+              <div style={{ fontWeight: "bold", color: "red" }}>{pkg.price}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("react-grid")).render(<PackageGrid />);
+</script>
+
+
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Maison n° 56, entre les rues 5 et 6, Kulola Poshta, en face de la banque FMFB, 4e district, Kaboul, Afghanistan
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">Forfaits</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fr.html">Forfait Micro Expertise Automobile</a></li> 
+  <li><a href="pro-package-auto-expertise.fr.html">Forfait Pro Expertise Automobile</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fr.html">Forfait Pro Plus Expertise Automobile</a></li>
+  <li><a href="gold-package-auto-expertise.fr.html">Forfait Or Expertise Automobile</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fr.html">Forfait Or Plus Expertise Automobile</a></li>
+  <li><a href="airbag-control-package.fr.html">Forfait Contrôle Airbag</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">Filiales internationales</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Turquie</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a></li>
+</ul>
+<!--
+<button class="showall">Tout afficher</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+    </div>
+    <p>	&copy; Copyright 2020 - 2025 DYNOMARK EXPERTISE AUTOMOBILE Tous droits réservés | Développé par <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

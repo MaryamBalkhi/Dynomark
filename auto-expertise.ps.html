@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داینومارک د موټر تخصص</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/who-are-we.css">
+</head>
+<body style="direction: rtl;">
+    
+    <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>د نوټر څخه مخکې <span style="color: red;">&nbsp;داینومارک&nbsp;</span> تضمین</h1>
+        </div>
+
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="د تلیفون نښه" style="margin-right: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="ټویټر"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="انسټاګرام"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="یوټیوب"></a>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="انګلیسي" class="flag" />
+                        <span>انګلیسي</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="auto-expertise.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="انګلیسي" /> انګلیسي
+                        </li>
+                        <li data-value="fa" data-url="auto-expertise.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="فارسي" /> فارسي
+                        </li>
+                        <li data-value="ps" data-url="auto-expertise.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پښتو" /> پښتو
+                        </li>
+                        <li data-value="fr" data-url="auto-expertise.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوي" /> فرانسوي
+                        </li>
+                        <li data-value="tr" data-url="auto-expertise.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکي" /> ترکي
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    
+                    if (url) {
+                        window.location.href = url;
+                    }
+
+                    select.classList.remove('open');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+
+                if (!selected || !options) return;
+
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        items[0]?.focus();
+                    }
+                });
+
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="لوګو">
+        
+        <nav>
+            <ul>
+                <li><a href="index.ps.html">کورپاڼه</a></li>
+                <li>
+                    <a href="#">کارپوریټ &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.ps.html">موږ څوک یو</a></li>
+                        <li><a href="photo-gallery.ps.html">د انځورونو ګالري</a></li>
+                        <li><a href="news-from-us.ps.html">زموږ خبرونه</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.ps.html">بستې</a></li>
+                <li><a href="auto-expertise.ps.html">د موټر تخصص</a></li>
+                <li><a href="checkpoints.ps.html">د کتنې نقطې</a></li>
+                <li><a href="contact.ps.html">له موږ سره اړیکه</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="تیاره لوګو">
+            <h1>نړیوالې څانګې</h1>
+        </div>
+        <div class="separator"></div>
+        
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>اروپا</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a>
+            </section>
+
+            <section>
+                <h2>ترکیه</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">انتالیا</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استنبول</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجایلي</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اوردو</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+            </section>
+
+            <section>
+                <h2>منځني ختیځ</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+            </section>
+        </div>
+
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="پته">
+                <span>کولولا پشتا، د FMFB بانک مخې ته، PD 04</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="تلیفون">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="ایمیل">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">د موټر تخصص</h1>
+        <p class="title-of-page-p"><a href="index.ps.html"><b>کورپاڼه &sol;</b></a> د موټر تخصص</p>
+    </div>
+
+    <div class="who-we-are">
+        <h2>د موټر تخصص څه دی؟</h2>
+        <p>تخصص، چې د Expert کلمه په پښتو کې د ترجمې په توګه ښکاري، د هغو کسانو لخوا ترسره شوې څیړنې دي چې په یوې خاصې برخه کې تخنیکي پوهه لري. <b>د موټر تخصص څه دی؟</b> دا نوم دی چې د موټرو په برخه کې د متخصصو استادانو لخوا د تخنیکي تجهیزاتو په کارولو سره ترسره شوي څیړنو ته ورکول کیږي. البته، دا ویل کیدی شي چې د موټر تخصص خدمات د موټر د خرید او خرڅلاو په پروسه کې په اغیزمنه توګه اړین دي.<br>
+
+        د موټر تخصص استادان د موټرو په تفصیلي څیړنې وروسته خپل نظر وړاندې کوي. د دې نظر په پایله کې، د موټر په اړه دقیق معلومات ترلاسه کول هم ممکن دي. موږ کولی شو په اسانۍ سره ووایو چې د موټر تخصص خدمات خورا تفصیلي عملیات شامل دي. دا هم ویل کیدی شي چې د موټر تخصص خدمت، چې د موټر د تاریخي معلوماتو د راټولولو پروسې په توګه هم ښکاري، یو مسلکي خدمت دی.</p>
+        <p><strong style="font-size: 22px; color: red;">مسلکي د موټر تخصص خدمت</strong></p>
+        <p>په ننني شرایطو کې، مسلکي د موټر تخصص خدمات په اغیزمنه توګه اړین دي. که موږ وپوښتو چې <b>د موټر تخصص</b> څه دی، مسلکي خدمات چې د موټرو د حادثو، میخانیکي حالت معلوماتو او د لګښتونو حالت په اړه معلومات وړاندې کوي، د موټر تخصص خدمات بلل کیږي. لکه څنګه چې لیدل کیږي، موږ ویلی شو چې د موټر تخصص خدمت د موټرو په تفصیلي کچه څیړنه ممکنه کوي.<br>
+
+        په خاصه توګه د دویم لاس موټرو په خرید او خرڅلاو کې، د موټر تخصص خدمات په اغیزمنه توګه اړین دي. په دې مرحله کې، د مسلکي کچې د موټر تخصص خدمت ترلاسه کول اړین دي. که تاسو غواړئ د موټر تخصص خدمت ترلاسه کړئ؛ تاسو باید پوه شئ چې د اړوند شرکت په اړه بشپړه څیړنه باید وشي. د دویم لاس موټر اخیستلو دمخه د داینومارک د موټر تخصص په غوره کولو سره، تاسو کولی شئ د هغه موټر د دوام او پاکوالي په اړه ډاډه شئ چې تاسو یې اخلئ.</p>
+    </div>
+
+    <div class="why-dynomark">
+        <h2>ارزیابي څه ده؟</h2>
+        <p>کارپوه د یوې خاصې موضوع په اړه تخنیکي پوهه لرونکی کس دی. د دویم لاس "د موټر تخصص" د تخنیکي وسایلو او تجهیزاتو په کارولو سره د موټرو په تفصیلي توګه څیړنه او د هغوی په اړه نظر ورکول دي. کارپوهان د موټر تېرې حادثې، بدل شوي یا رنګ شوي برخې مشخص کوي او همدارنګه د موټر اوسني انجن، شاسي، میخانیکي او میخانیکي شرایط چې ممکن په راتلونکي کې ستاسو لپاره لګښت ولري، مشاهده کوي او د راپور سره یوځای، د ټولو څیړنو وروسته د تخصص راپور چمتو کیږي او کاروونکي ته وړاندې کیږي.</p>
+    </div>
+
+    <div class="why-dynomark">
+        <h2>د موټر تخصص اهمیت</h2>
+        <p>د تخصص راپور په لومړي سر کې خلک د هغه موټر په اړه احتمالي لګښتونو او د هغه له ارزښت څخه زیاتې پیسې ورکولو په وړاندې ساتي.<br>
+
+        تر ټولو مهم، دا ستاسو د ژوند خوندیتوب ساتي. یو ښه د موټر تخصص کولی شي د هغه موټر ټول جزئیات چې تاسو یې اخیستل غواړئ تاسو ته وړاندې کړي او تاسو دا حالت یوازې د تخصص مرکزونو څخه زده کولی شئ.<br>
+
+        کله چې موټر اخلئ، زموږ خلک حتی ټایر ته نه ګوري، ټایر بهر له ظاهره ښه ښکاري، خو دننه یې بدلون لري، حتی دا حالت ستاسو د ژوند خوندیتوب ته ګواښ کولو لپاره کافي دی.<br>
+
+        او نور ډیرې غلطۍ، نیمګړتیاوې، په لنډه توګه، موږ وایو چې د تخصص راپور ستاسو ژوند او ستاسو بودیجه دواړه ساتي.<br>
+
+        د دویم لاس موټر اخیستلو دمخه، باید د تخصص راپور ترلاسه شي.</p>
+    </div>
+
+    <footer>
+        <div class="footer-contents">
+            <div>
+                <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+                
+                <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; کور نمبر ۵۶، د ۵ او ۶ سړکونو ترمنځ، کولولا پشتا، د FMFB بانک مخې ته، PD 04، کابل، افغانستان</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+            </div>
+            <div>
+                <h2 style="color: white;">بستې</h2>
+                <ul class="arrow-list">
+                    <li><a href="micro-package-auto-expertise.ps.html">مایکرو بسته د موټر تخصص</a></li> 
+                    <li><a href="pro-package-auto-expertise.ps.html">پرو بسته د موټر تخصص</a></li>
+                    <li><a href="pro-plus-package-auto-expertise.ps.html">پرو پلس بسته د موټر تخصص</a></li>
+                    <li><a href="gold-package-auto-expertise.ps.html">طلایي بسته د موټر تخصص</a></li>
+                    <li><a href="gold-plus-package-auto-expertise.ps.html">طلایي پلس بسته د موټر تخصص</a></li>
+                    <li><a href="airbag-control-package.ps.html">د ایربګ کنټرول بسته</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: white;">نړیوالې څانګې</h2>
+                <ul class="arrow-list">
+                    <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li> 
+                    <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-media">
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="ټویټر"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="انسټاګرام"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="یوټیوب"></a>
+            </div>
+            <p>&copy; کاپي رایټ ۲۰۲۰ - ۲۰۲۵ داینومارک د موټر تخصص، ټول حقونه خوندي دي | پرمختللی: <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخي</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

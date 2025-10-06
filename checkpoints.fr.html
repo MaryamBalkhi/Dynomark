@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPERTISE AUTO DYNOMARK</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/checkpoints.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>Pré-Notaire<span style="color: red;">&nbsp;Dynomark&nbsp;</span>Assurance</h1>
+        </div>
+
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="Icône de téléphone" style="margin-right: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-right: 5px;">OU</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="Anglais" class="flag" />
+                        <span>Anglais</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="checkpoints.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="Anglais" /> Anglais
+                        </li>
+                        <li data-value="fa" data-url="checkpoints.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persan" /> Persan
+                        </li>
+                        <li data-value="ps" data-url="checkpoints.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pachto" /> Pachto
+                        </li>
+                        <li data-value="fr" data-url="checkpoints.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="Français" /> Français
+                        </li>
+                        <li data-value="tr" data-url="checkpoints.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turc" /> Turc
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+
+            // Toggle dropdown visibility on click
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+
+            // Handle language selection
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+
+                    // Update the selected option display
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    
+                    // Navigate to the selected URL
+                    if (url) {
+                        window.location.href = url;
+                    }
+
+                    // Close the dropdown
+                    select.classList.remove('open');
+                });
+            });
+
+            // Close dropdown if clicking outside
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Close all dropdowns helper
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+
+            // Initialize each custom-select
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+
+                if (!selected || !options) return;
+
+                // Ensure options start hidden
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+
+                // Toggle open/close on click
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        // focus first item for keyboard users
+                        items[0]?.focus();
+                    }
+                });
+
+                // Keyboard on the selected control
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+
+                // Option click & keyboard support
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        // Replace the selected content visually
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+
+                        // Redirect to the page
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+
+            // Close on global Escape
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                // Only at the very top → show top headline
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                // Anywhere else on the page → hide it
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="logo">
+        
+        <nav>
+            <ul>
+                <li><a href="index.fr.html">Accueil</a></li>
+                <li>
+                    <a href="#">Entreprise &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.fr.html">Qui sommes-nous</a></li>
+                        <li><a href="photo-gallery.fr.html">Galerie de photos</a></li>
+                        <li><a href="news-from-us.fr.html">Actualités de notre part</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.fr.html">Forfaits</a></li>
+                <li><a href="auto-expertise.fr.html">Expertise automobile</a></li>
+                <li><a href="checkpoints.fr.html">Points de contrôle</a></li>
+                <li><a href="contact.fr.html">Contactez-nous</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <!-- Close button inside drop menu -->
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="logo sombre">
+            <h1>BRANCHES INTERNATIONALES</h1>
+        </div>
+        <div class="separator"></div>
+        
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>EUROPE</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+            </section>
+
+            <section>
+                <h2>TURQUIE</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+            </section>
+
+            <section>
+                <h2>MOYEN-ORIENT</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a>
+            </section>
+        </div>
+
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="Adresse">
+                <span>Kulola Poshta, en face de FMFB, PD 04</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="Téléphone">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="Email">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">POINTS DE CONTRÔLE</h1>
+        <p class="title-of-page-p"><a href="index.html"><b>Accueil &sol;</b></a> Points de contrôle</p>
+    </div>
+
+    <section class="grid-section">
+        <div class="grid-container">
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôles de la carrosserie et de la peinture</div>
+                <p class="card-text">Les pièces de la carrosserie du véhicule sont vérifiées en détail.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôles de l'agencement arrière</div>
+                <p class="card-text">Les contrôles de l'assemblage arrière consistent en une vérification générale de tous les systèmes mécaniques et de l'agencement sous le véhicule.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôles avant commande</div>
+                <p class="card-text">Les contrôles de l'agencement avant consistent en une vérification générale de tous les systèmes mécaniques et de l'agencement du véhicule.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôles du système de carburant et d'échappement</div>
+                <p class="card-text">Le système d'échappement est exposé à des conditions difficiles en raison de facteurs internes et externes pendant son utilisation.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Expertise interne/Contrôles électroniques</div>
+                <p class="card-text">Dans cette unité de contrôle, des vérifications générales de tous les systèmes mécaniques et électroniques, contrôlés depuis l'intérieur ou l'extérieur du véhicule, sont effectuées.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Test DYNO</div>
+                <p class="card-text">Le test de puissance DYNO détermine la puissance maximale que le moteur du véhicule peut produire.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôles d'expertise externe</div>
+                <p class="card-text">Les contrôles d'expertise externe sont l'un des points de contrôle d'expertise automobile fréquemment préférés par nos clients lors de l'achat et de la vente de véhicules d'occasion.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôles du haut du moteur</div>
+                <p class="card-text">Contrôles du haut du moteur : Il s'agit de la section où les parties supérieures du moteur, rencontrées en ouvrant le capot du véhicule, sont contrôlées.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Contrôle du moteur et de la transmission</div>
+                <p class="card-text">Contrôles du moteur et de la transmission : Nos inspections du moteur et de la transmission sont effectuées de manière professionnelle par nos mécaniciens moteur de manière détaillée et impartiale.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Test de diagnostic (Test du cerveau)</div>
+                <p class="card-text">Avec le test de diagnostic, des contrôles généraux de tous les systèmes électroniques et électromécaniques du véhicule sont effectués via les unités de contrôle.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Requête sur les dettes/dommages/pièces changées/kilométrage/détails du véhicule</div>
+                <p class="card-text">Permet d'obtenir des informations sur les dommages et les coûts de dommages du véhicule que vous envisagez d'acheter, le cas échéant, les dommages et coûts de dommages antérieurs, les demandes de pièces changées et les requêtes de kilométrage basées sur l'inspection. Les résultats sont obtenus auprès du SBM (Centre d'information et de surveillance des assurances).</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Test de freinage/suspension/dérapage latéral</div>
+                <p class="card-text">Avec ces tests effectués à la station de mesure, la capacité de freinage, de suspension et de tenue de route du véhicule est déterminée.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Test de fuite de carbone</div>
+                <p class="card-text">Le test de fuite de carbone permet de détecter les fuites et les fissures qui peuvent survenir sur les surfaces du bloc et de la culasse de votre véhicule à l'aide d'un liquide de détection de CO2 spécial.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Test de conduite sur route</div>
+                <p class="card-text">Le véhicule expertisé est finalement soumis à un test de conduite sur route sous le contrôle du technicien.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Garantie de détection de peinture de 1 an-2500 km</div>
+                <p class="card-text">Avec la garantie Dynomark, les contrôles de peinture de la carrosserie de votre véhicule sont garantis lors de l'achat et de la vente de véhicules d'occasion.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Garantie mécanique (Tur Assist)</div>
+                <p class="card-text">Garantie mécanique du moteur Tur Assist ; Il s'agit d'un type de garantie qui protège votre véhicule contre d'éventuelles pannes et peut être considéré comme une assurance santé privée pour les automobiles.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+        </div>
+    </section>
+
+    <div id="card-modal" class="card-modal">
+        <div class="modal-content">
+            <button id="modal-close" class="close-btn">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Define content for each card by index or unique title
+        const cardContents = [
+            {
+                title: "Contrôles de la carrosserie et de la peinture",
+                content: `<div class="who-we-are">
+                    <h2>Contrôles de la carrosserie et de la peinture</h2>
+                    <p>Capot : C'est l'une des parties les plus importantes qui couvre la surface extérieure du véhicule et forme le squelette. Il est composé de pièces qui nous protègent des facteurs externes en cas d'accident en mouvement. Un point de contrôle aussi important doit être vérifié avant l'achat et la vente d'un véhicule d'occasion. Les concessionnaires automobiles essaient de dissimuler les opérations sur la partie carrosserie-peinture car ils ne souhaitent pas que la valeur du véhicule diminue. Nous soulignons l'importance pour nos clients qui vont acheter un véhicule d'occasion de se rendre dans les branches d'expertise automobile Dynomark et de faire vérifier la carrosserie-peinture du véhicule avant l'achat.</p>
+                    
+                    <h2>Que vérifie-t-on dans les contrôles de carrosserie-peinture chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Les contrôles de carrosserie-peinture chez Dynomark Auto Expertise sont effectués de manière professionnelle, impartiale et détaillée à l'aide de nos outils technologiques. Dans nos contrôles de carrosserie-peinture du véhicule, nous examinons de nombreux points tels que la détection des pièces changées, la détection des pièces usinées, les opérations de démontage-montage, les opérations de réglage, les mesures de micron de peinture.<br>
+
+                        Lors de ces inspections, tout d'abord, des contrôles de démontage/montage ou de changement sont effectués sur toutes les pièces de la carrosserie du véhicule. Les épaisseurs de peinture en microns sont mesurées et les pièces de carrosserie peintes ou peintes localement sont détectées. Un contrôle des processus ou des dommages est effectué sur le châssis du véhicule, une détection des dommages est réalisée avec des contrôles internes et externes des piliers et des longerons. Enfin, l'ensemble de la carrosserie du véhicule est examiné, et les bosses, creux et processus de correction de bosses non peintes sont détectés, puis un rapport est préparé.<br>
+
+                        Au cours de ces examens, toutes les pièces suivantes sont vérifiées.
+                    </p>
+                    <ul>
+                        <li>Plafond</li>
+                        <li>Capot</li>
+                        <li>Aile avant gauche</li>
+                        <li>Porte avant gauche</li>
+                        <li>Porte arrière gauche</li>
+                        <li>Aile arrière gauche</li>
+                        <li>Pilier central gauche</li>
+                        <li>Pilier avant gauche</li>
+                        <li>Montant supérieur gauche</li>
+                        <li>Pilier intérieur arrière gauche</li>
+                        <li>Coffre</li>
+                        <li>Tôle de plancher</li>
+                        <li>Panneau arrière</li>
+                        <li>Aile arrière droite</li>
+                        <li>Porte arrière droite</li>
+                        <li>Porte avant droite</li>
+                        <li>Aile avant droite</li>
+                        <li>Pilier avant droite</li>
+                        <li>Pilier central droite</li>
+                        <li>Montant supérieur droite</li>
+                        <li>Pilier intérieur arrière droite</li>
+                        <li>Panneau avant</li>
+                        <li>Châssis avant gauche</li>
+                        <li>Châssis avant droite</li>
+                        <li>Longeron gauche</li>
+                        <li>Longeron droite</li>
+                        <li>Châssis arrière gauche</li>
+                        <li>Châssis arrière droite</li>
+                        <li>Plaque de base gauche</li>
+                        <li>Plaque de base droite</li>
+                        <li>Panneau de bascule gauche</li>
+                        <li>Panneau de bascule droite</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Contrôles de l'agencement arrière",
+                content: `<div class="who-we-are">
+                    <h2>Contrôles de l'agencement arrière</h2>
+                    <p>Assemblage arrière : Les pièces de l'agencement arrière, tout comme les pièces de l'agencement avant, sont des éléments qui affectent la qualité de conduite du véhicule en mouvement. Comme pour les autres points de contrôle lors de l'achat et de la vente de véhicules d'occasion, les contrôles de l'agencement arrière sont d'une grande importance.<br>
+
+                    Pour que votre véhicule se déplace de manière fluide et confortable en mouvement, les pièces de l'agencement arrière doivent remplir leurs fonctions de la meilleure manière possible. Si les pièces ne remplissent pas leurs fonctions, cela affecte négativement la conduite de votre véhicule en mouvement.<br>
+
+                    Par exemple, si vous ne faites aucun mouvement de manœuvre sur une route droite tout en conduisant votre véhicule, et que votre véhicule ne va pas droit, fait des bruits de claquement et de vibrations, et en même temps tire à droite ou à gauche, le véhicule ne vous offre pas une conduite confortable et met également en danger votre sécurité. Pour ces raisons, nous soulignons l'importance pour nos clients qui vont acheter un véhicule d'occasion de se rendre dans les branches d'expertise automobile Dynomark avant l'achat et de faire vérifier l'agencement arrière du véhicule.</p>
+                    
+                    <h2>Que vérifie-t-on dans les contrôles de l'agencement arrière chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Chez Dynomark Auto Expertise, les contrôles de l'agencement arrière sont effectués par des mécaniciens moteur de manière professionnelle, impartiale et détaillée dans un environnement éclairé sur un pont élévateur. Dans nos contrôles de l'agencement arrière, le véhicule est vérifié pour les claquements, les vibrations et le fonctionnement sain des composants, et chaque pièce est contrôlée et rapportée. Pendant ce contrôle, les points de contrôle suivants sont vérifiés.
+                    </p>
+                    <ul>
+                        <li>Pneu gauche</li>
+                        <li>Pneu droite</li>
+                        <li>Jante gauche</li>
+                        <li>Jante droite</li>
+                        <li>Disque de frein gauche</li>
+                        <li>Disque de frein droite</li>
+                        <li>Plaquette de frein gauche</li>
+                        <li>Plaquette de frein droite</li>
+                        <li>Érier de frein gauche</li>
+                        <li>Érier de frein droite</li>
+                        <li>Montage supérieur d'amortisseur gauche</li>
+                        <li>Montage supérieur d'amortisseur droite</li>
+                        <li>Ressort hélicoïdal gauche</li>
+                        <li>Ressort hélicoïdal droite</li>
+                        <li>Bras de contrôle supérieur arrière gauche</li>
+                        <li>Bras de contrôle supérieur arrière droite</li>
+                        <li>Bras de contrôle inférieur arrière gauche</li>
+                        <li>Bras de contrôle inférieur arrière droite</li>
+                        <li>Porche arrière gauche</li>
+                        <li>Porche arrière droite</li>
+                        <li>Rotule de courbure gauche</li>
+                        <li>Rotule de courbure droite</li>
+                        <li>Barre de courbure arrière</li>
+                        <li>Bras d'équilibrage arrière</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Contrôles avant commande",
+                content: `<div class="who-we-are">
+                    <h2>Contrôles avant commande</h2>
+                    <p>Agencement avant : Il s'agit de la section contenant des pièces importantes qui affectent la qualité de conduite du véhicule en mouvement. Comme pour les autres points de contrôle lors de l'achat et de la vente de véhicules d'occasion, les contrôles de l'agencement avant sont d'une grande importance. Pour que votre véhicule se déplace de manière fluide et confortable en mouvement, les pièces de l'agencement avant doivent remplir leurs fonctions de la meilleure manière possible. Par exemple, si vous ne faites aucun mouvement de direction sur une route droite tout en conduisant votre véhicule, et que votre véhicule ne va pas droit, il ne vous offre pas une conduite confortable et met également en danger votre sécurité. Si les pièces de l'agencement avant sont ajustées et fonctionnent correctement, cela maximise votre confort de conduite même sur des routes accidentées et minimise les chocs du véhicule. Pour cette raison, nous soulignons l'importance pour nos clients qui vont acheter un véhicule d'occasion de se rendre dans les branches d'expertise automobile Dynomark avant l'achat et de faire vérifier les contrôles de l'agencement avant du véhicule.</p>
+                    
+                    <h2>Que vérifie-t-on dans les contrôles de l'agencement avant chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Chez Dynomark Auto Expertise, les contrôles de l'agencement avant sont effectués par des mécaniciens moteur de manière professionnelle, impartiale et détaillée dans un environnement éclairé sur un pont élévateur. Dans nos contrôles de l'agencement avant, le véhicule est rapporté en vérifiant si les claquements, les vibrations et les composants fonctionnent correctement. Pendant ce contrôle, les points de contrôle suivants sont vérifiés.
+                    </p>
+                    <ul>
+                        <li>Pneu gauche</li>
+                        <li>Pneu droite</li>
+                        <li>Jante gauche</li>
+                        <li>Jante droite</li>
+                        <li>Disque de frein gauche</li>
+                        <li>Disque de frein droite</li>
+                        <li>Plaquette de frein gauche</li>
+                        <li>Plaquette de frein droite</li>
+                        <li>Érier de frein gauche</li>
+                        <li>Érier de frein droite</li>
+                        <li>Ressort hélicoïdal gauche</li>
+                        <li>Ressort hélicoïdal droite</li>
+                        <li>Amortisseur gauche</li>
+                        <li>Amortisseur droite</li>
+                        <li>Montage supérieur d'amortisseur gauche</li>
+                        <li>Montage supérieur d'amortisseur droite</li>
+                        <li>Rotule de suspension gauche</li>
+                        <li>Rotule de suspension droite</li>
+                        <li>Barre de direction gauche</li>
+                        <li>Barre de direction droite</li>
+                        <li>Embout de biellette gauche</li>
+                        <li>Embout de biellette droite</li>
+                        <li>Soufflet de biellette gauche</li>
+                        <li>Soufflet de biellette droite</li>
+                        <li>Bras oscillant gauche</li>
+                        <li>Bras oscillant droite</li>
+                        <li>Axe de roue gauche</li>
+                        <li>Axe de roue droite</li>
+                        <li>Soufflet d'axe extérieur gauche</li>
+                        <li>Soufflet d'axe extérieur droite</li>
+                        <li>Soufflet d'axe intérieur gauche</li>
+                        <li>Soufflet d'axe intérieur droite</li>
+                        <li>Tête d'axe intérieur gauche</li>
+                        <li>Tête d'axe intérieur droite</li>
+                        <li>Moyeu gauche</li>
+                        <li>Moyeu droite</li>
+                        <li>Oreille de moteur gauche</li>
+                        <li>Berceau moteur</li>
+                        <li>Barre de courbure</li>
+                        <li>Boîtier de direction</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Contrôles du système de carburant et d'échappement",
+                content: `<div class="who-we-are">
+                    <h2>Contrôles du système de carburant et d'échappement</h2>
+                    <p>Le système de carburant et d'échappement occupe une place importante dans les contrôles d'expertise automobile.<br>
+
+                    Le système d'échappement est exposé à des conditions difficiles en raison de facteurs internes et externes pendant son utilisation. Pour expliquer, il est utilisé lors de la sortie des gaz consommés dans les cylindres du moteur du véhicule. Les gaz brûlés ont une certaine chaleur et pression lorsqu'ils sortent. Ces températures et pressions chauffent excessivement les pièces d'échappement. Entre-temps, il peut être exposé à un refroidissement soudain avec de l'eau arrivant sur l'échappement chauffé. Lors des transitions du froid au chaud et du chaud au froid, l'échappement peut se déformer avec le temps.<br>
+
+                    Le système d'échappement, qui est exposé à tout cela dans le véhicule en mouvement, subit également l'impact des facteurs externes comme les pierres, la boue, l'eau, le sol, le gravier... Dans les composants du système de carburant et d'échappement fonctionnant dans de telles conditions difficiles, des perforations, des fissures, un fonctionnement irrégulier, des fuites, une odeur de carburant, etc., surviennent avec le temps. Ces situations affectent négativement les performances du véhicule et entraînent une consommation excessive de carburant. De plus, elles nuisent à la nature et à la santé humaine avec la sortie de gaz nocifs sans traitement (sans minimiser les dommages).<br>
+
+                    Pour ces raisons, nous soulignons l'importance pour nos clients qui vont acheter un véhicule d'occasion de se rendre dans les branches d'expertise automobile Dynomark avant l'achat et de faire vérifier le système de carburant et d'échappement du véhicule.<br>
+
+                    Chez Dynomark Auto Expertise, les contrôles du système de carburant et d'échappement sont effectués par des mécaniciens moteur de manière professionnelle, impartiale et détaillée dans un environnement éclairé sur un pont élévateur. En même temps, le système de carburant et d'échappement est vérifié pendant que le véhicule est en marche.<br>
+
+                    Dans nos contrôles de carburant et d'échappement, de nombreuses fonctions et pièces telles que les perforations, les fissures, les déformations, les fuites, le fonctionnement irrégulier, la fumée noire, la consommation de carburant brut sont vérifiées et rapportées dans les composants d'échappement et de carburant du véhicule. Pendant ce contrôle, les points de contrôle suivants sont vérifiés.
+                    </p>
+                    <ul>
+                        <li>Capteur d'oxygène</li>
+                        <li>Conduite de carburant</li>
+                        <li>Filtre à carburant</li>
+                        <li>Refroidisseur de carburant</li>
+                        <li>Collecteur d'échappement</li>
+                        <li>Catalyseur</li>
+                        <li>Tuyau d'échappement</li>
+                        <li>Pulvérisateur d'échappement</li>
+                        <li>Silencieux intermédiaire</li>
+                        <li>Silencieux arrière</li>
+                        <li>Conduite de réservoir de carburant</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Expertise interne/Contrôles électroniques",
+                content: `<div class="who-we-are">
+                    <h2>Expertise interne/Contrôles électroniques</h2>
+                    <p>Dans l'achat et la vente de véhicules d'occasion, les contrôles d'expertise interne occupent une place importante dans l'expertise automobile. Les contrôles d'expertise interne/électroniques sont l'un des points de contrôle d'expertise automobile fréquemment préférés par nos clients lors de l'achat et de la vente de véhicules d'occasion. Grâce aux contrôles effectués avant l'achat du véhicule, les acheteurs de véhicules obtiennent des informations détaillées sur le véhicule. Grâce à ces informations, ils connaissent l'état instantané du véhicule et achètent le véhicule en conséquence. Ils n'ont pas de surprise supplémentaire après l'achat.</p>
+                    
+                    <h2>Que vérifie-t-on dans l'expertise interne/contrôles électroniques chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Chez Dynomark Auto Expertise, les contrôles d'expertise interne/électroniques sont examinés par nos experts de manière professionnelle, impartiale et détaillée. Chaque point de contrôle est vérifié et rapporté pour savoir s'il est déformé, déchiré, rayé, cassé et en état de fonctionnement selon sa fonction. S'il y a un changement à un point quelconque, il est rapporté avec des visuels et expliqué lors de la présentation.<br>
+
+                        Chez Dynomark Auto Expertise, les points de contrôle suivants sont vérifiés lors de l'exécution des contrôles d'expertise interne/électroniques.
+                    </p>
+                    <ul>
+                        <li>Tableau de bord</li>
+                        <li>Klaxon</li>
+                        <li>Ensemble de boutons de porte avant gauche</li>
+                        <li>Boutons de vitres</li>
+                        <li>Boutons de contrôle des phares</li>
+                        <li>Boutons de contrôle des rétroviseurs</li>
+                        <li>Rétroviseur intérieur</li>
+                        <li>Lecteur CD radio</li>
+                        <li>Panneau de contrôle de la climatisation/chauffage</li>
+                        <li>Grilles de ventilation</li>
+                        <li>Pare-soleil</li>
+                        <li>Ceinture de sécurité</li>
+                        <li>Éclairage intérieur</li>
+                        <li>Volant</li>
+                        <li>Levier de vitesse</li>
+                        <li>Interrupteur de feux de détresse/frein de stationnement</li>
+                        <li>Levier de frein à main</li>
+                        <li>Torpédo</li>
+                        <li>Capteur de stationnement</li>
+                        <li>Garniture intérieure de porte</li>
+                        <li>Siège avant gauche</li>
+                        <li>Siège avant droite</li>
+                        <li>Sièges arrière</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Test DYNO",
+                content: `<div class="who-we-are">
+                    <h2>Test DYNO</h2>
+                    <p>Pendant ce test, le moteur du véhicule est poussé des plus bas régimes aux plus hauts régimes. Pendant le test, les changements de vitesse, le système de refroidissement, les gaz d'échappement, le bruit et les vibrations du moteur sont contrôlés. Les performances du moteur sont déterminées en comparant la valeur de puissance d'usine avec le résultat du test.<br>
+
+                    Selon la caractéristique du système de traction du véhicule soumis au test de puissance DYNO, les conditions de fonctionnement du groupe motopropulseur telles que 4x4 / 4x2 ou traction avant / traction arrière sont vérifiées. Le test dynamométrique permet également de déterminer combien de puissance générée par le moteur du véhicule est transmise aux roues. Il permet également de diagnostiquer des éléments tels que le système d'embrayage, la transmission, le différentiel, l'arbre, l'essieu, qui font partie du groupe motopropulseur.<br>
+
+                    Pendant le test de puissance DYNO, les vibrations du moteur, les roulements de roues, les vibrations à l'intérieur du véhicule sont également vérifiés. Le test de puissance DYNO est une simulation de conduite qui permet de voir les réactions de votre véhicule pendant la conduite.</p>
+                </div>`
+            },
+            {
+                title: "Contrôles d'expertise externe",
+                content: `<div class="who-we-are">
+                    <h2>Contrôles d'expertise externe</h2>
+                    <p>Dans l'achat et la vente de véhicules d'occasion, les contrôles d'expertise externe occupent une place importante dans l'expertise automobile. Dans l'achat et la vente de véhicules d'occasion, les contrôles d'expertise externe sont l'un des points de contrôle d'expertise automobile fréquemment préférés par nos clients. Grâce aux contrôles effectués avant l'achat du véhicule, les personnes qui vont acheter le véhicule obtiennent des informations détaillées sur le véhicule. Grâce à ces informations, elles connaissent l'état instantané du véhicule et achètent le véhicule en conséquence. De cette manière, elles n'ont pas de surprise supplémentaire après l'achat.</p>
+                    
+                    <h2>Pourquoi les contrôles d'expertise externe chez Dynomark Auto Expertise sont-ils importants ?</h2>
+                    <p>
+                        Il s'agit de la section où les pièces permettant aux utilisateurs de communiquer avec l'environnement pendant la conduite sont contrôlées. Avec le fonctionnement régulier de ces pièces, une conduite contrôlée a lieu et peut informer les autres véhicules en mouvement des mouvements et manœuvres à effectuer dans des conditions météorologiques pluvieuses, neigeuses et brumeuses. De cette manière, nous minimisons le risque d'accident.
+                    </p>
+                    <h2>Que vérifie-t-on dans les contrôles d'expertise externe chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Chez Dynomark Auto Expertise, les contrôles d'expertise externe sont examinés par nos experts de manière professionnelle, impartiale et détaillée. Chaque point de contrôle est vérifié et rapporté selon sa fonction, s'il est déformé, déchiré, rayé, cassé et en état de fonctionnement. S'il y a une situation de non-fonctionnement ou un changement à un point quelconque, il est rapporté avec des visuels et expliqué lors de la présentation.
+                    </p>
+                    <ul>
+                        <li>Vérification du numéro de châssis</li>
+                        <li> Pare-brise avant</li>
+                        <li>Vitre arrière</li>
+                        <li>Vitre avant gauche</li>
+                        <li>Vitre arrière gauche</li>
+                        <li>Vitre avant droite</li>
+                        <li>Vitre arrière droite</li>
+                        <li>Vitre papillon gauche</li>
+                        <li>Toit ouvrant/vitre de toit</li>
+                        <li>Poignées de porte extérieures</li>
+                        <li>Rétroviseur extérieur gauche</li>
+                        <li>Rétroviseur extérieur droite</li>
+                        <li>Phare gauche</li>
+                        <li>Phare droite</li>
+                        <li>Feu antibrouillard gauche</li>
+                        <li>Feu antibrouillard droite</li>
+                        <li>Clignotant gauche</li>
+                        <li>Clignotant droite</li>
+                        <li>Feu stop droite</li>
+                        <li>Feu stop gauche</li>
+                        <li>Feu stop intérieur droite</li>
+                        <li>Feu stop intérieur gauche</li>
+                        <li>Capteur de stationnement</li>
+                        <li>Éclairage de plaque d'immatriculation</li>
+                        <li>Essuie-glaces</li>
+                        <li>Lavage des phares</li>
+                        <li>Contrôles intérieurs du coffre</li>
+                        <li>Amortisseur de coffre</li>
+                        <li>Roue de secours</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Contrôles du haut du moteur",
+                content: `<div class="who-we-are">
+                    <h2>Contrôles du haut du moteur</h2>
+                    <p>Chez Dynomark Auto Expertise, les contrôles du haut du moteur sont l'un des points de contrôle lors des vérifications d'expertise automobile dans l'achat et la vente de véhicules d'occasion.<br>
+
+                    Contrôles du haut du moteur : Il s'agit de la section où les parties supérieures du moteur, rencontrées en ouvrant le capot du véhicule, sont vérifiées. Nos contrôles du haut du moteur sont examinés de manière professionnelle par nos mécaniciens moteur de manière détaillée et impartiale. Les défauts trouvés lors de ces inspections sont photographiés et rapportés en détail.</p>
+                    
+                    <h2>Que vérifie-t-on dans les contrôles du moteur chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Au cours des examens, nos experts mécaniciens moteur vérifient de nombreux détails tels que le niveau d'huile moteur, le degré d'antigel, les fuites d'huile moteur, les roulements, le fonctionnement bruyant du moteur, les sons provenant du moteur, l'état de fonctionnement du moteur, la mesure de la batterie.<br>
+
+                        Nous soulignons l'importance pour nos clients qui vont acheter un véhicule d'occasion de se rendre dans les branches d'expertise automobile Dynomark avant l'achat et de faire vérifier les contrôles du haut du moteur du véhicule.
+                    </p>
+                    <ul>
+                        <li>Points de contrôle</li>
+                        <li>Isolant thermique et sonore du capot</li>
+                        <li>Couvercle de protection contre la poussière du moteur</li>
+                        <li>Boîtier de filtre à air</li>
+                        <li>Injecteur</li>
+                        <li>Conduite de carburant d'injecteur</li>
+                        <li>Pompe à carburant</li>
+                        <li>Poulie de courroie en V et ordinateur</li>
+                        <li>Conduite de climatisation</li>
+                        <li>Pompe de direction</li>
+                        <li>Boîtier de thermostat</li>
+                        <li>Conduite de liquide de refroidissement moteur</li>
+                        <li>Indicateur de refroidissement moteur</li>
+                        <li>Jauge de contrôle du niveau d'huile</li>
+                        <li>Réservoir d'huile hydraulique de frein</li>
+                        <li>Réservoir d'huile de direction assistée</li>
+                        <li>Refroidisseur d'huile</li>
+                        <li>Couvercle de culbuteur</li>
+                        <li>Fuite d'huile</li>
+                        <li>Couvercle avant du moteur</li>
+                        <li>Billet de filtre à huile</li>
+                        <li>Joints avant du moteur</li>
+                        <li>Combustion de vapeur d'huile moteur</li>
+                        <li>Installation électrique du moteur</li>
+                        <li>Batterie</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Contrôle du moteur et de la transmission",
+                content: `<div class="who-we-are">
+                    <h2>Contrôle du moteur et de la transmission</h2>
+                    <p>Chez Dynomark Auto Expertise, un autre point de contrôle lors des vérifications d'expertise automobile dans l'achat et la vente de véhicules d'occasion est le contrôle du haut du moteur.<br>
+
+                    Contrôles du moteur et du groupe de transmission : Nos contrôles du moteur et du groupe de transmission sont examinés de manière professionnelle par nos mécaniciens moteur de manière détaillée et impartiale. Les défauts trouvés lors de ces examens sont photographiés et rapportés en détail.</p>
+                    
+                    <h2>Que vérifie-t-on dans les contrôles du moteur et du groupe de transmission chez Dynomark Auto Expertise ?</h2>
+                    <p>
+                        Au cours des inspections, nos mécaniciens moteur vérifient le moteur et le groupe de transmission ; de nombreux détails tels que les pièces cassées, les dommages, les changements de vitesse, l'embrayage, les fuites dans l'intercooler et les tuyaux, les fuites d'huile dans le bloc moteur sont examinés.<br>
+
+                        Nous soulignons l'importance pour nos clients qui vont acheter un véhicule d'occasion de se rendre dans les branches d'expertise automobile Dynomark avant l'achat et de faire vérifier les contrôles du moteur et du groupe de transmission du véhicule.
+                    </p>
+                    <ul>
+                        <li>Points de contrôle</li>
+                        <li>Capot avant gauche</li>
+                        <li>Capot avant droite</li>
+                        <li>Capot arrière gauche</li>
+                        <li>Capot arrière droite</li>
+                        <li>Radiateur d'eau moteur</li>
+                        <li>Turbo</li>
+                        <li>Intercooler</li>
+                        <li>Couvercle avant du moteur</li>
+                        <li>Bloc moteur</li>
+                        <li>Culasse</li>
+                        <li>Carter d'huile</li>
+                        <li>Bouchon de carter</li>
+                        <li>Joints de vilebrequin</li>
+                        <li>Joints arrière de vilebrequin</li>
+                        <li>Section de manchon de boîte de vitesses</li>
+                        <li>Boule d'embrayage</li>
+                        <li>Fourche d'embrayage</li>
+                        <li>Pression d'embrayage</li>
+                        <li>Garniture d'embrayage</li>
+                        <li>Volant moteur</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Test de diagnostic (Test du cerveau)",
+                content: `<div class="who-we-are">
+                    <h2>Test de diagnostic (Test du cerveau)</h2>
+                    <p>Avec le test de diagnostic, les unités de contrôle qui gèrent tous les systèmes électroniques et électromécaniques de votre véhicule sont contactées. Toutes les notifications de pannes passives et actives enregistrées dans l'unité de contrôle du véhicule (cerveau) sont détectées et un rapport est généré.<br>
+
+                    Après ces contrôles, il est déterminé si les systèmes électroniques et électromécaniques du véhicule tels que l'INJECTION MOTEUR, le MOTEUR, la GÉNÉRATION DE PUISSANCE, l'ABS, l'ESP, l'ASR, l'EDC, l'AIRBAG, la TRANSMISSION AUTOMATIQUE, le SYSTÈME DE TRACTION DE LA TRANSMISSION sont ACTIFS ou PASSIFS et s'ils fonctionnent dans la plage de valeurs correcte.<br>
+
+                    Le test de diagnostic vérifie également tous les systèmes de signalisation, de confort et de sécurité de votre véhicule. Le modulateur ABS, le système de déclenchement et d'inflateur d'airbag, le système de verrouillage des ceintures de sécurité, les filets de détection de passagers sous les sièges, les capteurs de collision d'airbag, les câbles d'airbag, les sockets et les lignes connectées aux manipulations de résistance et de haute tension sont également détectés. Tous les courts-circuits sur le système sont déterminés.<br>
+
+                    Le contrôle du système de traction 4x4 de votre véhicule, les vannes solénoïdes de la transmission automatique et les dépassements des limites inférieures et supérieures des changements de vitesse de la transmission sont également vérifiés.<br>
+
+                    Avec le test de diagnostic, les conditions de fonctionnement des fonctionnalités de confort de votre véhicule peuvent également être déterminées. Les boutons de vitres, les boutons de contrôle du volant modulaire, le système de suivi de voie, l'assistance au stationnement, les phares, les clignotants, les feux stop, l'éclairage intérieur, les feux de plaque d'immatriculation, le système audio, l'immobiliseur, la télécommande, le code de clé, le capteur d'angle de direction, le système de lavage des phares, le toit ouvrant, le capteur de phares et de pluie, l'assistance au démarrage en côte, tous les systèmes dont votre véhicule dispose et qui le rendent différent sont également vérifiés.<br>
+
+                    Il est très important que la qualité de l'appareil de test utilisé lors des tests de diagnostic sur votre véhicule et le programme sous licence utilisé soient de haute qualité. Dynomark Auto Expertise utilise l'appareil de test HELLA GUTMANN SOLUTIONS préféré en EUROPE dans toutes ses branches.</p>
+                </div>`
+            },
+            {
+                title: "Requête sur les dettes/dommages/pièces changées/kilométrage/détails du véhicule",
+                content: `<div class="who-we-are">
+                    <h2>Requête sur les dettes/dommages/pièces changées/kilométrage/détails du véhicule</h2>
+                    <p>Permet d'obtenir des informations sur les dommages et les coûts de dommages du véhicule que vous envisagez d'acheter, le cas échéant, les dommages et coûts de dommages antérieurs, les demandes de pièces changées et les requêtes de kilométrage basées sur l'inspection. Les résultats sont obtenus auprès du SBM (Centre d'information et de surveillance des assurances).</p>
+                </div>`
+            },
+            {
+                title: "Test de freinage/suspension/dérapage latéral",
+                content: `<div class="who-we-are">
+                    <h2>Test de freinage</h2>
+                    <p>Avec le test de freinage dans les services d'expertise automobile, la force de freinage transmise aux roues du véhicule est déterminée. Le taux de déviation pendant le freinage est déterminé. Cette répartition est très importante pour un arrêt sûr. Le fonctionnement des amortisseurs, qui sont l'une des pièces de base du système de suspension, est vérifié. Ce test est très important pour une conduite sûre. Avec le test de dérapage latéral, les résistances de déviation appliquées par les roues à la route sont déterminées. Ce test est très important pour une maniabilité sûre.<br>
+
+                    Avec le test de freinage, l'adhérence des pneus du véhicule, des plaquettes de frein et des disques de frein est détectée. Le fonctionnement du système de frein à main et la répartition de la puissance de freinage sur l'ensemble du système de freinage sont déterminés. Le fonctionnement correct des systèmes de freinage des véhicules est vital pour la sécurité de conduite.</p>
+                    
+                    <h2>Test d'amortisseur</h2>
+                    <p>
+                        Des contrôles généraux du système d'amortisseur et de toutes les pièces des véhicules entrant dans la station de test d'amortisseur sont effectués. Les cales supérieures et les bagues de connexion inférieures des amortisseurs, ainsi que les sons et les valeurs de fonctionnement de l'ensemble du système pendant le fonctionnement, sont déterminés. La manière dont les amortisseurs fonctionnent est très importante en termes de tenue de route et de résistance du véhicule au vent.
+                    </p>
+                    <h2>Test de dérapage latéral</h2>
+                    <p>
+                        Avec la mesure de dérapage latéral, les angles de toutes les roues du véhicule sont déterminés. Toutes les distorsions angulaires sur le groupe d'essieux avant et arrière sont déterminées. Toutes les courbures et déviations des groupes d'essieux avant et arrière survenant après un accident ou lors de passages sur des nids-de-poule ou des ralentisseurs durs sont également déterminées par le test de dérapage latéral.
+                    </p>
+                </div>`
+            },
+            {
+                title: "Test de fuite de carbone",
+                content: `<div class="who-we-are">
+                    <h2>Test de fuite de carbone</h2>
+                    <p>Le test de fuite de carbone est un test et une détection des fuites et des fissures qui peuvent survenir sur les surfaces du bloc et de la culasse de votre véhicule à l'aide d'un liquide chimique spécial. Ce test est l'un des tests vitaux pour le moteur d'un véhicule, utilisé pour déterminer si votre véhicule a rencontré un problème lié au joint ou un problème de surchauffe par le passé, et si ces dysfonctionnements sont actuellement présents.</p>
+                </div>`
+            },
+            {
+                title: "Test de conduite sur route",
+                content: `<div class="who-we-are">
+                    <h2>Test de conduite sur route</h2>
+                    <p>Avec ce test, le vendeur et l'acheteur du véhicule, dont tous les contrôles sont terminés dans l'atelier, sont invités au test de conduite sur route. Le système de freinage, le système d'amortisseur, la tenue de route, l'isolation sonore à l'intérieur du véhicule, la traction du moteur et les systèmes de transmission du véhicule sont vérifiés une fois de plus et le rapport est créé.<br>
+
+                    Requête de dommages/Requête de changement/Requête de kilométrage<br>
+
+                    Permet d'obtenir des informations sur les dommages passés et les coûts de dommages du véhicule que vous envisagez d'acheter, le cas échéant. Les résultats sont obtenus auprès du SBM (Centre d'information et de surveillance des assurances). De plus, les changements de pièces plastiques et mécaniques enregistrés par les dossiers de tramer sont également confirmés dans la requête de pièces changées. Les dates d'enregistrement d'inspection FENNI du véhicule et les informations de kilométrage sont accessibles. Les résultats sont reçus via le système PTT AVM.</p>
+                </div>`
+            },
+            {
+                title: "Garantie de détection de peinture de 1 an-2500 km",
+                content: `<div class="who-we-are">
+                    <h2>Garantie de détection de peinture de 1 an-2500 km (Garantie Dynomark)</h2>
+                    <p>Avec la garantie Dynomark, les contrôles de peinture de la carrosserie de votre véhicule sont garantis lors de l'achat et de la vente de véhicules d'occasion.</p>
+                    <h2>Garantie Dynomark (Couverture de la garantie de détection de peinture) :</h2>
+                    <p>Plafond, capot, aile avant gauche, porte avant gauche, porte arrière gauche, aile arrière gauche, pilier central gauche, pilier avant gauche, montant supérieur gauche, pilier intérieur arrière gauche, coffre, tôle de plancher, panneau arrière, aile arrière droite, porte arrière droite, porte avant droite, aile avant droite, pilier avant droite, pilier central droite, montant supérieur droite, pilier intérieur arrière droite, panneau avant, châssis avant gauche, châssis avant droite, longeron gauche, longeron droite, châssis arrière gauche, châssis arrière droite, plaque de base gauche, plaque de base droite, panneau de bascule gauche, panneau de bascule droite.</p>
+                    <h2>Garantie Dynomark (Conditions et portée de la garantie de détection de peinture) :</h2>
+                    <p>1 an ou 2 500 kilomètres à partir du kilométrage spécifié pour le véhicule dans le rapport d'expertise.<br>
+
+                    Les véhicules qui ont plus de 20 ans au moment du processus d'évaluation ou après le processus d'évaluation ne seront pas couverts par la garantie.<br>
+
+                    Même si le véhicule soumis au contrat n'a pas complété 1 an ou n'a pas parcouru 2 500 kilomètres, pour bénéficier des conditions de garantie, il ne doit pas être impliqué dans un accident pendant cette période ou ce kilométrage, et ne doit pas avoir un dossier de tramer ouvert ou conclu.<br>
+
+                    De même, les bosses, rayures, réparations de creux, revêtement céramique, protection de peinture, correction de bosses sans peinture, peinture locale, opérations de retouche ne doivent pas être effectuées après le rapport d'expertise, et les opérations, réglages, démontages et montages ne doivent pas être effectués sur les vis, clips, anneaux à encliquetage, rivets, boulons fixant les pièces de la carrosserie. Les valeurs d'épaisseur de peinture en microns spécifiées dans le rapport d'expertise ne doivent pas être différentes.<br>
+
+                    Pour des informations détaillées, vous pouvez lire notre politique de garantie.</p>
+                </div>`
+            },
+            {
+                title: "Garantie mécanique (Tur Assist)",
+                content: `<div class="who-we-are">
+                    <h2>Garantie mécanique du moteur Tur Assist</h2>
+                    <p>Chez Dynomark Auto Expertise, nous offrons à nos clients une garantie mécanique du moteur avec Tur Assist après le service d'expertise automobile dans l'achat et la vente de véhicules d'occasion. La garantie mécanique du moteur Tur Assist est un type de garantie qui protège votre véhicule contre d'éventuelles pannes et peut être considérée comme une assurance santé privée pour les automobiles.<br>
+
+                    Dans les véhicules d'occasion, la garantie mécanique du moteur couvre l'élimination des pannes qui peuvent survenir en garantissant les pièces coûteuses telles que le moteur et la boîte de vitesses, qui entraînent les dépenses les plus importantes dans votre véhicule, en cas de survenance de pannes dans la période promise.<br>
+
+                    Vous pouvez bénéficier de deux services offerts par Tur Assist. Selon les forfaits d'expertise automobile que vous choisirez :<br>
+
+                    <b>Garantie mécanique du moteur de 1 mois 1000 km et</b><br>
+                    <b>Garantie mécanique du moteur de 3 mois 5000 km, vous pouvez bénéficier de deux garanties mécaniques différentes pour le moteur.</b>
+                    </p>
+                    <h2>Avantages de la garantie Tur Assist pour nos clients</h2>
+                    <p> - La garantie pour voitures d'occasion "Garantie Tur Assist" vous épargne la charge financière des pannes mécaniques et électriques que votre véhicule peut rencontrer.<br>
+                    - Elle couvre les pièces les plus critiques du véhicule, les frais de main-d'œuvre et les services d'assistance routière.<br>
+
+                    - La garantie peut être appliquée aux véhicules listés ci-dessous, à condition qu'ils répondent aux critères pertinents.<br>
+
+                    Voitures particulières et véhicules utilitaires légers :<br>
+
+                    . Pas plus de 8 ans et<br>
+
+                    . Moins de 160 000 km.<br>
+
+                    Limite de 1 mois 1000 km (1 mois pour la garantie mécanique du moteur)<br>
+
+                    Limite de 3 mois 5000 km (3 mois pour la garantie mécanique du moteur) ne doit pas être dépassée.</p>
+                    <h2>POINTS COUVERTS PAR LA GARANTIE<br>
+                        Moteur<br>
+                        Transmission manuelle</h2>
+                    <p></p>
+                    <ul>
+                        <li>Culasse et joint</li>
+                        <li>Soupapes d'admission et d'échappement (sauf celles brûlées)</li>
+                        <li>Poussoirs de soupapes (y compris les ajusteurs hydrauliques)</li>
+                        <li>Ressorts de soupapes et joints de soupapes</li>
+                        <li>Arbre à cames et poussoirs</li>
+                        <li>Courroies de distribution, pignons et chaînes</li>
+                        <li>Pompe à huile</li>
+                        <li>Pistons et segments de piston</li>
+                        <li>Chemises de cylindre</li>
+                        <li>Vilebrequin et roulements</li>
+                        <li>Collecteur d'admission</li>
+                        <li>Bloc moteur</li>
+                        <li>Engrenages internes</li>
+                        <li>Jaunes de synchronisation et nids</li>
+                        <li>Sélecteurs de vitesse</li>
+                        <li>Arbres</li>
+                        <li>Roulements et bagues</li>
+                        <li>Engrenages de transfert</li>
+                    </ul>
+
+                    <h2>Transmission automatique</h2>
+                    <p></p>
+                    <ul>
+                        <li>Arbres internes</li>
+                        <li>Engrenages</li>
+                        <li>Bandes de freinage</li>
+                        <li>Réducteur</li>
+                        <li>Pompe de pression d'huile</li>
+                        <li>Roulements et bagues</li>
+                        <li>Servo et plaque</li>
+                        <li>Engrenages de transfert</li>
+                    </ul>
+
+                    <h2>CTX / CVT / POWERSHIFT / DURASHIFT ET AUTRES TRANSMISSIONS AUTOMATIQUES / SEMI-AUTOMATIQUES</h2>
+                    <p></p>
+                    <ul>
+                        <li>Engrenages planétaires</li>
+                        <li>Engrenages réducteurs</li>
+                        <li>Arbres</li>
+                        <li>Bobines variables</li>
+                        <li>Anneaux de pression</li>
+                        <li>Joints internes</li>
+                        <li>Roulements et bagues</li>
+                        <li>Unité de changement de vitesse hydro-électronique</li>
+                    </ul>
+
+                    <h2>CONVERTISSEUR DE COUPLE & TURBOCOMPRESSEUR</h2>
+                    <p></p>
+                    <ul>
+                        <li>En cas de défaillance d'une pièce interne mécanique. (À condition qu'elle soit révisée en premier)</li>
+                    </ul>
+
+                    <h2>SYSTÈME ÉLECTRIQUE</h2>
+                    <p></p>
+                    <ul>
+                        <li>Moteur de démarrage</li>
+                        <li>Solénoïde supérieur du moteur de démarrage</li>
+                        <li>Travailleurs</li>
+                        <li>Arbres</li>
+                        <li>Roulements et bagues</li>
+                    </ul>
+
+                    <h2>DIFFÉRENTIEL</h2>
+                    <p></p>
+                    <ul>
+                        <li>Engrenages à couronne et pignon</li>
+                        <li>Engrenages</li>
+                        <li>Arbres</li>
+                        <li>Roulements et bagues</li>
+                    </ul>
+
+                    <h2>AVANTAGES DE L'ASSISTANCE ROUTIÈRE</h2>
+                    <p></p>
+                    <ul>
+                        <li>Organisation de l'assistance routière – Transport 50 km</li>
+                        <li>Remorquage du véhicule – 500 TL</li>
+                        <li>Retour à la résidence permanente ou poursuite du voyage – Illimité</li>
+                        <li>Hébergement en raison de l'indisponibilité du véhicule – 150 TL / Nuit (Max. 2 nuits)</li>
+                        <li>Voyage pour récupérer le véhicule réparé – Illimité</li>
+                    </ul>
+                </div>`
+            },
+        ];
+
+        // 2. Grab all buttons
+        const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+        const modal = document.getElementById('card-modal');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
+
+        // 3. Open modal on button click
+        cardButtons.forEach((btn, index) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault(); // prevent default link behavior
+                modalBody.innerHTML = cardContents[index].content || "<p>Aucun contenu défini</p>";
+                modal.style.display = 'flex';
+            });
+        });
+
+        // 4. Close modal
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // 5. Close modal if click outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
+    </script>
+
+    <div class="the-back-btn">
+        <a class="news-detail-back" href="index.fr.html" style="text-decoration: none; color: white;">Retour</a>
+    </div>
+
+    <footer>
+        <div class="footer-contents">
+            <div>
+                <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+                
+                <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Maison n°56, entre les rues 5 et 6, Kulola Poshta, en face de FMFB, PD 04, Kaboul, Afghanistan</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+            </div>
+            <div>
+                <h2 style="color: white;">Forfaits</h2>
+                <ul class="arrow-list">
+                    <li><a href="micro-package-auto-expertise.fr.html">Forfait Micro Expertise Automobile</a></li> 
+                    <li><a href="pro-package-auto-expertise.fr.html">Forfait Pro Expertise Automobile</a></li>
+                    <li><a href="pro-plus-package-auto-expertise.fr.html">Forfait Pro Plus Expertise Automobile</a></li>
+                    <li><a href="gold-package-auto-expertise.fr.html">Forfait Gold Expertise Automobile</a></li>
+                    <li><a href="gold-plus-package-auto-expertise.fr.html">Forfait Gold Plus Expertise Automobile</a></li>
+                    <li><a href="airbag-control-package.fr.html">Forfait Contrôle Airbag</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: white;">Branches internationales</h2>
+                <ul class="arrow-list">
+                    <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a></li> 
+                    <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Turquie</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-media">
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+            <p>&copy; Copyright 2020 - 2025 DYNOMARK AUTO EXPERTISE Tous droits réservés | Développé par <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

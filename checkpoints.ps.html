@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داینومارک د موټر تخصص</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/checkpoints.css">
+</head>
+<body style="direction: rtl;">
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>د نوټري دمخه<span style="color: red;">&nbsp;داینومارک&nbsp;</span>تضمین</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Phone Icon" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="English" class="flag" />
+      <span>انګلیسي</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="checkpoints.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="English" /> انګلیسي
+      </li>
+      <li data-value="fa" data-url="checkpoints.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persian" /> پارسي
+      </li>
+      <li data-value="ps" data-url="checkpoints.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pashto" /> پښتو
+      </li>
+      <li data-value="fr" data-url="checkpoints.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="French" /> فرانسوي
+      </li>
+      <li data-value="tr" data-url="checkpoints.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turkish" /> ترکي
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.ps.html">کور</a></li>
+      <li>
+        <a href="#">کارپوریټ &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.ps.html">موږ څوک یو</a></li>
+          <li><a href="photo-gallery.ps.html">د انځورونو ګالري</a></li>
+          <li><a href="news-from-us.ps.html">زموږ له خوا خبرونه</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.ps.html">بستې</a></li>
+      <li><a href="auto-expertise.ps.html">د موټر تخصص</a></li>
+      <li><a href="checkpoints.ps.html">د معاینې نقطې</a></li>
+      
+      <li><a href="contact.ps.html">موږ سره اړیکه ونیسئ</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="logo-dark">
+    <h1>نړیوالې څانګې</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>اروپا</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a>
+     
+    </section>
+
+    <section>
+      <h2>ترکیه</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هتای</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">انتالیا</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوکایلي</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اوردو</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+    </section>
+
+    <section>
+      <h2>منځني ختیځ</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Address">
+    <span>کولولا پوستا، د FMFB مخامخ، PD 04</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Phone">
+    <span> 0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="Email">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">د معاینې نقطې</h1>
+    <p class="title-of-page-p"><a href="index.ps.html"><b>کور &sol;</b></a> د معاینې نقطې</p>
+</div>
+
+
+<section class="grid-section">
+  <div class="grid-container">
+
+        <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د بدن رنګ کنټرول</div>
+      <p class="card-text">د موټر بدن برخې په تفصیل سره معاینه کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د شا ترتیب کنټرول</div>
+      <p class="card-text">د شا ترتیب معاینات د موټر لاندې ټولو میخانیکي سیسټمونو او ترتیب عمومي معاینه ده.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د مخکې ترتیب کنټرول</div>
+      <p class="card-text">د مخکې ترتیب کنټرولونه د موټر په ټولو میخانیکي سیسټمونو او ترتیب عمومي کنټرول دي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د تیلو او ایګزاسټ سیسټم کنټرول</div>
+      <p class="card-text">د ایګزاسټ سیسټم د استعمال پر مهال داخلي او بهرني عواملو له امله سختو شرایطو سره مخ کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">داخلي تخصص/الیکټرونیکي کنټرولونه</div>
+      <p class="card-text">په دې کنټرول واحد کې، د موټر دننه یا بهر څخه کنټرول شوي ټولو میخانیکي او بریښنایی سیسټمونو عمومي کنټرولونه ترسره کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">داینو ازموینه</div>
+      <p class="card-text">د داینو ځواک ازموینه د موټر ماشین لخوا تولید شوي اعظمي ځواک مشخص کوي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">بهرني تخصص کنټرولونه</div>
+      <p class="card-text">بهرني تخصص معاینات زموږ د پیرودونکو لخوا د کارول شوي موټرونو اخیستلو او خرڅولو کې تر ټولو زیات غوره شوي د موټر تخصص کنټرول نقطې دي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د ماشین سر کنټرولونه</div>
+      <p class="card-text">د ماشین سر کنټرولونه: دا هغه برخه ده چې د موټر د بونټ برخې خلاصولو سره د ماشین سر برخې کنټرول کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د ماشین او ډرایو ټرین کنټرول</div>
+      <p class="card-text">د ماشین او ډرایو لاین معاینات: زموږ د ماشین او ډرایو ټرین معاینات د ماشین میخانیکونو لخوا په مسلکي او بې طرفه توګه په تفصیل سره معاینه کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تشخیصي ازموینه (دماغي ازموینه)</div>
+      <p class="card-text">د تشخیصي ازموینې سره، د موټر ټولو بریښنایی او الکترو-میخانیکي سیسټمونو عمومي کنټرولونه د کنټرول واحدونو له لارې ترسره کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د پور/زیان/بدلون/کیلومتر/د موټر تفصیل پوښتنه</div>
+      <p class="card-text">دا تاسو ته اجازه درکوي چې د هغه موټر په اړه معلومات ترلاسه کړئ چې تاسو یې اخیستلو اراده لرئ، که کوم زیان او د زیان لګښت، تیر زیان او د زیان لګښت، د بدلون برخې پوښتنه او د معاینې پر بنسټ د کیلومتر پوښتنه. پایلې د SBM (د بیمې معلوماتو او نظارت مرکز) څخه ترلاسه کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د بریک/معلق/د خوا سلایډ ازموینه</div>
+      <p class="card-text">د دې ازموینو سره چې د اندازه کولو سټیشن کې ترسره کیږي، د موټر بریک، معلق او د سړک ساتلو وړتیا ټاکل کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د کاربن لیکیج ازموینه</div>
+      <p class="card-text">د کاربن لیکیج ازموینه د ځانګړي CO2 کشف مایع سره ستاسو د موټر بلاک او سلنډر سر سطحونو کې واقع کیدونکي لیکونو او درزونو کشف کولو وړتیا ورکوي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د سړک چلولو ازموینه</div>
+      <p class="card-text">د تخصص شوي موټر په پای کې د تخنیکي کنټرول لاندې د سړک چلولو ازموینې ته اخیستل کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">یو کال-2500 کیلومتره د رنګ کشف تضمین</div>
+      <p class="card-text">د داینومارک تضمین سره، ستاسو د موټر بدن رنګ کنټرولونه د دویم لاس موټرونو اخیستلو او خرڅولو کې تضمین لاندې دي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">میخانیکي تضمین (تور اسیسټ)</div>
+      <p class="card-text">د تور اسیسټ ماشین میخانیکي تضمین؛ دا د تضمین یو ډول دی چې ستاسو موټر د ممکنه خرابیو په وړاندې پوښي او د موټرو خصوصي روغتیا بیمه په توګه لیدل کیدی شي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+  </div>
+</section>
+
+<div id="card-modal" class="card-modal">
+  <div class="modal-content">
+    <button id="modal-close" class="close-btn">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// 1. Define content for each card by index or unique title
+const cardContents = [
+  {
+    title: "Body-Paint Controls",
+    content: `<div class="who-we-are">
+                <h2>د بدن رنګ کنټرول</h2>
+                <p>بونټ: دا د موټر بهرنۍ سطحې پوښلو او د هډوکي جوړولو یوه له مهمو برخو څخه ده. دا د هغو برخو څخه جوړه ده چې موږ په حرکت کې د ممکنه پیښې په صورت کې د بهرنیو عواملو څخه ساتي. داسې یوه مهمه کنټرول نقطه باید د دویم لاس موټر اخیستلو او خرڅولو دمخه معاینه شي. د موټر پلورونکي هڅه کوي چې د بدن رنګ برخې عملیات پټ کړي ځکه چې دوی نه غواړي د موټر ارزښت کم شي. موږ زموږ د پیرودونکو لپاره چې دویم لاس موټر اخلي دا اهمیت بیانوو چې د موټر اخیستلو دمخه د داینومارک د موټر تخصص څانګو ته راشي او د موټر بدن رنګ معاینات ترسره کړي.</p>
+                
+                <h2>په داینومارک د موټر تخصص کې د بدن رنګ کنټرولونو کې څه ګورل کیږي؟</h2>
+                <p>
+                    په داینومارک د موټر تخصص کې د بدن رنګ کنټرولونه زموږ د ټیکنالوژیکي وسایلو سره په مسلکي، بې طرفه او تفصیلي توګه معاینه کیږي. زموږ د موټر د بدن رنګ کنټرولونو کې؛ موږ د بدلون برخو کشف، د پروسس شوي برخو کشف، جلا کول-ننوتل، تنظیم عملیات، رنګ-مایکرون اندازه کول له ډیری نقطو څخه معاینه کوو.<br>
+
+                    په دې معایناتو کې، لومړی، د موټر ټولو بدن برخو باندې جلا کول / ننوتل یا بدلون کنټرولونه ترسره کیږي. د رنګ مایکرون ضخامت اندازه کیږي او رنګ شوي یا محلي رنګ شوي بدن برخې کشف کیږي. په موټر شاسی باندې پروسس یا زیان کنټرول ترسره کیږي، د داخلي-بهرني پول او پوډي کنټرولونو سره زیان کشف کیږي. په پای کې، د موټر ټول بدن معاینه کیږي او کثافات، کثافات او غیر رنګ شوي کثافت اصلاح پروسس کشف کیږي او یو راپور چمتو کیږي.<br>
+
+                    د دې معایناتو پر مهال، لاندې ټولې برخې معاینه کیږي.
+                    </p>
+                    <ul>
+                    <li>چت</li>
+                    <li>بونټ</li>
+                    <li>کیڼ مخکینۍ فینډر</li>
+                    <li>کیڼ مخکینۍ دروازه</li>
+                    <li>کیڼ شاته دروازه</li>
+                    <li>کیڼ شاته فینډر</li>
+                    <li>کیڼ مرکزي ستن</li>
+                    <li>کیڼ مخکینۍ ستن</li>
+                    <li>کیڼ سر ستن</li>
+                    <li>کیڼ شاته داخلي ستن</li>
+                    <li>ټرنک</li>
+                    <li>حوض پاڼه</li>
+                    <li>شاته پینل</li>
+                    <li>ښي شاته فینډر</li>
+                    <li>ښي شاته دروازه</li>
+                    <li>ښي مخکینۍ دروازه</li>
+                    <li>ښي مخکینۍ فینډر</li>
+                    <li>ښي مخکینۍ ستن</li>
+                    <li>ښي مرکز</li>
+                    <li>ښي سر ستن</li>
+                    <li>ښي شاته داخلي ستن</li>
+                    <li>مخکینۍ پینل</li>
+                    <li>کیڼ مخکینۍ شاسی</li>
+                    <li>ښي مخکینۍ شاسی</li>
+                    <li>کیڼ رایفل پاڼه</li>
+                    <li>ښي رایفل پاڼه</li>
+                    <li>کیڼ شاته شاسی</li>
+                    <li>ښي شاته شاسی</li>
+                    <li>کیڼ پایه پاڼه</li>
+                    <li>ښي پایه پاڼه</li>
+                    <li>کیڼ راکر پینل</li>
+                    <li>ښي لاس مارشل</li>
+                    </ul>
+              </div>`
+  },
+    {
+    title: "Rear Layout Controls",
+    content: `<div class="who-we-are">
+                <h2>د شا ترتیب کنټرول</h2>
+                <p>شاته ترتیب: د شا ترتیب برخې، لکه مخکینۍ ترتیب برخې، هغه برخې دي چې د موټر په حرکت کې د چلولو کیفیت اغیزه کوي. د کارول شوي موټرونو اخیستلو او خرڅولو کې د نورو کنټرول نقطو په څیر، د شا ترتیب کنټرولونه خورا مهم دي.<br>
+
+د دې لپاره چې ستاسو موټر په حرکت کې په اسانۍ او آرامۍ سره حرکت وکړي، د شا ترتیب برخې باید خپلې دندې په غوره توګه ترسره کړي. که چیرې برخې خپلې دندې ترسره نه کړي، دا ستاسو د موټر په حرکت کې منفي اغیزه کوي.<br>
+
+د دې حالت د مثال په توګه، که تاسو د خپل موټر سره په مستقیم سړک حرکت کوئ او هیڅ منیوورینګ حرکتونه نه کوئ، ستاسو موټر مستقیم نه ځي، ټکانونه او غږونه کوي، او په ورته وخت کې کیڼ-ښي خوا ته کش کوي، موټر تاسو ته آرام چلولو نه ورکوي، بلکې ستاسو د ژوند خوندیتوب هم په خطر کې اچوي. د دې دلایلو له امله، موږ بیانوو چې زموږ د پیرودونکو لپاره چې دویم لاس موټر اخلي دا مهم دي چې د موټر اخیستلو دمخه د داینومارک د موټر تخصص څانګو ته راشي او د موټر د شا ترتیب کنټرولونه ترسره کړي.</p>
+                
+                <h2>په داینومارک د موټر تخصص کې د شا ترتیب کنټرولونو کې څه ګورل کیږي؟</h2>
+                <p>
+                    په داینومارک د موټر تخصص کې، د شا ترتیب کنټرولونه د ماشین میخانیکونو لخوا په مسلکي، بې طرفه او تفصیلي توګه په روښانه چاپیریال کې د موټر لفټ کې معاینه کیږي. زموږ د مخکیني ترتیب کنټرولونو کې، موټر؛ ټکانونه، لړزیدل او آیا برخې په روغتیایی توګه کار کوي او هره برخه معاینه کیږي او راپور ورکول کیږي. د دې کنټرول پر مهال، لاندې کنټرول نقطې معاینه کیږي.
+                    </p>
+                    <ul>
+  <li>کیڼ ټایر</li>
+  <li>ښي ټایر</li>
+  <li>کیڼ ریم</li>
+  <li>ښي ریم</li>
+  <li>کیڼ بریک ډیسک</li>
+  <li>ښي بریک ډیسک</li>
+  <li>کیڼ بریک پیډ</li>
+  <li>ښي بریک پیډ</li>
+  <li>کیڼ بریک کیلیپر</li>
+  <li>ښي بریک کیلیپر</li>
+  <li>کیڼ شاک ابزوربر سر نصب</li>
+  <li>ښي شاک ابزوربر سر نصب</li>
+  <li>کیڼ کویل سپرینګ</li>
+  <li>ښي کویل سپرینګ</li>
+  <li>کیڼ شاته سر کنټرول بازو</li>
+  <li>ښي شاته سر کنټرول بازو</li>
+  <li>کیڼ شاته ټیټ کنټرول بازو</li>
+  <li>ښي شاته ټیټ کنټرول بازو</li>
+  <li>کیڼ شاته پورچ</li>
+  <li>ښي شاته پورچ</li>
+  <li>کیڼ بنډ بال جواینټ</li>
+  <li>ښي بنډ بال جواینټ</li>
+  <li>شاته بنډ اوسپنه</li>
+  <li>شاته توازن بازو</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Pre-Order Controls",
+    content: `<div class="who-we-are">
+                <h2>د مخکې ترتیب کنټرول</h2>
+                <p>مخکینۍ ترتیب: دا هغه برخه ده چې مهمې برخې لري چې د موټر په حرکت کې د چلولو کیفیت اغیزه کوي. د کارول شوي موټرونو اخیستلو او خرڅولو کې د نورو کنټرول نقطو په څیر، د مخکیني ترتیب کنټرولونه خورا مهم دي. د دې لپاره چې ستاسو موټر په حرکت کې په اسانۍ او آرامۍ سره حرکت وکړي، د مخکیني ترتیب برخې باید خپلې دندې په غوره توګه ترسره کړي. د مثال په توګه، که تاسو د خپل موټر سره په مستقیم سړک حرکت کوئ او هیڅ سټیرینګ حرکتونه نه کوئ، که ستاسو موټر مستقیم نه ځي، موټر تاسو ته آرام چلولو نه ورکوي، بلکې ستاسو د ژوند خوندیتوب هم په خطر کې اچوي. که ستاسو د مخکیني ترتیب برخې تنظیم شوي وي او برخې په سمه توګه کار کوي، دا حتی په ناهموارو سړکونو کې ستاسو د چلولو آرامۍ زیاتوي او د موټر ټکانونه کموي. د دې دلایلو له امله، موږ زموږ د پیرودونکو لپاره چې دویم لاس موټر اخلي دا اهمیت بیانوو چې د موټر اخیستلو دمخه د داینومارک د موټر تخصص څانګو ته راشي او د موټر د مخکیني ترتیب کنټرولونه ترسره کړي.</p>
+                
+                <h2>په داینومارک د موټر تخصص کې د مخکیني ترتیب کنټرولونو کې څه ګورل کیږي؟</h2>
+                <p>
+                    په داینومارک د موټر تخصص کې، د مخکیني ترتیب کنټرولونه د ماشین میخانیکونو لخوا په مسلکي، بې طرفه او تفصیلي توګه په روښانه چاپیریال کې د موټر لفټ کې معاینه کیږي. زموږ د مخکیني ترتیب کنټرولونو کې، موټر د ټکانونو، لړزیدلو او اجزاوو د سم کار کولو له مخې معاینه کیږي او راپور ورکول کیږي. د دې کنټرول پر مهال، لاندې کنټرول نقطې معاینه کیږي.
+                    </p>
+                   <ul>
+  <li>کیڼ ټایر</li>
+  <li>ښي ټایر</li>
+  <li>کیڼ ریم</li>
+  <li>ښي ریم</li>
+  <li>کیڼ بریک ډیسک</li>
+  <li>ښي بریک ډیسک</li>
+  <li>کیڼ بریک پیډ</li>
+  <li>ښي بریک پیډ</li>
+  <li>کیڼ بریک کیلیپر</li>
+  <li>ښي بریک کیلیپر</li>
+  <li>کیڼ بریک کیلیپر</li>
+  <li>ښي بریک کیلیپر</li>
+  <li>کیڼ کویل سپرینګ</li>
+  <li>ښي کویل سپرینګ</li>
+  <li>کیڼ شاک ابزوربر</li>
+  <li>ښي اموټیسور</li>
+  <li>کیڼ شاک ابزوربر سر نصب</li>
+  <li>ښي شاک ابزوربر سر نصب</li>
+  <li>کیڼ معلق بال جواینټ</li>
+  <li>ښي هنګر رولیت</li>
+  <li>کیڼ ټای راډ</li>
+  <li>ښي ټای راډ</li>
+  <li>کیڼ ټای راډ پای</li>
+  <li>ښي ټای راډ پای</li>
+  <li>کیڼ ټای راډ بوټ</li>
+  <li>ښي ټای راډ بوټ</li>
+  <li>کیڼ سوینګ</li>
+  <li>ښي سوینګ</li>
+  <li>کیڼ اکسل شافټ</li>
+  <li>ښي اکسل شافټ</li>
+  <li>کیڼ بهرني اکسل بوټ</li>
+  <li>ښي بهرني اکسل بوټ</li>
+  <li>کیڼ داخلي اکسل بوټ</li>
+  <li>ښي داخلي اکسل بوټ</li>
+  <li>کیڼ بهرني اکسل بوټ</li>
+  <li>ښي بهرني اکسل بوټ</li>
+  <li>کیڼ داخلي اکسل سر</li>
+  <li>ښي داخلي اکسل سر</li>
+  <li>کیڼ پوری</li>
+  <li>ښي پوری</li>
+  <li>کیڼ د ماشین غوږ</li>
+  <li>خواب؛ د ماشین زانګو</li>
+  <li>بنډ اوسپنه</li>
+  <li>سټیرینګ بکس</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Fuel and Exhaust System Controls",
+    content: `<div class="who-we-are">
+                <h2>د تیلو او ایګزاسټ سیسټم کنټرولونه</h2>
+                <p>د تیلو ایګزاسټ سیسټم د موټر تخصص کنټرولونو کې یوه مهمه نقطه لري.<br>
+
+د ایګزاسټ سیسټم د استعمال پر مهال داخلي او بهرني عواملو پورې اړه لري سختو شرایطو سره مخ کیږي. که موږ تشریح کړو، دا د ماشین په سلنډرونو کې مصرف شوي ګازونو د موټر څخه د وتلو پر مهال د ایګزاسټ سیسټم کاروي. سوځول شوي ګازونه د دې وتلو پر مهال یو ټاکلی حرارت او فشار لري. دا تودوخې او فشارونه د ایګزاسټ برخې ډیر تودوي. په دې منځ کې، دا ممکن د تودوخې ایګزاسټ ته ناڅاپه اوبو سره یخولو سره مخ شي. د سړې څخه تودوخې-تودوخې څخه سړې ته په لیږد کې، ایګزاسټ ممکن د وخت پورې اړه لري خراب شي.<br>
+
+د ایګزاسټ سیسټم، چې په حرکت کې موټر کې د دې ټولو سره مخ کیږي، د بهرنیو عواملو څخه هم خپله برخه اخلي. کاڼي، خټې، اوبه، خاوره، جغل ... په داسې سختو شرایطو کې کار کونکي د تیلو ایګزاسټ اجزاو کې، پنچر، درز، غیر منظم عملیات، لیکیج، د تیلو بوی، او داسې نور حالتونه د وخت په تیریدو سره رامنځته کیږي. دا حالتونه د موټر فعالیت په منفي توګه اغیزه کوي او د تیلو زیات مصرف لامل کیږي. د دې سربیره، دا د زیان رسوونکو ګازونو د پروسس کولو پرته (د زیان کمولو پرته) د وتلو سره طبیعت او انساني روغتیا ته زیان رسوي.<br>
+
+د دې دلایلو له امله، موږ بیانوو چې زموږ د پیرودونکو لپاره چې دویم لاس موټر اخلي دا مهم دي چې د موټر اخیستلو دمخه د داینومارک د موټر تخصص څانګو ته راشي او د موټر د تیلو ایګزاسټ سیسټم کنټرولونه ترسره کړي.<br>
+
+په داینومارک د موټر تخصص کې، د تیلو ایګزاسټ سیسټم کنټرولونه د ماشین میخانیکونو لخوا په مسلکي، بې طرفه او تفصیلي توګه په روښانه چاپیریال کې د موټر لفټ باندې کنټرول کیږي. په ورته وخت کې، د تیلو ایګزاسټ سیسټم د موټر په چلولو پر مهال معاینه کیږي.<br>
+
+زموږ د تیلو ایګزاسټ کنټرولونو کې، د موټر د ایګزاسټ او تیلو اجزاوو کې پنچرونه، درزونه، خرابیدل، لیکیج، غیر منظم عملیات، تور لوګی، خام تیلو مصرف او نور ډیری دندې او برخې معاینه کیږي او راپور ورکول کیږي. د دې کنټرول پر مهال، لاندې کنټرول نقطې معاینه کیږي.
+                    </p>
+                    <ul>
+  <li>اکسیجن سینسر</li>
+  <li>د تیلو پایپ لاین</li>
+  <li>د تیلو فلټر</li>
+  <li>د تیلو کولر</li>
+  <li>ایګزاسټ منیفولډ</li>
+  <li>کټالیزر</li>
+  <li>ایګزاسټ پایپ</li>
+  <li>ایګزاسټ سپریر</li>
+  <li>منځنی خاموش کوونکی</li>
+  <li>شاته خاموش کوونکی</li>
+  <li>د تیلو ټانک پایپ</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Internal Expertise/Electronic Controls",
+    content: `<div class="who-we-are">
+                <h2>داخلي تخصص/الیکټرونیکي کنټرولونه</h2>
+                <p>د دویم لاس موټرونو اخیستلو او خرڅولو کې، داخلي تخصص کنټرولونه د موټر تخصص کې یوه مهمه ځای لري. داخلي تخصص / الیکټرونیکي کنټرولونه د کارول شوي موټرونو اخیستلو او خرڅولو کې زموږ د پیرودونکو لخوا تر ټولو زیات غوره شوي د موټر تخصص کنټرول نقطې دي. د موټر اخیستلو دمخه ترسره شوي کنټرولونو څخه مننه، د موټر اخیستونکي د موټر په اړه تفصیلي معلومات لري. د دې معلوماتو له امله، دا د موټر فوري حالت پوهیږي او د دې مطابق موټر اخلي. دا د اخیستلو وروسته اضافي حیرانتیا سره مخ نه کیږي.</p>
+                
+                <h2>په داینومارک د موټر تخصص کې داخلي تخصص / الیکټرونیکي کنټرولونو کې څه ګورل کیږي؟</h2>
+                <p>
+                    په داینومارک د موټر تخصص کې، داخلي تخصص / الیکټرونیکي کنټرولونه زموږ د استادانو لخوا په مسلکي، بې طرفه او تفصیلي توګه معاینه کیږي. هره کنټرول نقطه د دې دندې له مخې معاینه کیږي او راپور ورکول کیږي چې آیا دا خراب شوی، ټوټه شوی، سکریچ شوی، مات شوی او په کاري حالت کې دی. که په کومه نقطه کې بدلون وي، دا د بصریاتو سره راپور ورکول کیږي او د وړاندې کولو پر مهال تشریح کیږي.<br>
+
+په داینومارک د موټر تخصص کې، د داخلي تخصص / الیکټرونیکي معایناتو ترسره کولو پر مهال لاندې کنټرول نقطې معاینه کیږي.
+                    </p>
+                   <ul>
+  <li>د وسیلو پینل</li>
+  <li>هورن</li>
+  <li>کیڼ مخکینۍ دروازې بټن اسمبلي</li>
+  <li>د شیشې بټنونه</li>
+  <li>د سر څراغ کنټرول بټنونه</li>
+  <li>د عکس کنټرول بټنونه</li>
+  <li>داخلي شاته لید عکس</li>
+  <li>ریډیو سي ډي پلیر</li>
+  <li>د ایئر کنډیشنر تودوخې کنټرول پینل</li>
+  <li>وینټیلیشن ګریلز</li>
+  <li>لمر سیوری</li>
+  <li>سیټ بیلټ</li>
+  <li>داخلي رڼا</li>
+  <li>سټیرینګ ویل</li>
+  <li>ګیر</li>
+  <li>فلش لائټ-پارکینګ بریک سویچ</li>
+  <li>لاسي بریک لیور</li>
+  <li>تورپیډو</li>
+  <li>پارکینګ سینسر</li>
+  <li>د دروازې داخلي ترم</li>
+  <li>کیڼ مخکینۍ سیټ</li>
+  <li>ښي مخکینۍ سیټ</li>
+  <li>شاته سیټونه</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "DYNO Test",
+    content: `<div class="who-we-are">
+                <h2>داینو ازموینه</h2>
+                <p>د دې ازموینې پر مهال، د موټر ماشین د ټیټو انقلابونو څخه سر انقلابونو ته اخیستل کیږي. د ازموینې پر مهال، د ګیر بدلونونه، د یخولو سیسټم، ایګزاسټ ګاز، د ماشین غږ او د لړزیدو کنټرولونه ترسره کیږي. د ماشین فعالیت د فابریکې ځواک ارزښت سره د ازموینې پایلې پرتله کولو سره ټاکل کیږي.<br>
+
+د موټر د ټرکشن سیسټم ځانګړتیا له مخې چې د داینو ځواک ازموینې ته اخیستل کیږي، د ډرایوټرین عملیاتي شرایط لکه 4x4 / 4x2 یا مخکینۍ ویل ډرایو / شاته ویل ډرایو معاینه کیږي. د داینامیټر ازموینه موږ ته دا هم اجازه ورکوي چې د موټر ماشین لخوا تولید شوي ځواک څومره د ویلونو ته لیږدول کیږي. دا موږ ته د کلچ کلچ سیسټم، ټرانسمیشن، ډیفرینشیل، شافټ، اکسل، چې د ډرایوټرین برخې دي، ستونزې حل کولو اجازه ورکوي.<br>
+
+د داینو ځواک ازموینې پر مهال، د ماشین لړزیدل، د ویل بالونه، د موټر دننه لړزیدل هم معاینه کیږي. د داینو ځواک ازموینه یوه چلولو سمولیشن ده چې موږ ته اجازه ورکوي چې د موټر چلولو پر مهال ستاسو د موټر غبرګونونه وګورو.</p>
+              </div>`
+  },
+    {
+    title: "External Expertise Controls",
+    content: `<div class="who-we-are">
+                <h2>بهرني تخصص کنټرولونه</h2>
+                <p>د دویم لاس موټرونو اخیستلو او خرڅولو کې، بهرني تخصص کنټرولونه د موټر تخصص کې یوه مهمه ځای لري. د کارول شوي موټرونو اخیستلو او خرڅولو کې، بهرني تخصص کنټرولونه زموږ د پیرودونکو لخوا تر ټولو زیات غوره شوي د موټر تخصص کنټرول نقطې دي. د موټر اخیستلو دمخه ترسره شوي کنټرولونو څخه مننه، هغه خلک چې موټر اخلي د موټر په اړه تفصیلي معلومات لري. د دې معلوماتو له امله، دوی د موټر فوري حالت پوهیږي او د دې مطابق موټر اخلي. په دې توګه، دا د اخیستلو وروسته اضافي حیرانتیا سره مخ نه کیږي.</p>
+                
+                <h2>ولې په داینومارک د موټر تخصص کې بهرني تخصص کنټرولونه مهم دي؟</h2>
+                <p>
+                    دا هغه برخه ده چې هغه برخې کنټرول کیږي چې کاروونکو ته د چلولو پر مهال د چاپیریال سره اړیکه ورکوي. د دې برخو منظم عملیاتو سره، یو کنټرول شوی چلولو واقع کیږي او په باراني، واورین او مه آلود هوا شرایطو کې د حرکت او منیوورونو په اړه نورو موټرونو ته معلومات ورکولی شي. په دې توګه، موږ د پیښې خطر کموو.
+                    </p>
+               <h2>په داینومارک د موټر تخصص بهرني تخصص کنټرولونو کې څه ګورل کیږي؟</h2>
+               <p>
+                په داینومارک د موټر تخصص کې، بهرني تخصص معاینات زموږ د استادانو لخوا په مسلکي، بې طرفه او تفصیلي توګه معاینه کیږي. هره کنټرول نقطه د دې دندې له مخې معاینه کیږي او راپور ورکول کیږي چې آیا دا خراب شوی، ټوټه شوی، سکریچ شوی، مات شوی او په کاري حالت کې دی. که په کومه نقطه کې غیر کاري حالت یا بدلون وي، دا د بصریاتو سره راپور ورکول کیږي او د وړاندې کولو پر مهال تشریح کیږي.</p>
+                    <ul>
+  <li>د شاسی شمیره معاینه</li>
+  <li>مخکینۍ کړکۍ</li>
+  <li>شاته کړکۍ</li>
+  <li>کیڼ مخکینۍ کړکۍ</li>
+  <li>کیڼ شاته کړکۍ</li>
+  <li>ښي مخکینۍ کړکۍ</li>
+  <li>ښي شاته کړکۍ</li>
+  <li>کیڼ تیتلی کړکۍ</li>
+  <li>سنروف شیشې چت</li>
+  <li>بهرني دروازې لاسي</li>
+  <li>کیڼ شاته لید عکس</li>
+  <li>ښي شاته لید عکس</li>
+  <li>کیڼ سر څراغ</li>
+  <li>ښي سر څراغ</li>
+  <li>کیڼ مه څراغ</li>
+  <li>ښي مه څراغ</li>
+  <li>کیڼ سیګنال</li>
+  <li>ښي سیګنال</li>
+  <li>ښي سټاپ</li>
+  <li>کیڼ سټاپ</li>
+  <li>ښي داخلي سټاپ</li>
+  <li>کیڼ داخلي سټاپ</li>
+  <li>پارکینګ سینسر</li>
+  <li>د نمبر پلیټ رڼا</li>
+  <li>وایپرز</li>
+  <li>د سر څراغ مینځل</li>
+  <li>د ټرنک داخلي کنټرولونه</li>
+  <li>د ټرنک شاک ابزوربر</li>
+  <li>اضافي ټایر</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Engine Top Controls",
+    content: `<div class="who-we-are">
+                <h2>د ماشین سر کنټرولونه</h2>
+                <p>داینومارک د موټر تخصص د دویم لاس موټرونو اخیستلو او خرڅولو کې د موټر تخصص معایناتو پر مهال د کنټرول نقطو څخه یوه ده.<br>
+
+د ماشین سر کنټرولونه: دا هغه برخه ده چې د موټر د بونټ برخې خلاصولو سره د ماشین سر برخې کنټرول کیږي. زموږ د ماشین سر کنټرولونه د ماشین میخانیکونو لخوا په مسلکي او بې طرفه توګه په تفصیل سره معاینه کیږي. د دې معایناتو پر مهال موندل شوي عیبونه انځور کیږي او په تفصیل سره راپور ورکول کیږي.</p>
+                
+                <h2>په داینومارک د موټر تخصص د ماشین معایناتو کې څه ګورل کیږي؟</h2>
+                <p>
+                   د معایناتو پر مهال، زموږ د ماشین میخانیکي استادان، د ماشین سر معاینات؛ د ماشین تیلو کچه، د انټي فریز درجې، د ماشین تیلو لیکیج، بالونه، د ماشین لوړ غږ عملیات، د ماشین څخه غږونه، د ماشین عملیاتي حالت، د بیټرۍ اندازه کول په ډیری تفصیلاتو سره معاینه کیږي.<br>
+
+موږ زموږ د پیرودونکو لپاره چې دویم لاس موټر اخلي دا اهمیت بیانوو چې د موټر اخیستلو دمخه د داینومارک د موټر تخصص څانګو ته راشي او د موټر د ماشین سر معاینات ترسره کړي.
+                    </p>
+                   <ul>
+  <li>کنټرول نقطې</li>
+  <li>بونټ تودوخه او غږ انسولیټر</li>
+  <li>د ماشین دوړې پوښ</li>
+  <li>د هوا فلټر کیبینټ</li>
+  <li>انجیکټر</li>
+  <li>د انجیکټر تیلو لاین</li>
+  <li>د تیلو پمپ</li>
+  <li>وي-بیلټ پلی او کمپیوټر</li>
+  <li>د ایئر کنډیشنر پایپ</li>
+  <li>سټیرینګ پمپ</li>
+  <li>ترموسټیټ هاوسینګ</li>
+  <li>د ماشین یخولو پایپ</li>
+  <li>ام. یخولو شاخص</li>
+  <li>د تیلو کچې کنټرول بار</li>
+  <li>د بریک هایدرولیک تیلو ټانک</li>
+  <li>د پاور سټیرینګ تیلو ټانک</li>
+  <li>د تیلو کولر</li>
+  <li>د والو راکر والو پوښ</li>
+  <li>د تیلو لیکیج</li>
+  <li>د ماشین مخکینۍ پوښ</li>
+  <li>د تیلو فلټر بلیټ</li>
+  <li>د ماشین مخکینۍ ګیسکیټ</li>
+  <li>د ماشین بخار تیلو سوځول</li>
+  <li>د ماشین بریښنایی نصب</li>
+  <li>اکو</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Engine and Drive Train Control",
+    content: `<div class="who-we-are">
+                <h2>د ماشین او ډرایو ټرین کنټرول</h2>
+                <p>داینومارک د موټر تخصص د کارول شوي موټرونو اخیستلو او خرڅولو کې د موټر تخصص معایناتو پر مهال د کنټرول نقطو څخه یوه بله نقطه د ماشین سر کنټرول دی.<br>
+
+د ماشین او ټرانسمیشن ګروپ کنټرولونه: زموږ د ماشین او ټرانسمیشن ګروپ کنټرولونه د ماشین میخانیکونو لخوا په مسلکي او بې طرفه توګه په تفصیل سره معاینه کیږي. د دې معایناتو پر مهال موندل شوي عیبونه انځور کیږي او په تفصیل سره راپور ورکول کیږي.</p>
+                
+                <h2>په داینومارک د موټر تخصص کې د ماشین او ټرانسمیشن ګروپ کنټرولونو کې څه ګورل کیږي؟</h2>
+                <p>
+                   د معایناتو پر مهال، زموږ د ماشین میخانیکونه د ماشین او ټرانسمیشن ګروپ معاینه کوي؛ د ماتیدو، زیان، د ګیر بدلونونه، د کلچ کلچ، د انټرکولر او هوسونو کې لیکیج، د ماشین بلاک کې د تیلو لیکیج په ډیری تفصیلاتو سره معاینه کیږي.<br>
+
+موږ زموږ د پیرودونکو لپاره چې دویم لاس موټر اخلي دا اهمیت بیانوو چې د موټر اخیستلو دمخه د داینومارک د موټر تخصص څانګو ته راشي او د موټر د ماشین او ټرانسمیشن ګروپ کنټرولونه ترسره کړي.
+                    </p>
+                    <ul>
+  <li>کنټرول نقطې</li>
+  <li>کیڼ مخکینۍ هوډ</li>
+  <li>ښي مخکینۍ هوډ</li>
+  <li>کیڼ شاته هوډ</li>
+  <li>ښي شاته هوډ</li>
+  <li>د ماشین اوبه ریډیټر</li>
+  <li>توربو</li>
+  <li>انټرکولر</li>
+  <li>د ماشین مخکینۍ پوښ</li>
+  <li>د ماشین بلاک</li>
+  <li>سلنډر سر</li>
+  <li>د تیلو پین</li>
+  <li>د سمپ پلګ</li>
+  <li>کرانک سیل</li>
+  <li>کرانک شاته سیل</li>
+  <li>د ګیربکس آستین برخه</li>
+  <li>د کلچ بال</li>
+  <li>د کلچ فورک</li>
+  <li>د کلچ فشار</li>
+  <li>د کلچ لاینینګ</li>
+  <li>فلای ویل</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Diagnostic Test (Brain Test)",
+    content: `<div class="who-we-are">
+                <h2>تشخیصي ازموینه (دماغي ازموینه)</h2>
+                <p>د تشخیصي ازموینې سره، د موټر ټولو بریښنایی او الکترو-میخانیکي سیسټمونو اداره کونکي کنټرول واحدونو سره اړیکه نیول کیږي. د موټر کنټرول واحد (دماغ) کې ثبت شوي ټول غیر فعال او فعال غلطی اطلاعیه کشف کیږي او یو راپور جوړیږي.<br>
+
+د دې معایناتو وروسته، دا ټاکل کیږي چې آیا د موټر بریښنایی او الکترو-میخانیکي سیسټمونه لکه د ماشین انجیکشن، ماشین، د بریښنا تولید، ABS، ESP، ASR، EDC، ایئرباګ، اتوماتیک ټرانسمیشن، د ټرانسمیشن ټرکشن سیسټم فعال یا غیر فعال دي او آیا دوی په سم ارزښت رینج کې کار کوي.<br>
+
+تشخیصي ازموینه د موټر ټول سیګنالینګ، آرامۍ او خوندیتوب سیسټمونه هم معاینه کوي. د ابس موډولیټر، د ایئرباګ ټریګر او انفلیټر سیسټم، د سیټ بیلټونو تالاشي سیسټم، د سیټ لاندې مسافر کشف جالونه، د ایئرباګ ټکر سینسرونه، د ایئرباګ کیبل، ساکټ او لاین چې د مقاومت او لوړ ولټاژ منیپولیشنونو سره وصل دي هم کشف کیږي. په سیسټم باندې ټول شارټ سرکیټونه ټاکل کیږي.<br>
+
+د موټر د 4x4 ټرکشن سیسټم کنټرول، د اتوماتیک ټرانسمیشن سولینایډ والوونه او د ټرانسمیشن ګیر بدلون ټیټ او سرحد زیاتوالی هم معاینه کیږي.<br>
+
+د تشخیصي ازموینې سره، ستاسو د موټر د آرامۍ ځانګړتیاوو عملیاتي شرایط هم ټاکل کیدی شي. د کړکۍ بټنونه، د ماډلر سټیرینګ ویل کنټرول بټنونه، د لین تعقیب سیسټم، د پارکینګ مرسته، سر څراغونه، سیګنالونه، سټاپونه، داخلي رڼا، د نمبر پلیټ څراغونه، آډیو سیسټم، اموبیلایزر، ریموټ کنټرول، د کیلي کوډ، د سټیرینګ زاویه سینسر، د سر څراغ مینځلو سیسټم، سنروف، د سر څراغ او باران سینسر، د غونډۍ پیل مرسته، ستاسو د موټر ټول سیسټمونه چې ستاسو موټر جلا کوي هم معاینه کیږي.<br>
+
+دا خورا مهم دي چې د موټر باندې تشخیصي ازموینې ترسره کولو پر مهال د ازموینې وسیلې کیفیت او کارول شوی جواز لرونکی پروګرام. داینومارک د موټر تخصص په خپلو ټولو څانګو کې د یورپ لخوا غوره شوی HELLA GUTMANN SOLUTIONS ازموینې وسیله کاروي.</p>
+              </div>`
+  },
+    {
+    title: "Debt/Damage/Changed/Km/Vehicle Detail Query",
+    content: `<div class="who-we-are">
+                <h2>د پور/زیان/بدلون/کیلومتر/د موټر تفصیل پوښتنه</h2>
+                <p>دا تاسو ته اجازه درکوي چې د هغه موټر په اړه معلومات ترلاسه کړئ چې تاسو یې اخیستلو اراده لرئ، که کوم زیان او د زیان لګښت، تیر زیان او د زیان لګښت، د بدلون برخې پوښتنه او د معاینې پر بنسټ د کیلومتر پوښتنه. پایلې د SBM (د بیمې معلوماتو او نظارت مرکز) څخه ترلاسه کیږي.</p>
+              </div>`
+  },
+  
+  {
+    title: "د بریک / تعلیق / خواوې لغزش ازموینه",
+    content: `<div class="who-we-are">
+                <h2>د بریک ازموینه</h2>
+                <p>د آټو تخصص خدماتو کې د بریک ازموینې سره، هغه بریک قوه چې د موټر ویلونو ته لیږدول کیږي معلومه کیږي. د بریک کولو پر مهال د انحراف کچه ټاکل کیږي. دا توزیع د خوندي توقف لپاره خورا مهم دی. د تعلیق سیسټم د اساسي برخو څخه یوه، شاک جذبوونکي، عملیات چیک کیږي. دا ازموینه د خوندي موټر چلولو لپاره خورا مهم دی. د خواوې لغزش ازموینې سره، هغه مقاومتونه چې د ویلونو لخوا سړک ته لګول کیږي معلومه کیږي. دا ازموینه د خوندي کنټرول لپاره خورا مهم دی.<br>
+
+د بریک ازموینې سره، د موټر ټایرونو گرفت، بریک پیډونه او بریک ډیسکونه کشف کیږي. د لاسي بریک سیسټم عملیات او د ټول بریک سیسټم باندې د بریک قوې توزیع معلومه کیږي. د موټرو بریک سیسټمونو سمه کارکردګي د موټر چلولو خوندیتوب لپاره حیاتي ده.</p>
+                
+                <h2>د شاک جذبوونکي ازموینه</h2>
+                <p>
+                    د شاک جذبوونکي سیسټم او د هغو موټرو ټولو برخو عمومي کنټرولونه چې د شاک جذبوونکي ازموینې سټیشن ته ننوځي، چمتو کیږي. د شاک جذبوونکي پورتنۍ ویج او ښکته نښلونکي بوشینګونه، او همدارنګه د ټول سیسټم غږونه او عملیاتي ارزښتونه د عملیاتو پر مهال معلومه کیږي. د شاک جذبوونکو کار کولو طریقه د سړک گرفت او د موټر د باد په وړاندې مقاومت لپاره خورا مهم دی.
+                    </p>
+                 <h2>د خواوې لغزش ازموینه</h2>
+                <p>
+                    د خواوې لغزش اندازه کولو سره، د موټر د ټولو ویلونو زاویې معلومه کیږي. د مخکینۍ او شاتنۍ محور ګروپ باندې ټول زاویه داره خرابۍ معلومه کیږي. د پیښې یا سختو خندونو او سرعت خنډونو تیریدو وروسته رامنځته کیدونکي ټول مخکیني او شاتني محور ګروپ خمونه او انحرافات هم د خواوې لغزش ازموینې لخوا معلومه کیږي.
+                    </p>
+                    
+              </div>`
+  },
+    {
+    title: "د کاربن لیکج ازموینه",
+    content: `<div class="who-we-are">
+                <h2>د کاربن لیکج ازموینه</h2>
+                <p>د کاربن لیکج ازموینه د یوې ځانګړې کیمیاوي مایع سره ستاسو د موټر بلاک او سلنډر سر سطحونو باندې د لیکونو او درزونو ازموینه او کشف دی. دا ازموینه د موټر انجن لپاره یوه حیاتي ازموینه ده، چې د دې معلومولو لپاره کارول کیږي چې ایا ستاسو موټر په تیرو وختونو کې د ګیسکیټ پورې اړوند ستونزه یا د تودوخې زیاتوالي ستونزه لیدلې ده، او ایا دا خرابۍ په فوري توګه شتون لري.</p>
+              </div>`
+  },
+    {
+    title: "د سړک چلولو ازموینه",
+    content: `<div class="who-we-are">
+                <h2>د سړک چلولو ازموینه</h2>
+                <p>د دې ازموینې سره، د موټر پلورونکی او پیرودونکی، چې ټول کنټرولونه یې په ورکشاپ کې بشپړ شوي، د سړک چلولو ازموینې ته بلل کیږي. د موټر بریک سیسټم، شاک جذبوونکي سیسټم، د سړک گرفت، د موټر دننه غږ موصلیت، د انجن کشش او لیږد سیسټمونه یو ځل بیا چیک کیږي او راپور جوړیږي.<br>
+
+د زیان پوښتنه / د بدلون پوښتنه / د کیلو مترو پوښتنه<br>
+
+دا تاسو ته اجازه درکوي چې د هغه موټر په اړه معلومات ترلاسه کړئ چې تاسو یې د اخیستلو اراده لرئ، که کوم زیان او د زیان لګښت شتون لري. پایلې د SBM (د بیمې معلوماتو او څارنې مرکز) څخه ترلاسه کیږي. برسیره پردې، د ټرامر ریکارډونو لخوا ثبت شوي پلاستيکي او میخانیکي برخو بدلونونه هم د بدل شوي برخو پوښتنې کې تایید کیږي. د موټر FENNI تفتیش ثبت نیټې او د کیلو مترو معلومات لاسرسی کیږي. پایلې د PTT AVM سیسټم له لارې ترلاسه کیږي.</p>
+              </div>`
+  },
+    {
+    title: "د ۱ کال - ۲۵۰۰ کیلو متره رنګ کشف تضمین",
+    content: `<div class="who-we-are">
+                <h2>د ۱ کال - ۲۵۰۰ کیلو متره رنګ کشف تضمین (Dynomark تضمین)</h2>
+                <p>د Dynomark تضمین سره، ستاسو د موټر بدن رنګ کنټرولونه ستاسو د دویم لاس موټر اخیستلو او پلورلو کې تضمین لاندې دي.</p>
+                               <h2>Dynomark تضمین (د رنګ کشف تضمین پوښښ);</h2>
+                <p>چت، بونټ، کیڼ مخکینۍ فینډر، کیڼ مخکینۍ دروازه، کیڼ مخکینۍ دروازه، کیڼ شاتنۍ دروازه، کیڼ شاتنۍ فینډر، کیڼ مرکزي ستن، کیڼ مخکینۍ ستن، کیڼ پورتنۍ ستن، کیڼ شاتنۍ داخلي ستن، ټرنک، حوض پاڼه، شاتنۍ پینل، ښي شاتنۍ فینډر، ښي شاتنۍ دروازه، ښي مخکینۍ دروازه، ښي مخکینۍ دروازه، ښي مخکینۍ فینډر، ښي مخکینۍ ستن، ښي مرکزي ستن، ښي پورتنۍ ستن، ښي شاتنۍ داخلي ستن، مخکینۍ پینل، کیڼ مخکینۍ چیسیس، ښي مخکینۍ چیسیس، کیڼ رایفل پلیټ، ښي رایفل پلیټ، کیڼ شاتنۍ چیسیس، ښي شاتنۍ چیسیس، کیڼ فرش پلیټ، ښي فرش پلیټ، کیڼ راکر پینل، ښي راکر پینل کنټرول نقطې.</p> 
+                                <h2>Dynomark تضمین (د رنګ کشف تضمین شرایط او حدود);</h2>
+                <p>د تخصص راپور کې د موټر لپاره مشخص شوي مایلج څخه ۱ کال یا ۲۵۰۰ کیلو متره.<br>
+
+هغه موټرونه چې د ارزونې پروسې پر مهال له ۲۰ کلونو څخه زیات عمر لري یا د ارزونې پروسې وروسته له ۲۰ کلونو څخه زیات عمر لري، د تضمین لاندې نه راځي.<br>
+
+حتی که د قرارداد تابع موټر ۱ کال بشپړ نه کړي یا ۲۵۰۰ کیلو متره نه وي تیر کړي، د تضمین شرایطو څخه د ګټې اخیستنې لپاره، دا باید په دې موده یا مایلج کې په پیښه کې ښکیل نه وي، او باید د ټرامر فایل خلاص یا پای ته نه وي رسیدلی.<br>
+
+په ورته ډول، د تخصص راپور وروسته باید داغونه، خراشونه، داغ ترمیم، سرامیک پوښ، رنګ ساتنه، بې رنګه داغ اصلاح، محلي رنګ، او ریټچ عملیات ترسره نه شي، او د بدن برخو د ثابتولو لپاره په پیچونو، کلیپونو، سنیپ رینګونو، ریویټونو، بولټونو باندې عملیات، تنظیم، جلا کول او راټولولو عملیات باید ترسره نه شي. د تخصص راپور کې مشخص شوي مایکرون رنګ ضخامت ارزښتونه باید توپیر ونه لري.<br>
+
+د تفصیلي معلوماتو لپاره، تاسو کولی شئ زموږ د تضمین پالیسي ولولئ.</p>
+              </div>`
+  },
+      {
+    title: "میخانیکي تضمین (Tur Assist)",
+    content: `<div class="who-we-are">
+                <h2>د Tur Assist انجن میخانیکي تضمین</h2>
+                <p>Dynomark Auto Expertise خپلو پیرودونکو ته د دویم لاس موټر اخیستلو او پلورلو کې د آټو تخصص خدمت وروسته د Tur Assist سره د انجن میخانیکي تضمین وړاندې کوي. د Tur Assist انجن میخانیکي تضمین؛ دا د تضمین یو ډول دی چې ستاسو موټر د احتمالي خرابیو په وړاندې پوښي او د موټرو خصوصي روغتیا بیمه په توګه لیدل کیدی شي.<br>
+
+په دویم لاس موټرو کې، د انجن میخانیکي تضمین د هغو خرابیو له منځه وړلو پوښښ کوي چې ممکن د موټر په قیمتي برخو لکه انجن او ګیرباکس، چې ستاسو په موټر کې ترټولو لوی لګښت رامنځته کوي، په ژمنه شوې موده کې رامنځته شي.<br>
+
+تاسو کولی شئ د Tur Assist لخوا وړاندې شوي دوه خدماتو څخه ګټه پورته کړئ. زموږ د آټو تخصص بسته بندي مطابق چې تاسو به یې غوره کړئ؛<br>
+
+<b>د ۱ میاشتې ۱۰۰۰ کیلو متره انجن میخانیکي تضمین او</b><br>
+<b>د ۳ میاشتو ۵۰۰۰ کیلو متره انجن میخانیکي تضمین تاسو کولی شئ د دوه مختلفو انجن میخانیکي تضمینونو څخه ګټه پورته کړئ.</b>
+</p>
+                               <h2>زموږ د پیرودونکو لپاره د Tur Assist تضمین ګټې</h2>
+                <p> - د دویم لاس موټر تضمین "Tur Assist تضمین" محصول تاسو د میخانیکي او بریښنایی خرابیو مالي بار څخه ژغوري چې ستاسو موټر ورسره مخ کیدی شي.<br>
+ - دا د موټر ترټولو مهمې برخې، د کار لګښتونه او د سړک مرستې خدمات پوښي.<br>
+
+ - تضمین په لاندې ذکر شوي موټرو باندې پلي کیدی شي، بشرطې چې دوی اړوند معیارونه پوره کړي.<br>
+
+مسافر وړونکي موټرونه او سپک سوداګریز موټرونه؛<br>
+
+. له ۸ کلونو څخه زیات عمر نه لري او<br>
+
+. باید له ۱۶۰,۰۰۰ کیلو مترو کم وي.<br>
+
+د ۱ میاشتې ۱۰۰۰ کیلو متره حد (د انجن-میخانیکي تضمین لپاره ۱ میاشت)<br>
+
+د ۳ میاشتو ۵۰۰۰ کیلو متره حد (د انجن-میخانیکي تضمین لپاره ۳ میاشتې) له دې څخه زیات نه وي.</p> 
+                                <h2>د تضمین پوښښ نقطې<br>
+                                    انجن<br>
+                                    لاسي لیږد</h2>
+                                    <p></p>
+                                    <ul>
+  <li>د سلنډر سر او ګیسکیټ</li>
+  <li>د ننوتلو او وتلو والونه (سوځیدلي پرته)</li>
+  <li>د والو ټیپټونه (د هیدرولیک تنظیم کونکو په شمول)</li>
+  <li>د والو سپرینګونه او د والو ګلانډونه</li>
+  <li>کیمشافټ او ټیپټونه</li>
+  <li>د وخت بیلټونه، سپروکټونه او زنځیرونه</li>
+  <li>د تیلو پمپ</li>
+  <li>پسټنونه او پسټن رینګونه</li>
+  <li>د سلنډر لاینرونه</li>
+  <li>کرانکشافټ او بیرینګونه</li>
+  <li>د ننوتلو مانیفولډ</li>
+  <li>د انجن بلاک</li>
+  <li>داخلي ګیرونه</li>
+  <li>سینکروش یلو او نیسټونه</li>
+  <li>د ګیر انتخاب کونکي</li>
+  <li>شافټونه</li>
+  <li>بیرینګونه او بوشینګونه</li>
+  <li>د لیږد ګیرونه</li>
+</ul>
+
+<h2>اتوماتیک لیږد</h2>
+    <p></p>
+    <ul>
+  <li>داخلي شافټونه</li>
+  <li>ګیرونه</li>
+  <li>د بریک بانډونه</li>
+  <li>ریډیوسر</li>
+  <li>د تیلو فشار پمپ</li>
+  <li>بیرینګونه او بوشینګونه</li>
+  <li>سروو او پلیټ</li>
+  <li>د لیږد ګیرونه</li>
+</ul>
+
+<h2>CTX / CVT / POWERSHIFT / DURASHIFT او نور اتوماتیک / نیمه اتوماتیک لیږدونه</h2>
+    <p></p>
+<ul>
+  <li>د سیارې ګیرونه</li>
+  <li>د ریډیوسر ګیرونه</li>
+  <li>شافټونه</li>
+  <li>متغیر کویلونه</li>
+  <li>د فشار رینګونه</li>
+  <li>داخلي مهرونه</li>
+  <li>بیرینګونه او بوشینګونه</li>
+  <li>هایدرو-الکترونیکي ګیر بدلون واحد</li>
+</ul>
+
+<h2>تورک کنورټر او توربوچارجر</h2>
+    <p></p>
+    <ul>
+  <li>د کوم میخانیکي داخلي برخې ناکامۍ په صورت کې. (بشرطې چې لومړی بیاکتنه شوې وي)</li></ul>
+
+  <h2>د بریښنا سیسټم</h2>
+    <p></p>
+<ul>
+  <li>سټارټر موټور</li>
+  <li>د سټارټر موټور پورتنۍ سولینایډ</li>
+  <li>کارکونکي</li>
+  <li>شافټونه</li>
+  <li>بیرینګونه او بوشینګونه</li>
+</ul>
+
+
+  <h2>ډیفرنشل</h2>
+    <p></p>
+<ul>
+  <li>د رینګ او پینین ګیرونه</li>
+  <li>ګیرونه</li>
+  <li>شافټونه</li>
+  <li>بیرینګونه او بوشینګونه</li>
+</ul>
+
+  <h2>د سړک مرستې ګټې</h2>
+    <p></p>
+<ul>
+  <li>د سړک مرستې تنظیم - ټرانسپورټ ۵۰ کیلو متره</li>
+  <li>د موټر کشول - ۵۰۰ TL</li>
+  <li>دایمي استوګنځي ته بیرته سفر یا سفر ته دوام ورکول - غیر محدود</li>
+  <li>د موټر د نه شتون له امله استوګنه - ۱۵۰ TL / شپه (اعظمي ۲ شپې)</li>
+  <li>د ترمیم شوي موټر اخیستلو لپاره سفر - غیر محدود</li>
+</ul>
+
+
+</div>`
+  },
+];
+
+// 2. Grab all buttons
+const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+const modal = document.getElementById('card-modal');
+const modalBody = document.getElementById('modal-body');
+const modalClose = document.getElementById('modal-close');
+
+// 3. Open modal on button click
+cardButtons.forEach((btn, index) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault(); // prevent default link behavior
+    modalBody.innerHTML = cardContents[index].content || "<p>هیڅ منځپانګه تعریف شوې نه ده</p>";
+    modal.style.display = 'flex';
+  });
+});
+
+// 4. Close modal
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+// 5. Close modal if click outside content
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.style.display = 'none';
+});
+</script>
+
+<div class="the-back-btn">
+<a class="news-detail-back" href="index.ps.html" style="text-decoration: none; color: white;">شا</a>
+</div>
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; کور نمبر ۵۶، د ۵ او ۶ کوڅو ترمنځ، کلوله پوشته، د FMFB په مقابل کې، PD 04، کابل، افغانستان
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">بسته بندي</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.ps.html">مایکرو بسته آټو تخصص</a></li> 
+  <li><a href="pro-package-auto-expertise.ps.html">پرو بسته آټو تخصص</a></li>
+  <li><a href="pro-plus-package-auto-expertise.ps.html">پرو پلس بسته آټو تخصص</a></li>
+  <li><a href="gold-package-auto-expertise.ps.html">ګولډ بسته آټو تخصص</a></li>
+  <li><a href="gold-plus-package-auto-expertise.ps.html">ګولډ پلس بسته آټو تخصص</a></li>
+  <li><a href="airbag-control-package.ps.html">د ایربګ کنټرول بسته</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">نړیوالې څانګې</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284"> مراکش</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292"> عراق</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41"> ترکیه</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302"> کوسوو</a></li>
+</ul>
+<!--
+<button class="showall">ټول ښکاره کړئ</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+    <p>	&copy; کاپي رایت ۲۰۲۰ - ۲۰۲۵ DYNOMARK AUTO EXPERTISE ټول حقونه خوندي دي | د <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخي</a> لخوا جوړ شوی </p>
+  </div>
+</footer>
+
+</body>
+</html>

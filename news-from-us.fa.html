@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارشناسی خودرو داینومارک</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="stuff/styles/news-from-us.css">
+    <style>
+        body, .top-headline, .header, .drop-menu, .dealers-grid-container, .footer-contents, .footer-media, .title-of-page, .dealers-grid-text, .dealers-grid-btn {
+            direction: rtl;
+            text-align: right;
+        }
+        .dealers-grid-image {
+            margin-left: 20px;
+            margin-right: 0;
+        }
+        .dealers-grid-text {
+            padding-right: 20px;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body style="direction: rtl;">
+    <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>تضمین <span style="color: red;">&nbsp;داینومارک&nbsp;</span> پیش از دفتر اسناد رسمی</h1>
+        </div>
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="آیکون تلفن" style="margin-left: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-left: 5px;">یا</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+            <div class="separator"></div>
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+            </div>
+            <div class="separator"></div>
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="انگلیسی" class="flag" />
+                        <span>انگلیسی</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="news-from-us.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="انگلیسی" /> انگلیسی
+                        </li>
+                        <li data-value="fa" data-url="news-from-us.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="فارسی" /> فارسی
+                        </li>
+                        <li data-value="ps" data-url="news-from-us.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پشتو" /> پشتو
+                        </li>
+                        <li data-value="fr" data-url="news-from-us.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوی" /> فرانسوی
+                        </li>
+                        <li data-value="tr" data-url="news-from-us.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکی" /> ترکی
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                    select.classList.remove('open');
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+                if (!selected || !options) return;
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        items[0]?.focus();
+                    }
+                });
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="لوگو">
+        <nav>
+            <ul>
+                <li><a href="index.fa.html">صفحه اصلی</a></li>
+                <li>
+                    <a href="#">شرکتی &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.fa.html">ما کی هستیم</a></li>
+                        <li><a href="photo-gallery.fa.html">گالری تصاویر</a></li>
+                        <li><a href="news-from-us.fa.html">اخبار از ما</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.fa.html">بسته‌ها</a></li>
+                <li><a href="auto-expertise.fa.html">کارشناسی خودرو</a></li>
+                <li><a href="checkpoints.fa.html">نقاط کنترل</a></li>
+                <li><a href="contact.fa.html">تماس با ما</a></li>
+            </ul>
+        </nav>
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="لوگو تیره">
+            <h1>شعب بین‌المللی</h1>
+        </div>
+        <div class="separator"></div>
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>اروپا</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a>
+            </section>
+            <section>
+                <h2>ترکیه</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">آنتالیا</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجائلی</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اوردو</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+            </section>
+            <section>
+                <h2>خاورمیانه</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+            </section>
+        </div>
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="آدرس">
+                <span>کولوله پشتا، مقابل بانک FMFB، ناحیه ۴</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="تلفن">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="ایمیل">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">اخبار از ما</h1>
+        <p class="title-of-page-p"><a href="index.fa.html"><b>صفحه اصلی &sol;</b></a> اخبار از ما</p>
+    </div>
+    <section class="dealers-grid-section">
+        <div class="dealers-grid-container">
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img1.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی افیون ما در خدمت شماست!</b>
+                    <p>نمایندگی افیون ما با پرسنل حرفه‌ای و دستگاه‌های تکنولوژی پیشرفته شروع به ارائه خدمات کرده است.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img2.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی سامسون / وزرکوپرو به زودی در خدمت شماست.</b>
+                    <p>نمایندگی وزرکوپرو ما به زودی با پرسنل حرفه‌ای و دستگاه‌های تکنولوژی پیشرفته در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img3.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی شانلی‌اورفا / سیورک به زودی در خدمت شماست.</b>
+                    <p>نمایندگی کارشناسی خودرو، نمایندگی‌های کارشناسی خودرو، دریافت نمایندگی کارشناسی خودرو، شرکت‌های نمایندگی کارشناسی خودرو.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img4.png');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی سامسون وزرکوپرو شروع به ارائه خدمات کرد.</b>
+                    <p>نمایندگی کارشناسی خودرو، نمایندگی‌های کارشناسی خودرو، دریافت نمایندگی کارشناسی خودرو، شرکت‌های نمایندگی کارشناسی خودرو.</p>
+                    <a class="dealers-grid-btn" href="/en/samsun-vezi̇rkopru-dealer-started-to-serve/news/130">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img5.jpg')"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی ماردین / قزل‌تپه به زودی در خدمت شماست.</b>
+                    <p>نمایندگی کارشناسی خودرو، نمایندگی‌های کارشناسی خودرو، دریافت نمایندگی کارشناسی خودرو، شرکت‌های نمایندگی کارشناسی خودرو.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img6.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی توکات / اربا به زودی در خدمت شماست.</b>
+                    <p>نمایندگی اربا ما در توکات به زودی با پرسنل حرفه‌ای و دستگاه‌های تکنولوژی پیشرفته در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img7.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی هاتای / آرزوز به زودی در خدمت شماست.</b>
+                    <p>نمایندگی آرزوز ما در هاتای به زودی با پرسنل حرفه‌ای و دستگاه‌های تکنولوژی پیشرفته در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img8.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی کارشناسی خودرو داینومارک سیورک / شانلی‌اورفا در خدمت شماست.</b>
+                    <p>نمایندگی کارشناسی خودرو، نمایندگی‌های کارشناسی خودرو، دریافت نمایندگی کارشناسی خودرو، شرکت‌های نمایندگی کارشناسی خودرو.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img9.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی ما در تکرداغ / کاپاکلی در خدمت شماست</b>
+                    <p>نمایندگی کارشناسی خودرو، نمایندگی‌های کارشناسی خودرو، دریافت نمایندگی کارشناسی خودرو، شرکت‌های نمایندگی کارشناسی خودرو.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img10.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی آنتالیا / کپز در خدمت شماست.</b>
+                    <p>نمایندگی کارشناسی خودرو، نمایندگی‌های کارشناسی خودرو، خرید نمایندگی کارشناسی خودرو، شرکت‌های نمایندگی کارشناسی خودرو.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img11.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی هاتای / آرزوز شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک هاتای / آرزوز شروع به ارائه خدمات کرد. کارشناسی خودرو آرزوز مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img12.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی توکات / اربا شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک توکات / اربا شروع به ارائه خدمات کرد. کارشناسی خودرو اربا مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img13.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی ما در دنیزلی / تاس شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک دنیزلی / تاس شروع به ارائه خدمات کرد. کارشناسی خودرو تاس مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img14.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی ما در تکرداغ / چورلو به زودی در خدمت شماست</b>
+                    <p>کارشناسی خودرو داینومارک چورلو، مجهز به پرسنل حرفه‌ای و جدیدترین ماشین‌های کارشناسی خودرو، به زودی در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img15.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی داینومارک چورلو / تکرداغ شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک چورلو / تکرداغ شروع به ارائه خدمات کرد. کارشناسی خودرو چورلو مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img16.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی قارص ما به زودی در خدمت شماست</b>
+                    <p>کارشناسی خودرو داینومارک قارص، مجهز به پرسنل حرفه‌ای و جدیدترین ماشین‌های کارشناسی خودرو، به زودی در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img17.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی قارص ما شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک قارص شروع به ارائه خدمات کرد. کارشناسی خودرو قارص مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img18.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی باندرما ما به زودی در خدمت شماست</b>
+                    <p>کارشناسی خودرو داینومارک باندرما، مجهز به پرسنل حرفه‌ای و جدیدترین ماشین‌های کارشناسی خودرو، به زودی در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img19.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>کمپین پاییزی</b>
+                    <p>با کد SBH10 می‌توانید 10٪ تخفیف در تمام بسته‌های کارشناسی دریافت کنید.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img20.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی بالیکسیر / باندرما شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک باندرما / بالیکسیر شروع به ارائه خدمات کرد. کارشناسی خودرو باندرما مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img21.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی اونی / اوردو به زودی در خدمت شماست</b>
+                    <p>کارشناسی خودرو داینومارک اونی، مجهز به پرسنل حرفه‌ای و جدیدترین ماشین‌های کارشناسی خودرو، به زودی در خدمت شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img22.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>شعبه اسنیورت حرمیدره E5 شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک اسنیورت / استانبول شروع به ارائه خدمات کرد. کارشناسی خودرو اسنیورت مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img23.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>بخش کارشناسی خودرو با داینومارک به جهان باز می‌شود</b>
+                    <p>پس از رسیدن به 40 شعبه در کشور، داینومارک کارشناسی خودرو اکنون قرارداد اصلی نمایندگی را امضا کرده است که این بخش را به آفریقای شمالی، اروپا و خاورمیانه گسترش خواهد داد...</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-color: rgb(106, 106, 106);"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی اونی / اوردو شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک اونی / اوردو شروع به ارائه خدمات کرد. کارشناسی خودرو اونی مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="optional-button-grid" href="grid24news.html">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img25.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>15٪ تخفیف در تمام بسته‌های کارشناسی</b>
+                    <p>در شعب داینومارک در طول ماه ژانویه 15٪ تخفیف در تمام بسته‌های کارشناسی ارائه می‌شود.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img26.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>15٪ تخفیف در تمام بسته‌های کارشناسی در شعب داینومارک</b>
+                    <p>داینومارک کارشناسی خودرو به زودی در سراسر جهان. نمایندگی توزیع‌کننده کشوری کازابلانکا / مراکش شروع به ارائه خدمات کرد. کارشناسی خودرو فاس مجهز به جدیدترین ماشین‌های کارشناسی خودرو، آماده ارائه خدمات به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img27.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی آرتین / هوپا شروع به ارائه خدمات کرد</b>
+                    <p>نمایندگی کارشناسی خودرو داینومارک هوپا / آرتین شروع به ارائه خدمات کرد. کارشناسی خودرو هوپا مجهز به جدیدترین ماشین‌های کارشناسی خودرو، با پرسنل حرفه‌ای خود آماده ارائه خدمات بی‌نقص به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img28.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی بغداد عراق شروع به ارائه خدمات کرد!</b>
+                    <p>داینومارک کارشناسی خودرو به زودی در سراسر جهان. نمایندگی توزیع‌کننده کشوری بغداد / عراق شروع به ارائه خدمات کرد. کارشناسی خودرو عراق مجهز به جدیدترین ماشین‌های کارشناسی خودرو، آماده ارائه خدمات به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img29.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>نمایندگی بغداد عراق شروع به ارائه خدمات کرد!</b>
+                    <p>داینومارک کارشناسی خودرو به زودی در سراسر جهان. نمایندگی توزیع‌کننده کشوری بغداد / عراق شروع به ارائه خدمات کرد. کارشناسی خودرو عراق مجهز به جدیدترین ماشین‌های کارشناسی خودرو، آماده ارائه خدمات به شماست.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img30.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>کمپین بهاری 10٪ تخفیف در تمام بسته‌های کارشناسی</b>
+                    <p>10٪ تخفیف در تمام بسته‌های کارشناسی معتبر بین 01.04.2023 تا 01.06.2023 در شعب داینومارک.</p>
+                    <a class="dealers-grid-btn" href="#">بیشتر >></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gridContainer = document.querySelector('.dealers-grid-container');
+            if (!gridContainer) {
+                console.warn('Grid container not found');
+                return;
+            }
+            const items = Array.from(gridContainer.querySelectorAll('.dealers-grid-item'));
+            items.forEach(item => {
+                const btn = item.querySelector('.dealers-grid-btn');
+                if (!btn) return;
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = btn.getAttribute('href');
+                    console.log('Button clicked, href:', href);
+                    if (href === 'news-from-us.html') {
+                        try {
+                            window.location.assign(href);
+                            console.log('Navigating to:', href);
+                        } catch (error) {
+                            console.error('Navigation failed:', error);
+                            alert('Failed to navigate to news-from-us.html. Please ensure the file exists and is accessible.');
+                        }
+                    } else {
+                        openDetail(item);
+                    }
+                });
+            });
+            function openDetail(item) {
+                const imgDiv = item.querySelector('.dealers-grid-image');
+                const titleEl = item.querySelector('.dealers-grid-text b');
+                const pEl = item.querySelector('.dealers-grid-text p');
+                const bg = (imgDiv && (imgDiv.style.backgroundImage || getComputedStyle(imgDiv).backgroundImage)) || 'none';
+                const titleText = titleEl ? titleEl.textContent.trim() : '';
+                const descText = pEl ? pEl.textContent.trim() : '';
+                gridContainer.style.display = 'none';
+                const detailWrap = document.createElement('div');
+                detailWrap.className = 'news-detail';
+                const inner = document.createElement('div');
+                inner.className = 'news-detail-inner';
+                const textCol = document.createElement('div');
+                textCol.className = 'news-detail-text';
+                const titleNode = document.createElement('b');
+                titleNode.className = 'news-detail-title';
+                titleNode.textContent = titleText;
+                const descNode = document.createElement('p');
+                descNode.className = 'news-detail-desc';
+                descNode.textContent = descText;
+                const backBtn = document.createElement('button');
+                backBtn.className = 'news-detail-back';
+                backBtn.type = 'button';
+                backBtn.textContent = 'بازگشت';
+                textCol.appendChild(titleNode);
+                textCol.appendChild(descNode);
+                textCol.appendChild(backBtn);
+                const imgCol = document.createElement('div');
+                imgCol.className = 'news-detail-image';
+                const urlMatch = bg.match(/url\(["']?(.*?)["']?\)/);
+                const imgUrl = urlMatch ? urlMatch[1] : '';
+                const imgTag = document.createElement('img');
+                imgTag.src = imgUrl || '';
+                imgTag.alt = titleText || 'تصویر خبری';
+                imgCol.appendChild(imgTag);
+                inner.appendChild(textCol);
+                inner.appendChild(imgCol);
+                detailWrap.appendChild(inner);
+                gridContainer.parentNode.insertBefore(detailWrap, gridContainer.nextSibling);
+                backBtn.addEventListener('click', function () {
+                    detailWrap.remove();
+                    gridContainer.style.display = '';
+                    window.scrollTo({ top: gridContainer.getBoundingClientRect().top + window.pageYOffset - 20, behavior: 'smooth' });
+                });
+            }
+        });
+        const items = document.querySelectorAll('.dealers-grid-item');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        items.forEach(item => {
+            observer.observe(item);
+        });
+        fetch(href, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`${href} exists, proceeding with navigation`);
+                } else {
+                    console.error(`${href} not found (status: ${response.status})`);
+                    alert(`${href} not found. Please check the file path or server configuration.`);
+                }
+            })
+            .catch(error => {
+                console.error(`Fetch check failed for ${href}: ${error.message}`);
+                alert(`Unable to verify ${href}. Error: ${error.message}`);
+            });
+    </script>
+    <footer>
+        <div class="footer-contents">
+            <div>
+                <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+                <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; خانه شماره ۵۶، بین خیابان‌های ۵ و ۶، کولوله پشتا، مقابل بانک FMFB، ناحیه ۴، کابل، افغانستان</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+            </div>
+            <div>
+                <h2 style="color: white;">بسته‌ها</h2>
+                <ul class="arrow-list">
+                    <li><a href="micro-package-auto-expertise.fa.html">بسته میکرو کارشناسی خودرو</a></li>
+                    <li><a href="pro-package-auto-expertise.fa.html">بسته حرفه‌ای کارشناسی خودرو</a></li>
+                    <li><a href="pro-plus-package-auto-expertise.fa.html">بسته حرفه‌ای پلاس کارشناسی خودرو</a></li>
+                    <li><a href="gold-package-auto-expertise.fa.html">بسته طلایی کارشناسی خودرو</a></li>
+                    <li><a href="gold-plus-package-auto-expertise.fa.html">بسته طلایی پلاس کارشناسی خودرو</a></li>
+                    <li><a href="airbag-control-package.fa.html">بسته کنترل ایربگ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: white;">شعب بین‌المللی</h2>
+                <ul class="arrow-list">
+                    <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-media">
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+            </div>
+            <p>&copy; کپی‌رایت ۲۰۲۰ - ۲۰۲۵ داینومارک کارشناسی خودرو تمام حقوق محفوظ است | توسعه داده شده توسط <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخی</a></p>
+        </div>
+    </footer>
+</body>
+</html>

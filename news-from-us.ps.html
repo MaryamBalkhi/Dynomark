@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ډاینومارک د موټر تخصص</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="stuff/styles/news-from-us.css">
+    <style>
+        body, .top-headline, .header, .drop-menu, .dealers-grid-container, .footer-contents, .footer-media, .title-of-page, .dealers-grid-text, .dealers-grid-btn {
+            direction: rtl;
+            text-align: right;
+        }
+        .dealers-grid-image {
+            margin-left: 20px;
+            margin-right: 0;
+        }
+        .dealers-grid-text {
+            padding-right: 20px;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body style="direction: rtl;">
+    <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>د نوټري مخکې <span style="color: red;">&nbsp;ډاینومارک&nbsp;</span> تضمین</h1>
+        </div>
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="د تلیفون آیکون" style="margin-left: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-left: 5px;">یا</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+            <div class="separator"></div>
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="ټویټر"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="انسټاګرام"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="یوټیوب"></a>
+            </div>
+            <div class="separator"></div>
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="انګلیسي" class="flag" />
+                        <span>انګلیسي</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="news-from-us.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="انګلیسي" /> انګلیسي
+                        </li>
+                        <li data-value="fa" data-url="news-from-us.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="فارسي" /> فارسي
+                        </li>
+                        <li data-value="ps" data-url="news-from-us.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پښتو" /> پښتو
+                        </li>
+                        <li data-value="fr" data-url="news-from-us.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوي" /> فرانسوي
+                        </li>
+                        <li data-value="tr" data-url="news-from-us.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکي" /> ترکي
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                    select.classList.remove('open');
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+                if (!selected || !options) return;
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        items[0]?.focus();
+                    }
+                });
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="لوګو">
+        <nav>
+            <ul>
+                <li><a href="index.ps.html">کورپاڼه</a></li>
+                <li>
+                    <a href="#">کارپوریټ &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.ps.html">موږ څوک یو</a></li>
+                        <li><a href="photo-gallery.ps.html">د انځورونو ګالري</a></li>
+                        <li><a href="news-from-us.ps.html">زموږ له خوا خبرونه</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.ps.html">بستې</a></li>
+                <li><a href="auto-expertise.ps.html">د موټر تخصص</a></li>
+                <li><a href="checkpoints.ps.html">د کنټرول نقطې</a></li>
+                <li><a href="contact.ps.html">له موږ سره اړیکه</a></li>
+            </ul>
+        </nav>
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="تور لوګو">
+            <h1>نړیوالې څانګې</h1>
+        </div>
+        <div class="separator"></div>
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>اروپا</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a>
+            </section>
+            <section>
+                <h2>ترکیه</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">انټالیا</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استنبول</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوچایلي</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اوردو</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+            </section>
+            <section>
+                <h2>منځني ختیځ</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+            </section>
+        </div>
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="پته">
+                <span>کولوله پشتا، د FMFB په مقابل کې، ناحیه ۴</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="تلیفون">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="ایمیل">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">زموږ له خوا خبرونه</h1>
+        <p class="title-of-page-p"><a href="index.ps.html"><b>کورپاڼه &sol;</b></a> زموږ له خوا خبرونه</p>
+    </div>
+    <section class="dealers-grid-section">
+        <div class="dealers-grid-container">
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img1.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د افیون ډیلر ستاسو په خدمت کې دی!</b>
+                    <p>زموږ د افیون ډیلر د مسلکي کارکوونکو او پرمختللي ټیکنالوژي وسیلو سره خدمت پیل کړی دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img2.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د سامسون / وزرکوپرو ډیلر ډیر ژر ستاسو په خدمت کې دی.</b>
+                    <p>زموږ د وزرکوپرو ډیلر ډیر ژر د مسلکي کارکوونکو او پرمختللي ټیکنالوژي وسیلو سره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img3.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د شانلي‌اورفا / سیورک ډیلر ډیر ژر ستاسو په خدمت کې دی.</b>
+                    <p>د موټر تخصص ډیلر، د موټر تخصص ډیلرشپونه، د موټر تخصص ډیلران، د موټر تخصص ډیلرشپ ترلاسه کول، د موټر تخصص ډیلرشپ شرکتونه.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img4.png');"></div>
+                <div class="dealers-grid-text">
+                    <b>د سامسون وزرکوپرو ډیلر خدمت پیل کړ.</b>
+                    <p>د موټر تخصص ډیلر، د موټر تخصص ډیلرشپونه، د موټر تخصص ډیلران، د موټر تخصص ډیلرشپ ترلاسه کول، د موټر تخصص ډیلرشپ شرکتونه.</p>
+                    <a class="dealers-grid-btn" href="/en/samsun-vezi̇rkopru-dealer-started-to-serve/news/130">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img5.jpg')"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د ماردین / قزل‌تپه ډیلر ډیر ژر ستاسو په خدمت کې دی.</b>
+                    <p>د موټر تخصص ډیلر، د موټر تخصص ډیلرشپونه، د موټر تخصص ډیلران، د موټر تخصص ډیلرشپ ترلاسه کول، د موټر تخصص ډیلرشپ شرکتونه.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img6.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د توکات / اربا ډیلر ډیر ژر ستاسو په خدمت کې دی.</b>
+                    <p>زموږ د اربا ډیلر په توکات کې ډیر ژر د مسلکي کارکوونکو او پرمختللي ټیکنالوژي وسیلو سره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img7.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د هاتای / آرزوز ډیلر ډیر ژر ستاسو په خدمت کې دی.</b>
+                    <p>زموږ د آرزوز ډیلر په هاتای کې ډیر ژر د مسلکي کارکوونکو او پرمختللي ټیکنالوژي وسیلو سره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img8.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>د ډاینومارک د موټر تخصص سیورک / شانلي‌اورفا ډیلر ستاسو په خدمت کې دی.</b>
+                    <p>د موټر تخصص ډیلر، د موټر تخصص ډیلرشپونه، د موټر تخصص ډیلران، د موټر تخصص ډیلرشپ ترلاسه کول، د موټر تخصص ډیلرشپ شرکتونه.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img9.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د تکرداغ / کاپاکلي ډیلر ستاسو په خدمت کې دی</b>
+                    <p>د موټر تخصص ډیلر، د موټر تخصص ډیلرشپونه، د موټر تخصص ډیلران، د موټر تخصص ډیلرشپ ترلاسه کول، د موټر تخصص ډیلرشپ شرکتونه.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img10.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>د انټالیا / کپز ډیلر ستاسو په خدمت کې دی.</b>
+                    <p>د موټر تخصص ډیلر، د موټر تخصص ډیلرشپونه، د موټر تخصص ډیلران، د موټر تخصص ډیلرشپ اخیستل، د موټر تخصص ډیلرشپ شرکتونه.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img11.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>د هاتای / آرزوز ډیلر خدمت پیل کړ</b>
+                    <p>د ډاینومارک د موټر تخصص هاتای / آرزوز ډیلر خدمت پیل کړ. د آرزوز د موټر تخصص د وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال دی، د مسلکي کارکوونکو سره ستاسو د کامل خدمت لپاره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img12.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>د توکات / اربا ډیلر خدمت پیل کړ</b>
+                    <p>د ډاینومارک د موټر تخصص توکات / اربا ډیلر خدمت پیل کړ. د اربا د موټر تخصص د وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال دی، د مسلکي کارکوونکو سره ستاسو د کامل خدمت لپاره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img13.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د دنیزلي / تاس ډیلر خدمت پیل کړ</b>
+                    <p>د ډاینومارک د موټر تخصص دنیزلي / تاس ډیلر خدمت پیل کړ. د تاس د موټر تخصص د وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال دی، د مسلکي کارکوونکو سره ستاسو د کامل خدمت لپاره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img14.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د تکرداغ / چورلو ډیلر ډیر ژر ستاسو په خدمت کې دی</b>
+                    <p>د ډاینومارک د موټر تخصص چورلو، د مسلکي کارکوونکو او وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال، ډیر ژر ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img15.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>د ډاینومارک د چورلو / تکرداغ ډیلر خدمت پیل کړ</b>
+                    <p>د ډاینومارک د موټر تخصص چورلو / تکرداغ ډیلر خدمت پیل کړ. د چورلو د موټر تخصص د وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال دی، د مسلکي کارکوونکو سره ستاسو د کامل خدمت لپاره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img16.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د قارص ډیلر ډیر ژر ستاسو په خدمت کې دی</b>
+                    <p>د ډاینومارک د موټر تخصص قارص، د مسلکي کارکوونکو او وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال، ډیر ژر ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img17.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د قارص ډیلر خدمت پیل کړ</b>
+                    <p>د ډاینومارک د موټر تخصص قارص ډیلر خدمت پیل کړ. د قارص د موټر تخصص د وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال دی، د مسلکي کارکوونکو سره ستاسو د کامل خدمت لپاره ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img18.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>زموږ د باندرما ډیلر ډیر ژر ستاسو په خدمت کې دی</b>
+                    <p>د ډاینومارک د موټر تخصص باندرما، د مسلکي کارکوونکو او وروستي ټیکنالوژي د موټر تخصص ماشینونو سره سمبال، ډیر ژر ستاسو په خدمت کې دی.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img19.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>د مني کمپاین</b>
+                    <p>د SBH10 کوډ سره تاسو کولی شئ په ټولو تخصصي بستو کې 10٪ تخفیف ترلاسه کړئ.</p>
+                    <a class="dealers-grid-btn" href="#">نور >></a>
+                </div>
+            </div>
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img20.jpeg');"></div>
+    <div class="dealers-grid-text">
+        <b>زموږ بالیکسیز / باندرما پلورونکی خدمت پیل کړ</b>
+        <p>ډینومارک آټو ایکسپرټیز باندرما / بالیکسیز پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، باندرما آټو ایکسپرټیز ستاسو خدمت ته چمتو دی ترڅو تاسو ته د خپل مسلکي عملې سره بشپړ خدمت وړاندې کړي.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img21.jpg');"></div>
+    <div class="dealers-grid-text">
+        <b>اونی / اردو زموږ پلورونکی ډیر ژر ستاسو خدمت ته دی</b>
+        <p>ډینومارک اونی آټو ایکسپرټیز، د مسلکي عملې او وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، ډیر ژر ستاسو خدمت ته دی.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img22.jpeg');"></div>
+    <div class="dealers-grid-text">
+        <b>ایسنیورت حرامیدره E5 څانګه خدمت پیل کړ</b>
+        <p>ډینومارک آټو ایکسپرټیز ایسنیورت / استنبول پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، ایسنیورت آټو ایکسپرټیز ستاسو خدمت ته چمتو دی ترڅو تاسو ته د خپل مسلکي عملې سره بشپړ خدمت وړاندې کړي.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img23.jpeg');"></div>
+    <div class="dealers-grid-text">
+        <b>آټو ایکسپرټیز سکتور د ډینومارک سره نړۍ ته خلاصیږي</b>
+        <p>په هیواد کې 40 څانګو ته رسیدو وروسته، ډینومارک آټو ایکسپرټیز اوس د ماسټر فرنچایز تړون لاسلیک کړی چې دا به سکتور ته اجازه ورکړي چې شمالي افریقا، اروپا او منځني ختیځ ته خپور شي... دا برانډ به لومړی</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-color: rgb(106, 106, 106);"></div>
+    <div class="dealers-grid-text">
+        <b>اونی / اردو پلورونکی خدمت پیل کړ</b>
+        <p>ډینومارک آټو ایکسپرټیز اونی / اردو پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، اونی آټو ایکسپرټیز ستاسو خدمت ته چمتو دی ترڅو تاسو ته د خپل مسلکي عملې سره بشپړ خدمت وړاندې کړي.</p>
+        <a class="optional-button-grid" href="grid24news.html">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img25.jpg');"></div>
+    <div class="dealers-grid-text">
+        <b>په ټولو ایکسپرټیز کڅوړو کې 15٪ تخفیف</b>
+        <p>د جنوري په اوږدو کې په ډینومارک څانګو کې په ټولو ارزونې کڅوړو باندې 15٪ تخفیف معتبر دی.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img26.jpeg');"></div>
+    <div class="dealers-grid-text">
+        <b>په ډینومارک څانګو کې په ټولو ارزونې کڅوړو باندې 15٪ تخفیف معتبر دی</b>
+        <p>ډینومارک آټو ایکسپرټیز ډیر ژر په ټوله نړۍ کې دی. زموږ د هیواد توزیع کونکی کاسابلانکا / مراکش پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، فاس آټو ایکسپرټیز ستاسو خدمت ته دی.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img27.jpeg');"></div>
+    <div class="dealers-grid-text">
+        <b>زموږ آرتوین / هوپا پلورونکی خدمت پیل کړ</b>
+        <p>ډینومارک آټو ایکسپرټیز هوپا / آرتوین پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، هوپا آټو ایکسپرټیز ستاسو خدمت ته چمتو دی ترڅو تاسو ته د خپل مسلکي عملې سره بشپړ خدمت وړاندې کړي.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img28.jpg');"></div>
+    <div class="dealers-grid-text">
+        <b>زموږ بغداد عراق پلورونکی خدمت پیل کړ!</b>
+        <p>ډینومارک آټو ایکسپرټیز ډیر ژر په ټوله نړۍ کې دی. زموږ د هیواد توزیع کونکی بغداد / عراق پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، عراق آټو ایکسپرټیز ستاسو خدمت ته دی.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img29.jpg');"></div>
+    <div class="dealers-grid-text">
+        <b>زموږ بغداد عراق پلورونکی خدمت پیل کړ!</b>
+        <p>ډینومارک آټو ایکسپرټیز ډیر ژر په ټوله نړۍ کې دی. زموږ د هیواد توزیع کونکی بغداد / عراق پلورونکی خدمت پیل کړ. د وروستي ټیکنالوژي آټو ایکسپرټیز ماشینونو سره مجهز، عراق آټو ایکسپرټیز ستاسو خدمت ته دی.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+<div class="dealers-grid-item">
+    <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img30.jpg');"></div>
+    <div class="dealers-grid-text">
+        <b>د پسرلي کمپاین په ټولو ایکسپرټیز کڅوړو باندې 10٪ تخفیف</b>
+        <p>د 01.04.2023-01.06.2023 ترمنځ په ډینومارک څانګو کې په ټولو ارزونې کڅوړو باندې 10٪ تخفیف معتبر دی.</p>
+        <a class="dealers-grid-btn" href="#">نور >> </a>
+    </div>
+</div>
+
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const gridContainer = document.querySelector('.dealers-grid-container');
+  if (!gridContainer) {
+    console.warn('Grid container not found');
+    return; // nothing to do
+  }
+
+  // Find all grid items and attach click handlers to their "More" buttons
+  const items = Array.from(gridContainer.querySelectorAll('.dealers-grid-item'));
+  items.forEach(item => {
+    const btn = item.querySelector('.dealers-grid-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); // stop anchor navigation
+      const href = btn.getAttribute('href');
+      console.log('Button clicked, href:', href); // Debug log
+      // Check if the button has the specific href for UNYE/ORDU card
+      if (href === 'news-from-us.html') {
+        try {
+          window.location.assign(href); // Use assign for navigation
+          console.log('Navigating to:', href);
+        } catch (error) {
+          console.error('Navigation failed:', error);
+          alert('Failed to navigate to news-from-us.html. Please ensure the file exists and is accessible.');
+        }
+      } else {
+        openDetail(item); // trigger detail view for other cards
+      }
+    });
+  });
+
+  // Create and show detail view for one item
+  function openDetail(item) {
+    const imgDiv = item.querySelector('.dealers-grid-image');
+    const titleEl = item.querySelector('.dealers-grid-text b');
+    const pEl = item.querySelector('.dealers-grid-text p');
+
+    // Get background-image string (works for inline style or computed style)
+    const bg = (imgDiv && (imgDiv.style.backgroundImage || getComputedStyle(imgDiv).backgroundImage)) || 'none';
+    const titleText = titleEl ? titleEl.textContent.trim() : '';
+    const descText = pEl ? pEl.textContent.trim() : '';
+
+    // Hide the whole grid container
+    gridContainer.style.display = 'none';
+
+    // Build detail DOM (safer to use textContent to avoid injecting raw HTML)
+    const detailWrap = document.createElement('div');
+    detailWrap.className = 'news-detail';
+
+    const inner = document.createElement('div');
+    inner.className = 'news-detail-inner';
+
+    // Text column
+    const textCol = document.createElement('div');
+    textCol.className = 'news-detail-text';
+
+    const titleNode = document.createElement('b');
+    titleNode.className = 'news-detail-title';
+    titleNode.textContent = titleText;
+
+    const descNode = document.createElement('p');
+    descNode.className = 'news-detail-desc';
+    descNode.textContent = descText;
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'news-detail-back';
+    backBtn.type = 'button';
+    backBtn.textContent = 'شاته';
+
+    textCol.appendChild(titleNode);
+    textCol.appendChild(descNode);
+    textCol.appendChild(backBtn);
+
+    // Image column
+    const imgCol = document.createElement('div');
+    imgCol.className = 'news-detail-image';
+
+    // Extract plain URL from background-image: url("...") string
+    const urlMatch = bg.match(/url\(["']?(.*?)["']?\)/);
+    const imgUrl = urlMatch ? urlMatch[1] : '';
+
+    const imgTag = document.createElement('img');
+    imgTag.src = imgUrl || '';
+    imgTag.alt = titleText || 'د خبر انځور';
+    imgCol.appendChild(imgTag);
+
+    inner.appendChild(textCol);
+    inner.appendChild(imgCol);
+    detailWrap.appendChild(inner);
+
+    // Insert the detail view right after the grid container
+    gridContainer.parentNode.insertBefore(detailWrap, gridContainer.nextSibling);
+
+    // Back behavior
+    backBtn.addEventListener('click', function () {
+      detailWrap.remove();
+      gridContainer.style.display = ''; // restore original display
+      // optionally scroll to the grid
+      window.scrollTo({ top: gridContainer.getBoundingClientRect().top + window.pageYOffset - 20, behavior: 'smooth' });
+    });
+  }
+});
+
+// Fade-in on scroll
+const items = document.querySelectorAll('.dealers-grid-item');
+
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target); // animate once
+    }
+  });
+}, { threshold: 0.15 });
+
+items.forEach(item => {
+  observer.observe(item);
+});
+
+fetch(href, { method: 'HEAD' })
+  .then(response => {
+    if (response.ok) {
+      console.log(`${href} exists, proceeding with navigation`);
+    } else {
+      console.error(`${href} not found (status: ${response.status})`);
+      alert(`${href} نه موندل شو. مهرباني وکړئ د فایل لار یا سرور ترتیب چیک کړئ.`);
+    }
+  })
+  .catch(error => {
+    console.error(`Fetch check failed for ${href}: ${error.message}`);
+    alert(`د ${href} تصدیق کولو توان نلري. تېروتنه: ${error.message}`);
+  });
+</script>
+
+<footer>
+  <div class="footer-contents">
+    <div>
+      <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+      <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; کور نمبر 56، د 5 او 6 سړکونو ترمنځ، کولولا پوسټا، د FMFB په مقابل کې، PD 04، کابل، افغانستان</a>
+      <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+      <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+      <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+    </div>
+    <div>
+      <h2 style="color: white;">کڅوړې</h2>
+      <ul class="arrow-list">
+        <li><a href="micro-package-auto-expertise.ps.html">مایکرو کڅوړه آټو ایکسپرټیز</a></li>
+        <li><a href="pro-package-auto-expertise.ps.html">پرو کڅوړه آټو ایکسپرټیز</a></li>
+        <li><a href="pro-plus-package-auto-expertise.ps.html">پرو پلس کڅوړه آټو ایکسپرټیز</a></li>
+        <li><a href="gold-package-auto-expertise.ps.html">ګولډ کڅوړه آټو ایکسپرټیز</a></li>
+        <li><a href="gold-plus-package-auto-expertise.ps.html">ګولډ پلس کڅوړه آټو ایکسپرټیز</a></li>
+        <li><a href="airbag-control-package.ps.html">ایرباګ کنټرول کڅوړه</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 style="color: white;">نړیوالې څانګې</h2>
+      <ul class="arrow-list">
+        <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li>
+        <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+        <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+        <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="ټویټر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="انسټاګرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوټیوب"></a>
+    </div>
+    <p>&copy; کاپي رایټ 2020 - 2025 ډینومارک آټو ایکسپرټیز ټول حقوق محفوظ دي | جوړ شوی د <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخي</a> لخوا</p>
+  </div>
+</footer>
+
+</body>
+</html>

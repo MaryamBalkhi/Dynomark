@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expertise Automobile Dynomark</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="stuff/styles/news-from-us.css">
+</head>
+<body>
+    <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>Assurance <span style="color: red;">&nbsp;Dynomark&nbsp;</span> avant notaire</h1>
+        </div>
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="Icône de téléphone" style="margin-right: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-right: 5px;">OU</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+            <div class="separator"></div>
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+            <div class="separator"></div>
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="Anglais" class="flag" />
+                        <span>Anglais</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="index.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="Anglais" /> Anglais
+                        </li>
+                        <li data-value="fa" data-url="news-from-us.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persan" /> Persan
+                        </li>
+                        <li data-value="ps" data-url="news-from-us.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pachto" /> Pachto
+                        </li>
+                        <li data-value="fr" data-url="news-from-us.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="Français" /> Français
+                        </li>
+                        <li data-value="tr" data-url="news-from-us.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turc" /> Turc
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                    select.classList.remove('open');
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+                if (!selected || !options) return;
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        items[0]?.focus();
+                    }
+                });
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="Logo">
+        <nav>
+            <ul>
+                <li><a href="index.fr.html">Accueil</a></li>
+                <li>
+                    <a href="#">Entreprise &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.fr.html">Qui sommes-nous</a></li>
+                        <li><a href="photo-gallery.fr.html">Galerie de photos</a></li>
+                        <li><a href="news-from-us.fr.html">Actualités de nous</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.fr.html">Forfaits</a></li>
+                <li><a href="auto-expertise.fr.html">Expertise Automobile</a></li>
+                <li><a href="checkpoints.fr.html">Points de contrôle</a></li>
+                <li><a href="contact.fr.html">Nous contacter</a></li>
+            </ul>
+        </nav>
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="Logo sombre">
+            <h1>Branches internationales</h1>
+        </div>
+        <div class="separator"></div>
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>Europe</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+            </section>
+            <section>
+                <h2>Turquie</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+            </section>
+            <section>
+                <h2>Moyen-Orient</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a>
+            </section>
+        </div>
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="Adresse">
+                <span>Kulola Poshta, en face de FMFB, PD 04</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="Téléphone">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="Email">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">Actualités de nous</h1>
+        <p class="title-of-page-p"><a href="index.fr.html"><b>Accueil &sol;</b></a> Actualités de nous</p>
+    </div>
+    <section class="dealers-grid-section">
+        <div class="dealers-grid-container">
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img1.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Afyon est à votre service !</b>
+                    <p>Notre concessionnaire à Afyon a commencé à offrir ses services avec son personnel professionnel et ses équipements technologiques de pointe.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img2.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Samsun / Vezirköprü sera bientôt à votre service.</b>
+                    <p>Notre concessionnaire à Vezirköprü sera bientôt à votre service avec son personnel professionnel et ses équipements technologiques de pointe.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img3.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Şanlıurfa / Siverek sera bientôt à votre service.</b>
+                    <p>Concessionnaire d'expertise automobile, concessionnaires d'expertise automobile, obtenir une concession d'expertise automobile, entreprises de concession d'expertise automobile.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img4.png');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Samsun Vezirköprü a commencé à servir.</b>
+                    <p>Concessionnaire d'expertise automobile, concessionnaires d'expertise automobile, obtenir une concession d'expertise automobile, entreprises de concession d'expertise automobile.</p>
+                    <a class="dealers-grid-btn" href="/en/samsun-vezi̇rkopru-dealer-started-to-serve/news/130">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img5.jpg')"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Mardin/Kızıltepe sera bientôt à votre service.</b>
+                    <p>Concessionnaire d'expertise automobile, concessionnaires d'expertise automobile, obtenir une concession d'expertise automobile, entreprises de concession d'expertise automobile.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img6.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Tokat / Erbaa sera bientôt à votre service.</b>
+                    <p>Notre concessionnaire à Erbaa à Tokat sera bientôt à votre service avec son personnel professionnel et ses équipements technologiques de pointe.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img7.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Hatay / Arsuz sera bientôt à votre service.</b>
+                    <p>Notre concessionnaire à Arsuz à Hatay sera bientôt à votre service avec son personnel professionnel et ses équipements technologiques de pointe.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img8.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Dynomark Expertise Automobile à Siverek / Şanlıurfa est à votre service.</b>
+                    <p>Concessionnaire d'expertise automobile, concessionnaires d'expertise automobile, obtenir une concession d'expertise automobile, entreprises de concession d'expertise automobile.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img9.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Tekirdağ / Kapaklı est à votre service</b>
+                    <p>Concessionnaire d'expertise automobile, concessionnaires d'expertise automobile, obtenir une concession d'expertise automobile, entreprises de concession d'expertise automobile.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img10.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire à Antalya / Kepez est à votre service.</b>
+                    <p>Concessionnaire d'expertise automobile, concessionnaires d'expertise automobile, acheter une concession d'expertise automobile, entreprises de concession d'expertise automobile.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img11.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Hatay / Arsuz a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Hatay / Arsuz a commencé à servir. Équipé des dernières machines d'expertise automobile, Arsuz Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img12.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Tokat / Erbaa a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Tokat / Erbaa a commencé à servir. Équipé des dernières machines d'expertise automobile, Erbaa Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img13.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Denizli / Tavas a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Denizli / Tavas a commencé à servir. Équipé des dernières machines d'expertise automobile, Tavas Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img14.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Tekirdağ / Çorlu sera bientôt à votre service</b>
+                    <p>Dynomark Expertise Automobile Çorlu, équipé d'un personnel professionnel et des dernières machines d'expertise automobile, sera bientôt à votre service.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img15.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Dynomark Çorlu / Tekirdağ a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Çorlu / Tekirdağ a commencé à servir. Équipé des dernières machines d'expertise automobile, Çorlu Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img16.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Kars sera bientôt à votre service</b>
+                    <p>Dynomark Expertise Automobile Kars, équipé d'un personnel professionnel et des dernières machines d'expertise automobile, sera bientôt à votre service.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img17.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Kars a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Kars a commencé à servir. Équipé des dernières machines d'expertise automobile, Kars Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img18.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Bandırma sera bientôt à votre service</b>
+                    <p>Dynomark Expertise Automobile Bandırma, équipé d'un personnel professionnel et des dernières machines d'expertise automobile, sera bientôt à votre service.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img19.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Campagne d'automne</b>
+                    <p>Avec le code SBH10, vous pouvez obtenir une réduction de 10 % sur tous les forfaits d'expertise.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img20.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Balıkesir / Bandırma a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Bandırma / Balıkesir a commencé à servir. Équipé des dernières machines d'expertise automobile, Bandırma Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img21.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Notre concessionnaire à Ünye / Ordu sera bientôt à votre service</b>
+                    <p>Dynomark Expertise Automobile Ünye, équipé d'un personnel professionnel et des dernières machines d'expertise automobile, sera bientôt à votre service.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img22.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>La branche Esenyurt Haramidere E5 a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Esenyurt / Istanbul a commencé à servir. Équipé des dernières machines d'expertise automobile, Esenyurt Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img23.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le secteur de l'expertise automobile s'ouvre au monde avec Dynomark</b>
+                    <p>Après avoir atteint 40 branches dans le pays, Dynomark Expertise Automobile a signé un accord de franchise principale qui permettra au secteur de s'étendre à l'Afrique du Nord, à l'Europe et au Moyen-Orient...</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-color: rgb(106, 106, 106);"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Ünye / Ordu a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Ünye / Ordu a commencé à servir. Équipé des dernières machines d'expertise automobile, Ünye Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="optional-button-grid" href="grid24news.html">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img25.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Réduction de 15 % sur tous les forfaits d'expertise</b>
+                    <p>Valable dans les branches Dynomark, 15 % de réduction sur tous les forfaits d'expertise tout au long du mois de janvier.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img26.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Réduction de 15 % sur tous les forfaits d'expertise dans les branches Dynomark</b>
+                    <p>Dynomark Expertise Automobile bientôt dans le monde entier. Notre distributeur national à Casablanca / Maroc a commencé à servir. Équipé des dernières machines d'expertise automobile, FAS Expertise Automobile est à votre service pour...</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img27.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire Artvin / Hopa a commencé à servir</b>
+                    <p>Le concessionnaire Dynomark Expertise Automobile Hopa / Artvin a commencé à servir. Équipé des dernières machines d'expertise automobile, Hopa Expertise Automobile est à votre service pour vous offrir un service parfait avec son personnel professionnel.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img28.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire à Bagdad, Irak a commencé à servir !</b>
+                    <p>Dynomark Expertise Automobile bientôt dans le monde entier. Notre distributeur national à Bagdad / Irak a commencé à servir. Équipé des dernières machines d'expertise automobile, Irak Expertise Automobile est à votre service pour...</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img29.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Le concessionnaire à Bagdad, Irak a commencé à servir !</b>
+                    <p>Dynomark Expertise Automobile bientôt dans le monde entier. Notre distributeur national à Bagdad / Irak a commencé à servir. Équipé des dernières machines d'expertise automobile, Irak Expertise Automobile est à votre service pour...</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img30.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Campagne de printemps : 10 % de réduction sur tous les forfaits d'expertise</b>
+                    <p>10 % de réduction sur tous les forfaits d'expertise valable entre le 01.04.2023 et le 01.06.2023 dans les branches Dynomark.</p>
+                    <a class="dealers-grid-btn" href="#">En savoir plus >></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gridContainer = document.querySelector('.dealers-grid-container');
+            if (!gridContainer) {
+                console.warn('Grid container not found');
+                return;
+            }
+            const items = Array.from(gridContainer.querySelectorAll('.dealers-grid-item'));
+            items.forEach(item => {
+                const btn = item.querySelector('.dealers-grid-btn');
+                if (!btn) return;
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = btn.getAttribute('href');
+                    console.log('Button clicked, href:', href);
+                    if (href === 'news-from-us.html') {
+                        try {
+                            window.location.assign(href);
+                            console.log('Navigating to:', href);
+                        } catch (error) {
+                            console.error('Navigation failed:', error);
+                            alert('Échec de la navigation vers news-from-us.html. Veuillez vérifier que le fichier existe et est accessible.');
+                        }
+                    } else {
+                        openDetail(item);
+                    }
+                });
+            });
+            function openDetail(item) {
+                const imgDiv = item.querySelector('.dealers-grid-image');
+                const titleEl = item.querySelector('.dealers-grid-text b');
+                const pEl = item.querySelector('.dealers-grid-text p');
+                const bg = (imgDiv && (imgDiv.style.backgroundImage || getComputedStyle(imgDiv).backgroundImage)) || 'none';
+                const titleText = titleEl ? titleEl.textContent.trim() : '';
+                const descText = pEl ? pEl.textContent.trim() : '';
+                gridContainer.style.display = 'none';
+                const detailWrap = document.createElement('div');
+                detailWrap.className = 'news-detail';
+                const inner = document.createElement('div');
+                inner.className = 'news-detail-inner';
+                const textCol = document.createElement('div');
+                textCol.className = 'news-detail-text';
+                const titleNode = document.createElement('b');
+                titleNode.className = 'news-detail-title';
+                titleNode.textContent = titleText;
+                const descNode = document.createElement('p');
+                descNode.className = 'news-detail-desc';
+                descNode.textContent = descText;
+                const backBtn = document.createElement('button');
+                backBtn.className = 'news-detail-back';
+                backBtn.type = 'button';
+                backBtn.textContent = 'Retour';
+                textCol.appendChild(titleNode);
+                textCol.appendChild(descNode);
+                textCol.appendChild(backBtn);
+                const imgCol = document.createElement('div');
+                imgCol.className = 'news-detail-image';
+                const urlMatch = bg.match(/url\(["']?(.*?)["']?\)/);
+                const imgUrl = urlMatch ? urlMatch[1] : '';
+                const imgTag = document.createElement('img');
+                imgTag.src = imgUrl || '';
+                imgTag.alt = titleText || 'Image d’actualité';
+                imgCol.appendChild(imgTag);
+                inner.appendChild(textCol);
+                inner.appendChild(imgCol);
+                detailWrap.appendChild(inner);
+                gridContainer.parentNode.insertBefore(detailWrap, gridContainer.nextSibling);
+                backBtn.addEventListener('click', function () {
+                    detailWrap.remove();
+                    gridContainer.style.display = '';
+                    window.scrollTo({ top: gridContainer.getBoundingClientRect().top + window.pageYOffset - 20, behavior: 'smooth' });
+                });
+            }
+        });
+        const items = document.querySelectorAll('.dealers-grid-item');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        items.forEach(item => {
+            observer.observe(item);
+        });
+        fetch(href, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`${href} exists, proceeding with navigation`);
+                } else {
+                    console.error(`${href} not found (status: ${response.status})`);
+                    alert(`${href} not found. Please check the file path or server configuration.`);
+                }
+            })
+            .catch(error => {
+                console.error(`Fetch check failed for ${href}: ${error.message}`);
+                alert(`Unable to verify ${href}. Error: ${error.message}`);
+            });
+    </script>
+    <footer>
+        <div class="footer-contents">
+            <div>
+                <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+                <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Maison n° 56, entre les rues 5 et 6, Kulola Poshta, en face de FMFB, PD 04, Kaboul, Afghanistan</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+            </div>
+            <div>
+                <h2 style="color: white;">Forfaits</h2>
+                <ul class="arrow-list">
+                    <li><a href="micro-package-auto-expertise.fr.html">Forfait Micro Expertise Automobile</a></li>
+                    <li><a href="pro-package-auto-expertise.fr.html">Forfait Pro Expertise Automobile</a></li>
+                    <li><a href="pro-plus-package-auto-expertise.fr.html">Forfait Pro Plus Expertise Automobile</a></li>
+                    <li><a href="gold-package-auto-expertise.fr.html">Forfait Gold Expertise Automobile</a></li>
+                    <li><a href="gold-plus-package-auto-expertise.fr.html">Forfait Gold Plus Expertise Automobile</a></li>
+                    <li><a href="airbag-control-package.fr.html">Forfait Contrôle Airbag</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: white;">Branches internationales</h2>
+                <ul class="arrow-list">
+                    <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Turquie</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-media">
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+            <p>&copy; Copyright 2020 - 2025 Dynomark Expertise Automobile Tous droits réservés | Développé par <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a></p>
+        </div>
+    </footer>
+</body>
+</html>

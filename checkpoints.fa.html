@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارشناسی خودرو داینومارک</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/checkpoints.css">
+</head>
+<body style="direction: rtl;">
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>تضمین <span style="color: red;">&nbsp;داینومارک&nbsp;</span> قبل از دفتر اسناد رسمی</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Phone Icon" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="English" class="flag" />
+      <span>انگلیسی</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="checkpoints.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="English" /> انگلیسی
+      </li>
+      <li data-value="fa" data-url="checkpoints.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persian" /> پارسی
+      </li>
+      <li data-value="ps" data-url="checkpoints.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pashto" /> پشتو
+      </li>
+      <li data-value="fr" data-url="checkpoints.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="French" /> فرانسوی
+      </li>
+      <li data-value="tr" data-url="checkpoints.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turkish" /> ترکی
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fa.html">خانه</a></li>
+      <li>
+        <a href="#">شرکتی &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fa.html">ما کی هستیم</a></li>
+          <li><a href="photo-gallery.fa.html">گالری تصاویر</a></li>
+          <li><a href="news-from-us.fa.html">اخبار از ما</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fa.html">بسته‌ها</a></li>
+      <li><a href="auto-expertise.fa.html">کارشناسی خودرو</a></li>
+      <li><a href="checkpoints.fa.html">نقاط کنترل</a></li>
+      
+      <li><a href="contact.fa.html">تماس با ما</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="logo-dark">
+    <h1>شعب بین‌المللی</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>اروپا</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a>
+     
+    </section>
+
+    <section>
+      <h2>ترکیه</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">آنتالیا</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجائلی</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اردو</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+    </section>
+
+    <section>
+      <h2>خاورمیانه</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Address">
+    <span>کولولا پشتا، مقابل FMFB، PD 04</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Phone">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="Email">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">نقاط کنترل</h1>
+    <p class="title-of-page-p"><a href="index.fa.html"><b>خانه &sol;</b></a> نقاط کنترل</p>
+</div>
+
+
+<section class="grid-section">
+  <div class="grid-container">
+
+        <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های بدنه و رنگ</div>
+      <p class="card-text">قطعات بدنه خودرو به طور دقیق بررسی می‌شوند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های چیدمان عقب</div>
+      <p class="card-text">کنترل‌های مونتاژ عقب شامل بررسی کلی تمام سیستم‌های مکانیکی زیر خودرو و چیدمان آن‌هاست.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های پیش‌سفارش</div>
+      <p class="card-text">کنترل‌های چیدمان جلو شامل کنترل کلی تمام سیستم‌های مکانیکی و چیدمان روی خودرو است.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های سیستم سوخت و اگزوز</div>
+      <p class="card-text">سیستم اگزوز به دلیل عوامل داخلی و خارجی در معرض شرایط سخت قرار می‌گیرد.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کارشناسی داخلی/کنترل‌های الکترونیکی</div>
+      <p class="card-text">در این واحد کنترلی، کنترل‌های کلی تمام سیستم‌های مکانیکی و الکترونیکی که از داخل یا خارج خودرو کنترل می‌کنیم، انجام می‌شود.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تست دینو</div>
+      <p class="card-text">تست قدرت دینو حداکثر توانی که موتور خودرو می‌تواند تولید کند را تعیین می‌کند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های کارشناسی خارجی</div>
+      <p class="card-text">کنترل‌های کارشناسی خارجی یکی از نقاط کنترل کارشناسی خودرو است که مشتریان ما در خرید و فروش خودروهای دست دوم اغلب ترجیح می‌دهند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های بالای موتور</div>
+      <p class="card-text">کنترل‌های بالای موتور: بخشی است که قسمت‌های بالایی موتور که با باز کردن کاپوت خودرو با آن مواجه می‌شویم، کنترل می‌شوند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل موتور و سیستم انتقال قدرت</div>
+      <p class="card-text">کنترل‌های موتور و سیستم انتقال قدرت: بازرسی‌های موتور و سیستم انتقال قدرت ما به صورت حرفه‌ای توسط مکانیک‌های موتور ما به طور دقیق و بی‌طرفانه بررسی می‌شوند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تست تشخیصی (تست مغز)</div>
+      <p class="card-text">با تست تشخیصی، کنترل‌های کلی تمام سیستم‌های الکترونیکی و الکترومکانیکی خودرو از طریق واحدهای کنترلی انجام می‌شود.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">استعلام بدهی/خسارت/تغییر/کیلومتر/جزئیات خودرو</div>
+      <p class="card-text">این امکان را به شما می‌دهد تا اطلاعاتی در مورد خسارت و هزینه خسارت خودرو مورد نظر برای خرید، در صورت وجود، خسارت‌ها و هزینه‌های گذشته، استعلام قطعات تعویضی و استعلام مسافت پیموده شده بر اساس بازرسی دریافت کنید. نتایج از مرکز اطلاعات و نظارت بیمه (SBM) به دست می‌آیند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تست ترمز/تعلیق/لغزش جانبی</div>
+      <p class="card-text">با این تست‌ها که در ایستگاه اندازه‌گیری انجام می‌شود، توانایی ترمز، تعلیق و چسبندگی جاده خودرو تعیین می‌شود.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تست نشت کربن</div>
+      <p class="card-text">تست نشت کربن امکان تشخیص نشتی‌ها و ترک‌هایی که ممکن است روی سطوح بلوک و سرسیلندر خودرو شما ایجاد شود را با مایع تشخیص CO2 ویژه فراهم می‌کند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تست رانندگی جاده‌ای</div>
+      <p class="card-text">خودروی کارشناسی شده در نهایت تحت کنترل تکنسین به تست رانندگی جاده‌ای برده می‌شود.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">گارانتی تشخیص رنگ یک ساله-2500 کیلومتر</div>
+      <p class="card-text">با تضمین داینومارک، کنترل‌های رنگ بدنه خودروی شما در خرید و فروش خودروهای دست دوم تحت گارانتی است.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">گارانتی مکانیکی (تور اسیست)</div>
+      <p class="card-text">گارانتی مکانیکی موتور تور اسیست؛ نوعی گارانتی است که خودروی شما را در برابر نقص‌های احتمالی پوشش می‌دهد و می‌توان آن را به عنوان بیمه سلامت خصوصی خودروها در نظر گرفت.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+  </div>
+</section>
+
+<div id="card-modal" class="card-modal">
+  <div class="modal-content">
+    <button id="modal-close" class="close-btn">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// 1. Define content for each card by index or unique title
+const cardContents = [
+  {
+    title: "کنترل‌های بدنه و رنگ",
+    content: `<div class="who-we-are">
+                <h2>کنترل‌های بدنه و رنگ</h2>
+                <p>کاپوت: یکی از مهم‌ترین قطعاتی است که سطح خارجی خودرو را پوشش می‌دهد و اسکلت آن را تشکیل می‌دهد. این شامل قطعاتی است که در صورت وقوع تصادف در حال حرکت، ما را از عوامل خارجی محافظت می‌کند. چنین نقطه کنترلی مهمی باید قبل از خرید و فروش خودروی دست دوم بررسی شود. فروشندگان خودرو سعی می‌کنند عملیات انجام شده در بخش بدنه و رنگ را پنهان کنند زیرا نمی‌خواهند ارزش خودرو کاهش یابد. ما بر اهمیت مراجعه مشتریانمان که قصد خرید خودروی دست دوم دارند به شعب کارشناسی خودرو داینومارک و انجام کنترل‌های بدنه و رنگ خودرو قبل از خرید تأکید می‌کنیم.</p>
+                
+                <h2>در کنترل‌های بدنه و رنگ داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+                <p>
+                    کنترل‌های بدنه و رنگ در کارشناسی خودرو داینومارک به صورت حرفه‌ای، بی‌طرفانه و با جزئیات توسط ابزارهای تکنولوژیکی ما بررسی می‌شود. در کنترل‌های بدنه و رنگ خودرو؛ ما از نقاط مختلفی مانند تشخیص قطعات تعویضی، تشخیص قطعات فرآوری‌شده، عملیات جداسازی-نصب، عملیات تنظیم، اندازه‌گیری‌های میکرون رنگ بررسی می‌کنیم.<br>
+
+                    در این بازرسی‌ها، ابتدا کنترل‌های جداسازی/نصب یا تعویض روی تمام قطعات بدنه خودرو انجام می‌شود. ضخامت‌های میکرون رنگ اندازه‌گیری شده و قطعات بدنه رنگ‌شده یا به صورت موضعی رنگ‌شده شناسایی می‌شوند. کنترل فرآیند یا خسارت روی شاسی خودرو انجام می‌شود، تشخیص خسارت با کنترل‌های داخلی و خارجی ستون و پودیه انجام می‌شود. در نهایت، کل بدنه خودرو بررسی شده و فرورفتگی‌ها، گودی‌ها و فرآیندهای اصلاح فرورفتگی بدون رنگ شناسایی شده و گزارش تهیه می‌شود.<br>
+
+                    در طول این بررسی‌ها، تمام قطعات زیر بررسی می‌شوند.
+                    </p>
+                    <ul>
+                    <li>سقف</li>
+                    <li>کاپوت</li>
+                    <li>گلگیر جلوی چپ</li>
+                    <li>درب جلوی چپ</li>
+                    <li>درب عقب چپ</li>
+                    <li>گلگیر عقب چپ</li>
+                    <li>ستون مرکزی چپ</li>
+                    <li>ستون جلوی چپ</li>
+                    <li>ستون بالایی چپ</li>
+                    <li>ستون داخلی عقب چپ</li>
+                    <li>صندوق عقب</li>
+                    <li>ورق حوضچه</li>
+                    <li>پنل عقب</li>
+                    <li>گلگیر عقب راست</li>
+                    <li>درب عقب راست</li>
+                    <li>درب جلوی راست</li>
+                    <li>گلگیر جلوی راست</li>
+                    <li>ستون جلوی راست</li>
+                    <li>ستون مرکزی راست</li>
+                    <li>ستون بالایی راست</li>
+                    <li>ستون داخلی عقب راست</li>
+                    <li>پنل جلو</li>
+                    <li>شاسی جلوی چپ</li>
+                    <li>شاسی جلوی راست</li>
+                    <li>تفنگ چپ</li>
+                    <li>تفنگ راست</li>
+                    <li>شاسی عقب چپ</li>
+                    <li>شاسی عقب راست</li>
+                    <li>صفحه پایه چپ</li>
+                    <li>صفحه پایه راست</li>
+                    <li>پنل راکر چپ</li>
+                    <li>پنل راکر راست</li>
+                    </ul>
+              </div>`
+  },
+    {
+    title: "کنترل‌های چیدمان عقب",
+    content: `<div class="who-we-are">
+                <h2>کنترل‌های چیدمان عقب</h2>
+                <p>مونتاژ عقب: قطعات چیدمان عقب، مانند قطعات چیدمان جلو، قطعاتی هستند که بر کیفیت رانندگی خودرو در حال حرکت تأثیر می‌گذارند. مانند سایر نقاط کنترلی در خرید و فروش خودروهای دست دوم، کنترل‌های چیدمان عقب از اهمیت بالایی برخوردارند.<br>
+
+برای اینکه خودروی شما به طور روان و راحت در حال حرکت باشد، قطعات چیدمان عقب باید به بهترین شکل عملکرد خود را انجام دهند. اگر قطعات عملکرد خود را انجام ندهند، این موضوع به طور منفی بر رانندگی خودروی شما در حال حرکت تأثیر می‌گذارد.<br>
+
+به عنوان مثال، اگر در جاده مستقیم هیچ حرکت مانوری انجام ندهید و خودروی شما مستقیم نرود، صداهای ضربه‌ای و نویز ایجاد کند و در عین حال به سمت راست یا چپ کشیده شود، خودرو نه تنها رانندگی راحت را برای شما فراهم نمی‌کند، بلکه ایمنی زندگی شما را نیز به خطر می‌اندازد. به همین دلایل، ما تأکید می‌کنیم که مشتریانمان که قصد خرید خودروی دست دوم دارند، قبل از خرید به شعب کارشناسی خودرو داینومارک مراجعه کرده و کنترل‌های چیدمان عقب خودرو را انجام دهند.</p>
+                
+                <h2>در کنترل‌های چیدمان عقب داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+                <p>
+                    در کارشناسی خودرو داینومارک، کنترل‌های چیدمان عقب توسط مکانیک‌های موتور به صورت حرفه‌ای، بی‌طرفانه و با جزئیات در محیط روشن در بالابر خودرو بررسی می‌شوند. در کنترل‌های چیدمان جلوی ما، خودرو از نظر صداهای ضربه‌ای، لرزش و سلامت عملکرد اجزا بررسی شده و گزارش می‌شود. در طول این کنترل، نقاط کنترلی زیر بررسی می‌شوند.
+                    </p>
+                    <ul>
+  <li>لاستیک چپ</li>
+  <li>لاستیک راست</li>
+  <li>رینگ چپ</li>
+  <li>رینگ راست</li>
+  <li>دیسک ترمز چپ</li>
+  <li>دیسک ترمز راست</li>
+  <li>لنت ترمز چپ</li>
+  <li>لنت ترمز راست</li>
+  <li>کالیپر ترمز چپ</li>
+  <li>کالیپر ترمز راست</li>
+  <li>نصب بالای کمک‌فنر چپ</li>
+  <li>نصب بالای کمک‌فنر راست</li>
+  <li>فنر مارپیچ چپ</li>
+  <li>فنر مارپیچ راست</li>
+  <li>بازوی کنترلی بالای عقب چپ</li>
+  <li>بازوی کنترلی بالای عقب راست</li>
+  <li>بازوی کنترلی پایین عقب چپ</li>
+  <li>بازوی کنترلی پایین عقب راست</li>
+  <li>ایوان عقب چپ</li>
+  <li>ایوان عقب راست</li>
+  <li>مفصل توپی خم چپ</li>
+  <li>مفصل توپی خم راست</li>
+  <li>میله خم عقب</li>
+  <li>بازوی تعادل عقب</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "کنترل‌های پیش‌سفارش",
+    content: `<div class="who-we-are">
+                <h2>کنترل‌های پیش‌سفارش</h2>
+                <p>چیدمان جلو: بخشی است که شامل قطعات مهمی است که بر کیفیت رانندگی خودرو در حال حرکت تأثیر می‌گذارند. مانند سایر نقاط کنترلی در خرید و فروش خودروهای دست دوم، کنترل‌های چیدمان جلو از اهمیت بالایی برخوردارند. برای اینکه خودروی شما به طور روان و راحت در حال حرکت باشد، قطعات چیدمان جلو باید به بهترین شکل عملکرد خود را انجام دهند. به عنوان مثال، اگر در جاده مستقیم هیچ حرکت فرمان‌دهی انجام ندهید و خودروی شما مستقیم نرود، خودرو نه تنها رانندگی راحت را برای شما فراهم نمی‌کند، بلکه ایمنی زندگی شما را نیز به خطر می‌اندازد. در صورتی که قطعات چیدمان جلو تنظیم شده و قطعات به درستی کار کنند، حتی در جاده‌های ناهموار راحتی رانندگی شما را به حداکثر می‌رساند و شوک‌های خودرو را به حداقل می‌رساند. به همین دلیل، ما بر اهمیت مراجعه مشتریانمان که قصد خرید خودروی دست دوم دارند به شعب کارشناسی خودرو داینومارک قبل از خرید و انجام کنترل‌های چیدمان جلو خودرو تأکید می‌کنیم.</p>
+                
+                <h2>در کنترل‌های چیدمان جلو داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+                <p>
+                    در کارشناسی خودرو داینومارک، کنترل‌های چیدمان جلو توسط مکانیک‌های موتور به صورت حرفه‌ای، بی‌طرفانه و با جزئیات در محیط روشن در بالابر خودرو بررسی می‌شوند. در کنترل‌های چیدمان جلوی ما، خودرو از نظر صداهای ضربه‌ای، لرزش و عملکرد صحیح اجزا بررسی شده و گزارش می‌شود. در طول این کنترل، نقاط کنترلی زیر بررسی می‌شوند.
+                    </p>
+                   <ul>
+  <li>لاستیک چپ</li>
+  <li>لاستیک راست</li>
+  <li>رینگ چپ</li>
+  <li>رینگ راست</li>
+  <li>دیسک ترمز چپ</li>
+  <li>دیسک ترمز راست</li>
+  <li>لنت ترمز چپ</li>
+  <li>لنت ترمز راست</li>
+  <li>کالیپر ترمز چپ</li>
+  <li>کالیپر ترمز راست</li>
+  <li>کالیپر ترمز چپ</li>
+  <li>کالیپر ترمز راست</li>
+  <li>فنر مارپیچ چپ</li>
+  <li>فنر مارپیچ راست</li>
+  <li>کمک‌فنر چپ</li>
+  <li>کمک‌فنر راست</li>
+  <li>نصب بالای کمک‌فنر چپ</li>
+  <li>نصب بالای کمک‌فنر راست</li>
+  <li>مفصل توپی تعلیق چپ</li>
+  <li>رولت تعلیق راست</li>
+  <li>میله تای راد چپ</li>
+  <li>میله تای راد راست</li>
+  <li>انتهای تای راد چپ</li>
+  <li>انتهای تای راد راست</li>
+  <li>غلاف تای راد چپ</li>
+  <li>غلاف تای راد راست</li>
+  <li>چرخش چپ</li>
+  <li>چرخش راست</li>
+  <li>شفت محور چپ</li>
+  <li>شفت محور راست</li>
+  <li>غلاف محور خارجی چپ</li>
+  <li>غلاف محور خارجی راست</li>
+  <li>غلاف محور داخلی چپ</li>
+  <li>غلاف محور داخلی راست</li>
+  <li>غلاف محور خارجی چپ</li>
+  <li>غلاف محور خارجی راست</li>
+  <li>سر محور داخلی چپ</li>
+  <li>سر محور داخلی راست</li>
+  <li>پوریه چپ</li>
+  <li>پوریه راست</li>
+  <li>گوش موتور چپ</li>
+  <li>گهواره موتور</li>
+  <li>میله خم</li>
+  <li>جعبه فرمان</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "کنترل‌های سیستم سوخت و اگزوز",
+    content: `<div class="who-we-are">
+                <h2>کنترل‌های سیستم سوخت و اگزوز</h2>
+                <p>سیستم اگزوز سوخت نقطه مهمی در کنترل‌های کارشناسی خودرو دارد.<br>
+
+سیستم اگزوز به دلیل عوامل داخلی و خارجی در معرض شرایط سخت قرار می‌گیرد. اگر توضیح دهیم، سیستم اگزوز در هنگام خروج گازهای مصرف‌شده در سیلندرهای موتور از خودرو استفاده می‌شود. گازهای سوخته هنگام خروج دارای گرما و فشار خاصی هستند. این دماها و فشارها قطعات اگزوز را بیش از حد گرم می‌کنند. در این میان، ممکن است با آب ناگهانی که به اگزوز گرم می‌رسد، خنک شود. در گذر از سرد به گرم و گرم به سرد، اگزوز ممکن است با گذشت زمان تغییر شکل دهد.<br>
+
+سیستم اگزوز که در خودروی در حال حرکت در معرض همه این‌ها قرار دارد، همچنین از عوامل خارجی مانند سنگ، گل، آب، خاک، شن و ... تأثیر می‌گیرد. در اجزای اگزوز سوخت که در چنین شرایط سختی کار می‌کنند، با گذشت زمان مشکلاتی مانند سوراخ شدن، ترک خوردن، عملکرد نامنظم، نشتی، بوی سوخت و غیره رخ می‌دهد. این شرایط به طور منفی بر عملکرد خودرو تأثیر می‌گذارند و باعث مصرف سوخت اضافی می‌شوند. علاوه بر این، با خروج گازهای مضر بدون پردازش (بدون کاهش آسیب)، به طبیعت و سلامت انسان آسیب می‌رساند.<br>
+
+به همین دلایل، ما تأکید می‌کنیم که مشتریانمان که قصد خرید خودروی دست دوم دارند، قبل از خرید به شعب کارشناسی خودرو داینومارک مراجعه کرده و کنترل‌های سیستم اگزوز سوخت خودرو را انجام دهند.<br>
+
+در کارشناسی خودرو داینومارک، کنترل‌های سیستم اگزوز سوخت توسط مکانیک‌های موتور به صورت حرفه‌ای، بی‌طرفانه و با جزئیات در محیط روشن روی بالابر خودرو کنترل می‌شوند. در عین حال، سیستم اگزوز سوخت در حالی که خودرو در حال کار است بررسی می‌شود.<br>
+
+در کنترل‌های اگزوز سوخت ما، بسیاری از عملکردها و قطعات مانند سوراخ‌ها، ترک‌ها، تغییر شکل‌ها، نشتی‌ها، عملکرد نامنظم، دود سیاه، مصرف سوخت خام در اجزای اگزوز و سوخت خودرو بررسی شده و گزارش می‌شوند. در طول این کنترل، نقاط کنترلی زیر بررسی می‌شوند.
+                    </p>
+                    <ul>
+  <li>سنسور اکسیژن</li>
+  <li>لوله سوخت</li>
+  <li>فیلتر سوخت</li>
+  <li>خنک‌کننده سوخت</li>
+  <li>منفیلد اگزوز</li>
+  <li>کاتالیزور</li>
+  <li>لوله اگزوز</li>
+  <li>افشانک اگزوز</li>
+  <li>خاموش‌کننده میانی</li>
+  <li>خاموش‌کننده عقب</li>
+  <li>لوله مخزن سوخت</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "کارشناسی داخلی/کنترل‌های الکترونیکی",
+    content: `<div class="who-we-are">
+                <h2>کارشناسی داخلی/کنترل‌های الکترونیکی</h2>
+                <p>در خرید و فروش خودروهای دست دوم، کنترل‌های کارشناسی داخلی جایگاه مهمی در کارشناسی خودرو دارند. کنترل‌های کارشناسی داخلی/الکترونیکی یکی از نقاط کنترلی کارشناسی خودرو است که مشتریان ما در خرید و فروش خودروهای دست دوم اغلب ترجیح می‌دهند. به لطف کنترل‌های انجام‌شده قبل از خرید خودرو، خریداران خودرو اطلاعات دقیقی در مورد خودرو دارند. به لطف این اطلاعات، وضعیت لحظه‌ای خودرو را می‌دانند و بر این اساس خودرو را خریداری می‌کنند. پس از خرید با هیچ شگفتی اضافی مواجه نمی‌شوند.</p>
+                
+                <h2>در کارشناسی داخلی/کنترل‌های الکترونیکی داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+                <p>
+                    در کارشناسی خودرو داینومارک، کنترل‌های کارشناسی داخلی/الکترونیکی توسط استادکاران ما به صورت حرفه‌ای، بی‌طرفانه و با جزئیات بررسی می‌شوند. هر نقطه کنترلی از نظر تغییر شکل، پارگی، خراش، شکستگی و وضعیت عملکرد بر اساس عملکرد آن بررسی شده و گزارش می‌شود. اگر در هر نقطه‌ای تغییری وجود داشته باشد، با تصاویر گزارش شده و در طول ارائه توضیح داده می‌شود.<br>
+
+در کارشناسی خودرو داینومارک، نقاط کنترلی زیر هنگام انجام کنترل‌های کارشناسی داخلی/الکترونیکی بررسی می‌شوند.
+                    </p>
+                   <ul>
+  <li>صفحه ابزار</li>
+  <li>بوق</li>
+  <li>مجموعه دکمه درب جلوی چپ</li>
+  <li>دکمه‌های شیشه</li>
+  <li>دکمه‌های کنترل چراغ جلو</li>
+  <li>دکمه‌های کنترل آینه</li>
+  <li>آینه عقب داخلی</li>
+  <li>پخش‌کننده رادیو CD</li>
+  <li>پنل کنترل گرمایش کولر</li>
+  <li>شبکه‌های تهویه</li>
+  <li>آفتاب‌گیر</li>
+  <li>کمربند ایمنی</li>
+  <li>نورپردازی داخلی</li>
+  <li>فرمان</li>
+  <li>دنده</li>
+  <li>کلید فلاشر-ترمز پارک</li>
+  <li>اهرم ترمز دستی</li>
+  <li>تورپدو</li>
+  <li>سنسور پارک</li>
+  <li>تزئینات داخلی درب</li>
+  <li>صندلی جلوی چپ</li>
+  <li>صندلی جلوی راست</li>
+  <li>صندلی‌های عقب</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "تست دینو",
+    content: `<div class="who-we-are">
+                <h2>تست دینو</h2>
+                <p>در طول این تست، موتور خودرو از پایین‌ترین دورها به دورهای بالاتر برده می‌شود. در طول تست، تعویض دنده‌ها، سیستم خنک‌کننده، گاز اگزوز، نویز موتور و کنترل‌های لرزش انجام می‌شود. عملکرد موتور با مقایسه مقدار توان کارخانه‌ای با نتیجه تست تعیین می‌شود.<br>
+
+با توجه به ویژگی سیستم کشش خودرو که به تست قدرت دینو برده می‌شود، شرایط عملکرد سیستم انتقال قدرت مانند 4x4 / 4x2 یا چرخ‌های جلو محرک / چرخ‌های عقب محرک بررسی می‌شود. تست دینامومتر همچنین به ما امکان می‌دهد تا میزان توان تولیدشده توسط موتور خودرو که به چرخ‌ها منتقل می‌شود را تعیین کنیم. همچنین به ما اجازه می‌دهد تا عناصری مانند سیستم کلاچ، گیربکس، دیفرانسیل، شفت، محور که از قطعات سیستم انتقال قدرت هستند را عیب‌یابی کنیم.<br>
+
+در طول تست قدرت دینو، لرزش موتور، بال‌های چرخ، لرزش داخل خودرو نیز بررسی می‌شود. تست قدرت دینو یک شبیه‌سازی رانندگی است که به ما امکان می‌دهد واکنش‌های خودروی شما را در حین رانندگی ببینیم.</p>
+              </div>`
+  },
+    {
+    title: "کنترل‌های کارشناسی خارجی",
+    content: `<div class="who-we-are">
+                <h2>کنترل‌های کارشناسی خارجی</h2>
+                <p>در خرید و فروش خودروهای دست دوم، کنترل‌های کارشناسی خارجی جایگاه مهمی در کارشناسی خودرو دارند. در خرید و فروش خودروهای دست دوم، کنترل‌های کارشناسی خارجی یکی از نقاط کنترلی کارشناسی خودرو است که مشتریان ما اغلب ترجیح می‌دهند. به لطف کنترل‌های انجام‌شده قبل از خرید خودرو، افرادی که قصد خرید خودرو دارند اطلاعات دقیقی در مورد خودرو دارند. به لطف این اطلاعات، وضعیت لحظه‌ای خودرو را می‌دانند و بر این اساس خودرو را خریداری می‌کنند. به این ترتیب، پس از خرید با هیچ شگفتی اضافی مواجه نمی‌شوند.</p>
+                
+                <h2>چرا کنترل‌های کارشناسی خارجی در داینومارک مهم است؟</h2>
+                <p>
+                    این بخشی است که قطعاتی که کاربران را قادر به ارتباط با محیط در حین رانندگی می‌کنند، کنترل می‌شوند. با عملکرد منظم این قطعات، رانندگی کنترل‌شده‌ای انجام می‌شود و می‌تواند در شرایط آب و هوایی بارانی، برفی و مه‌آلود، سایر وسایل نقلیه در حال حرکت را از حرکات و مانورهای انجام‌شده مطلع کند. به این ترتیب، خطر تصادف را به حداقل می‌رسانیم.
+                    </p>
+               <h2>در کنترل‌های کارشناسی خارجی داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+               <p>
+                در کارشناسی خودرو داینومارک، کنترل‌های کارشناسی خارجی توسط استادکاران ما به صورت حرفه‌ای، بی‌طرفانه و با جزئیات بررسی می‌شوند. هر نقطه کنترلی بر اساس عملکرد آن، از نظر تغییر شکل، پارگی، خراش، شکستگی و وضعیت عملکرد بررسی شده و گزارش می‌شود. اگر در هر نقطه‌ای وضعیت غیرفعال یا تغییری وجود داشته باشد، با تصاویر گزارش شده و در طول ارائه توضیح داده می‌شود.</p>
+                    <ul>
+  <li>بررسی شماره شاسی</li>
+  <li>شیشه جلو</li>
+  <li>شیشه عقب</li>
+  <li>شیشه جلوی چپ</li>
+  <li>شیشه عقب چپ</li>
+  <li>شیشه جلوی راست</li>
+  <li>شیشه عقب راست</li>
+  <li>شیشه پروانه‌ای چپ</li>
+  <li>سقف شیشه‌ای سانروف</li>
+  <li>دستگیره‌های درب خارجی</li>
+  <li>آینه عقب چپ</li>
+  <li>آینه عقب راست</li>
+  <li>چراغ جلوی چپ</li>
+  <li>چراغ جلوی راست</li>
+  <li>چراغ مه‌شکن چپ</li>
+  <li>چراغ مه‌شکن راست</li>
+  <li>سیگنال چپ</li>
+  <li>سیگنال راست</li>
+  <li>استپ راست</li>
+  <li>استپ چپ</li>
+  <li>استپ داخلی راست</li>
+  <li>استپ داخلی چپ</li>
+  <li>سنسور پارک</li>
+  <li>نورپردازی پلاک</li>
+  <li>برف‌پاک‌کن‌ها</li>
+  <li>شستشوی چراغ جلو</li>
+  <li>کنترل‌های داخلی صندوق عقب</li>
+  <li>کمک‌فنر صندوق عقب</li>
+  <li>لاستیک زاپاس</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "کنترل‌های بالای موتور",
+    content: `<div class="who-we-are">
+                <h2>کنترل‌های بالای موتور</h2>
+                <p>کارشناسی خودرو داینومارک یکی از نقاط کنترلی در طول بررسی‌های کارشناسی خودرو در خرید و فروش خودروهای دست دوم است.<br>
+
+کنترل‌های بالای موتور: بخشی است که قسمت‌های بالایی موتور که با باز کردن کاپوت خودرو با آن مواجه می‌شویم، بررسی می‌شوند. کنترل‌های بالای موتور ما به صورت حرفه‌ای توسط مکانیک‌های موتور ما به طور دقیق و بی‌طرفانه بررسی می‌شوند. نقص‌های یافت‌شده در طول این بازرسی‌ها عکاسی شده و به طور دقیق گزارش می‌شوند.</p>
+                
+                <h2>در بررسی‌های موتور داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+                <p>
+                   در طول بررسی‌ها، استادکاران مکانیک موتور ما، کنترل‌های بالای موتور؛ جزئیات زیادی مانند سطح روغن موتور، درجه ضد یخ، نشتی‌های روغن موتور، بال‌ها، عملکرد بلند موتور، صداهای موتور، وضعیت عملکرد موتور، اندازه‌گیری باتری بررسی می‌شوند.<br>
+
+ما بر اهمیت مراجعه مشتریانمان که قصد خرید خودروی دست دوم دارند به شعب کارشناسی خودرو داینومارک قبل از خرید و انجام کنترل‌های بالای موتور خودرو تأکید می‌کنیم.
+                    </p>
+                   <ul>
+  <li>نقاط کنترلی</li>
+  <li>عایق گرما و صدای کاپوت</li>
+  <li>پوشش گرد و غبار موتور</li>
+  <li>کابینت فیلتر هوا</li>
+  <li>انژکتور</li>
+  <li>خط سوخت انژکتور</li>
+  <li>پمپ سوخت</li>
+  <li>قرقره تسمه V و کامپیوتر</li>
+  <li>لوله کولر</li>
+  <li>پمپ فرمان</li>
+  <li>محفظه ترموستات</li>
+  <li>لوله خنک‌کننده موتور</li>
+  <li>شاخص خنک‌کننده</li>
+  <li>میله کنترل سطح روغن</li>
+  <li>مخزن روغن هیدرولیک ترمز</li>
+  <li>مخزن روغن فرمان هیدرولیک</li>
+  <li>خنک‌کننده روغن</li>
+  <li>پوشش سوپاپ راکر</li>
+  <li>نشتی روغن</li>
+  <li>پوشش جلوی موتور</li>
+  <li>بیلت فیلتر روغن</li>
+  <li>واشر جلوی موتور</li>
+  <li>سوختن روغن بخار موتور</li>
+  <li>نصب الکتریکی موتور</li>
+  <li>باتری</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "کنترل موتور و سیستم انتقال قدرت",
+    content: `<div class="who-we-are">
+                <h2>کنترل موتور و سیستم انتقال قدرت</h2>
+                <p>کارشناسی خودرو داینومارک یکی دیگر از نقاط کنترلی در طول بررسی‌های کارشناسی خودرو در خرید و فروش خودروهای دست دوم، کنترل بالای موتور است.<br>
+
+کنترل‌های گروه موتور و انتقال قدرت: کنترل‌های گروه موتور و انتقال قدرت ما به صورت حرفه‌ای توسط مکانیک‌های موتور ما به طور دقیق و بی‌طرفانه بررسی می‌شوند. نقص‌های یافت‌شده در طول این بررسی‌ها عکاسی شده و به طور دقیق گزارش می‌شوند.</p>
+                
+                <h2>در کنترل‌های گروه موتور و انتقال قدرت داینومارک چه چیزهایی بررسی می‌شود؟</h2>
+                <p>
+                   در طول بازرسی‌ها، مکانیک‌های موتور ما گروه موتور و انتقال قدرت را بررسی می‌کنند؛ جزئیات زیادی مانند شکستگی، خسارت، تعویض دنده‌ها، کلاچ، نشتی‌ها در اینترکولر و شیلنگ‌ها، نشتی‌های روغن در بلوک موتور بررسی می‌شوند.<br>
+
+ما بر اهمیت مراجعه مشتریانمان که قصد خرید خودروی دست دوم دارند به شعب کارشناسی خودرو داینومارک قبل از خرید و انجام کنترل‌های گروه موتور و انتقال قدرت خودرو تأکید می‌کنیم.
+                    </p>
+                    <ul>
+  <li>نقاط کنترلی</li>
+  <li>کاپوت جلوی چپ</li>
+  <li>کاپوت جلوی راست</li>
+  <li>کاپوت عقب چپ</li>
+  <li>کاپوت عقب راست</li>
+  <li>رادیاتور آب موتور</li>
+  <li>توربو</li>
+  <li>اینترکولر</li>
+  <li>پوشش جلوی موتور</li>
+  <li>بلوک موتور</li>
+  <li>سرسیلندر</li>
+  <li>تشت روغن</li>
+  <li>پلاگ تشت</li>
+  <li>مهر و موم کرانک</li>
+  <li>مهر و موم عقب کرانک</li>
+  <li>بخش آستین گیربکس</li>
+  <li>توپ کلاچ</li>
+  <li>چنگال کلاچ</li>
+  <li>فشار کلاچ</li>
+  <li>لنت کلاچ</li>
+  <li>چرخ طیار</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "تست تشخیصی (تست مغز)",
+    content: `<div class="who-we-are">
+                <h2>تست تشخیصی (تست مغز)</h2>
+                <p>با تست تشخیصی، واحدهای کنترلی که تمام سیستم‌های الکترونیکی و الکترومکانیکی خودروی شما را مدیریت می‌کنند، تماس گرفته می‌شود. تمام اعلان‌های خطای غیرفعال و فعال ثبت‌شده در واحد کنترل خودرو (مغز) شناسایی شده و گزارش تولید می‌شود.<br>
+
+پس از این بررسی‌ها، مشخص می‌شود که آیا سیستم‌های الکترونیکی و الکترومکانیکی خودرو مانند تزریق موتور، موتور، تولید نیرو، ABS، ESP، ASR، EDC، ایربگ، گیربکس اتوماتیک، سیستم کشش انتقال قدرت فعال یا غیرفعال هستند و آیا در محدوده مقادیر صحیح کار می‌کنند.<br>
+
+تست تشخیصی همچنین تمام سیستم‌های سیگنالینگ، راحتی و ایمنی خودروی شما را بررسی می‌کند. مدولاتور ABS، سیستم فعال‌سازی و بادکننده ایربگ، سیستم قفل کمربندهای ایمنی، شبکه‌های تشخیص مسافر زیر صندلی، سنسورهای برخورد ایربگ، کابل ایربگ، سوکت و خط متصل به مقاومت و دستکاری‌های ولتاژ بالا نیز شناسایی می‌شوند. تمام اتصالات کوتاه در سیستم تعیین می‌شوند.<br>
+
+کنترل سیستم کشش 4x4 خودروی شما، شیرهای سلنوئید گیربکس اتوماتیک و تجاوزهای حد پایین و بالای تعویض دنده انتقال نیز بررسی می‌شوند.<br>
+
+با تست تشخیصی، شرایط عملکرد ویژگی‌های راحتی خودروی شما نیز می‌تواند تعیین شود. دکمه‌های شیشه، دکمه‌های کنترل فرمان مدولار، سیستم ردیابی خط، کمک پارک، چراغ‌های جلو، سیگنال‌ها، استپ‌ها، نورپردازی داخلی، چراغ‌های پلاک، سیستم صوتی، ایموبلایزر، کنترل از راه دور، کد کلید، سنسور زاویه فرمان، سیستم شستشوی چراغ جلو، سانروف، سنسور چراغ و باران، پشتیبانی شروع تپه، تمام سیستم‌هایی که خودروی شما دارد و آن را متفاوت می‌کند نیز بررسی می‌شوند.<br>
+
+کیفیت دستگاه تست استفاده‌شده هنگام انجام تست‌های تشخیصی روی خودروی شما و برنامه دارای مجوز استفاده‌شده بسیار مهم است. کارشناسی خودرو داینومارک از دستگاه تست HELLA GUTMANN SOLUTIONS که در اروپا ترجیح داده می‌شود در تمام شعب خود استفاده می‌کند.</p>
+              </div>`
+  },
+    {
+    title: "استعلام بدهی/خسارت/تغییر/کیلومتر/جزئیات خودرو",
+    content: `<div class="who-we-are">
+                <h2>استعلام بدهی/خسارت/تغییر/کیلومتر/جزئیات خودرو</h2>
+                <p>این امکان را به شما می‌دهد تا اطلاعاتی در مورد خسارت و هزینه خسارت خودروی مورد نظر برای خرید، در صورت وجود، خسارت‌ها و هزینه‌های گذشته، استعلام قطعات تعویضی و استعلام مسافت پیموده شده بر اساس بازرسی دریافت کنید. نتایج از مرکز اطلاعات و نظارت بیمه (SBM) به دست می‌آیند.</p>
+              </div>`
+  },
+    {
+    title: "تست ترمز/تعلیق/لغزش جانبی",
+    content: `<div class="who-we-are">
+                <h2>تست ترمز</h2>
+                <p>با تست ترمز در خدمات کارشناسی خودرو، نیروی ترمز منتقل‌شده به چرخ‌های خودرو تعیین می‌شود. نرخ انحراف در هنگام ترمز مشخص می‌شود. این توزیع برای توقف ایمن بسیار مهم است. عملکرد کمک‌فنرها که یکی از قطعات اصلی سیستم تعلیق هستند، بررسی می‌شود. این تست برای رانندگی ایمن بسیار مهم است. با تست لغزش جانبی، مقاومت‌های انحرافی اعمال‌شده توسط چرخ‌ها به جاده تعیین می‌شود. این تست برای هندلینگ ایمن بسیار مهم است.<br>
+
+با تست ترمز، چسبندگی لاستیک‌های خودرو، لنت‌های ترمز و دیسک‌های ترمز شناسایی می‌شود. عملکرد سیستم ترمز دستی و توزیع قدرت ترمز بر کل سیستم ترمز تعیین می‌شود. عملکرد صحیح سیستم‌های ترمز خودروها برای ایمنی رانندگی حیاتی است.</p>
+                
+                <h2>تست کمک‌فنر</h2>
+                <p>
+                    کنترل‌های کلی سیستم کمک‌فنر و تمام قطعات خودروهایی که وارد ایستگاه تست کمک‌فنر می‌شوند، ارائه می‌شود. گوه بالایی کمک‌فنر و بوش‌های اتصال پایین، و همچنین صداها و مقادیر عملکرد کل سیستم در طول عملیات تعیین می‌شوند. نحوه عملکرد کمک‌فنرها از نظر چسبندگی جاده و مقاومت خودرو در برابر باد بسیار مهم است.
+                    </p>
+                 <h2>تست لغزش جانبی</h2>
+                <p>
+                    با اندازه‌گیری لغزش جانبی، زوایای تمام چرخ‌های خودرو تعیین می‌شود. تمام اعوجاج‌های زاویه‌ای در گروه محورهای جلو و عقب مشخص می‌شوند. تمام انحناها و انحرافات گروه محورهای جلو و عقب که پس از تصادف یا در هنگام عبور از گودال‌ها و سرعت‌گیرهای سخت رخ می‌دهند نیز توسط تست لغزش جانبی تعیین می‌شوند.
+                    </p>
+                    
+              </div>`
+  },
+    {
+    title: "تست نشت کربن",
+    content: `<div class="who-we-are">
+                <h2>تست نشت کربن</h2>
+                <p>تست نشت کربن یک تست و تشخیص نشتی‌ها و ترک‌هایی است که ممکن است روی سطوح بلوک و سرسیلندر خودروی شما با مایع شیمیایی ویژه ایجاد شود. این تست یکی از تست‌های حیاتی برای موتور خودرو است که برای تعیین اینکه آیا خودروی شما در گذشته مشکل مربوط به واشر یا مشکل گرمای بیش از حد داشته است و آیا این نقص‌ها در حال حاضر موجود هستند، استفاده می‌شود.</p>
+              </div>`
+  },
+    {
+    title: "تست رانندگی جاده‌ای",
+    content: `<div class="who-we-are">
+                <h2>تست رانندگی جاده‌ای</h2>
+                <p>با این تست، فروشنده و خریدار خودرویی که تمام کنترل‌های آن در کارگاه تکمیل شده است، به تست رانندگی جاده‌ای دعوت می‌شوند. سیستم ترمز، سیستم کمک‌فنر، چسبندگی جاده، عایق صوتی داخل خودرو، کشش موتور و سیستم‌های انتقال خودرو بار دیگر بررسی شده و گزارش ایجاد می‌شود.<br>
+
+استعلام خسارت/استعلام تغییر/استعلام کیلومتر<br>
+
+این امکان را به شما می‌دهد تا اطلاعاتی در مورد خسارت‌ها و هزینه‌های گذشته خودروی مورد نظر برای خرید، در صورت وجود، دریافت کنید. نتایج از مرکز اطلاعات و نظارت بیمه (SBM) به دست می‌آیند. علاوه بر این، تغییرات قطعات پلاستیکی و مکانیکی ثبت‌شده توسط سوابق ترامر نیز در استعلام قطعات تعویضی تأیید می‌شود. تاریخ‌های ثبت بازرسی فنی خودرو و اطلاعات کیلومتر دسترسی پیدا می‌کند. نتایج از طریق سیستم PTT AVM دریافت می‌شود.</p>
+              </div>`
+  },
+    {
+    title: "گارانتی تشخیص رنگ یک ساله-2500 کیلومتر",
+    content: `<div class="who-we-are">
+                <h2>گارانتی تشخیص رنگ یک ساله-2500 کیلومتر (گارانتی داینومارک)</h2>
+                <p>با تضمین داینومارک، کنترل‌های رنگ بدنه خودروی شما در خرید و فروش خودروهای دست دوم تحت گارانتی است.</p>
+                               <h2>گارانتی داینومارک (پوشش گارانتی تشخیص رنگ)</h2>
+                <p>سقف، کاپوت، گلگیر جلوی چپ، درب جلوی چپ، درب جلوی چپ، درب عقب چپ، گلگیر عقب چپ، ستون مرکزی چپ، ستون جلوی چپ، ستون بالایی چپ، ستون داخلی عقب چپ، صندوق عقب، ورق حوضچه، پنل عقب، گلگیر عقب راست، درب عقب راست، درب جلوی راست، درب جلوی راست، گلگیر جلوی راست، ستون جلوی راست، ستون مرکزی راست، ستون بالایی راست، ستون داخلی عقب راست، پنل جلو، شاسی جلوی چپ، شاسی جلوی راست، صفحه تفنگ چپ، صفحه تفنگ راست، شاسی عقب چپ، شاسی عقب راست، صفحه پایه چپ، صفحه پایه راست، پنل راکر چپ، نقاط کنترلی پنل راکر راست.</p> 
+                                <h2>گارانتی داینومارک (شرایط و دامنه گارانتی تشخیص رنگ)</h2>
+                <p>یک سال یا 2500 کیلومتر از مسافت مشخص‌شده برای خودرو در گزارش کارشناسی.<br>
+
+خودروهایی که در زمان فرآیند ارزیابی بیش از 20 سال سن دارند یا پس از فرآیند ارزیابی بیش از 20 سال سن دارند، تحت پوشش گارانتی قرار نمی‌گیرند.<br>
+
+حتی اگر خودروی موضوع قرارداد یک سال را تکمیل نکرده یا 2500 کیلومتر را طی نکرده باشد، برای بهره‌مندی از شرایط گارانتی، نباید در این دوره یا مسافت در تصادف شرکت کرده باشد و نباید پرونده ترامر باز یا بسته شده باشد.<br>
+
+به همین ترتیب، فرورفتگی‌ها، خراش‌ها، تعمیرات گودی، پوشش سرامیکی، محافظت از رنگ، اصلاح فرورفتگی بدون رنگ، رنگ موضعی، عملیات رتوش نباید پس از گزارش کارشناسی انجام شود، و عملیات، تنظیم، جداسازی و مونتاژ روی پیچ‌ها، گیره‌ها، حلقه‌های قفل، پرچ‌ها، پیچ‌هایی که قطعات بدنه را ثابت می‌کنند نباید انجام شود. مقادیر ضخامت رنگ میکرون مشخص‌شده در گزارش کارشناسی نباید متفاوت باشد.<br>
+
+برای اطلاعات دقیق، می‌توانید سیاست گارانتی ما را مطالعه کنید.</p>
+              </div>`
+  },
+      {
+    title: "گارانتی مکانیکی (تور اسیست)",
+    content: `<div class="who-we-are">
+                <h2>گارانتی مکانیکی موتور تور اسیست</h2>
+                <p>کارشناسی خودرو داینومارک پس از خدمات کارشناسی خودرو در خرید و فروش خودروهای دست دوم، گارانتی مکانیکی موتور را با تور اسیست به مشتریان خود ارائه می‌دهد. گارانتی مکانیکی موتور تور اسیست؛ نوعی گارانتی است که خودروی شما را در برابر نقص‌های احتمالی پوشش می‌دهد و می‌توان آن را به عنوان بیمه سلامت خصوصی خودروها در نظر گرفت.<br>
+
+در خودروهای دست دوم، گارانتی مکانیکی موتور هزینه‌های ناشی از نقص‌های احتمالی را با تضمین قطعات گران‌قیمت مانند موتور و گیربکس که بزرگ‌ترین هزینه را در خودروی شما ایجاد می‌کنند، در صورت بروز نقص‌ها در دوره وعده داده‌شده، پوشش می‌دهد.<br>
+
+شما می‌توانید از دو خدمت ارائه‌شده توسط تور اسیست بهره‌مند شوید. بر اساس بسته‌های کارشناسی خودرو که انتخاب خواهید کرد؛<br>
+
+<b>گارانتی مکانیکی موتور 1 ماهه 1000 کیلومتر و</b><br>
+<b>گارانتی مکانیکی موتور 3 ماهه 5000 کیلومتر می‌توانید از دو گارانتی مکانیکی موتور مختلف بهره‌مند شوید.</b>
+</p>
+                               <h2>مزایای گارانتی تور اسیست برای مشتریان ما</h2>
+                <p> - گارانتی خودروی دست دوم "گارانتی تور اسیست" شما را از بار مالی خرابی‌های مکانیکی و الکتریکی که ممکن است خودروی شما با آن مواجه شود، نجات می‌دهد.<br>
+ - بحرانی‌ترین قطعات خودرو، هزینه‌های کار و خدمات کمک جاده‌ای را پوشش می‌دهد.<br>
+
+ - گارانتی می‌تواند برای خودروهای ذکرشده در زیر اعمال شود، به شرطی که معیارهای مربوطه را برآورده کنند.<br>
+
+خودروهای سواری و وسایل نقلیه تجاری سبک؛<br>
+
+. بیش از 8 سال سن نداشته باشند و<br>
+
+.160.000 کیلومتر کمتر باشد.<br>
+
+حد 1 ماه 1000 کیلومتر (1 ماه برای گارانتی مکانیکی موتور)<br>
+
+حد 3 ماه 5000 کیلومتر (3 ماه برای گارانتی مکانیکی موتور) تجاوز نکند.</p> 
+                                <h2>نقاط تحت پوشش گارانتی<br>
+                                    موتور<br>
+                                    گیربکس دستی</h2>
+                                    <p></p>
+                                    <ul>
+  <li>سرسیلندر و واشر</li>
+  <li>سوپاپ‌های ورودی و خروجی (به جز سوخته‌ها)</li>
+  <li>تپت‌های سوپاپ (شامل تنظیم‌کننده‌های هیدرولیکی)</li>
+  <li>فنرهای سوپاپ و غده‌های سوپاپ</li>
+  <li>میل بادامک و تپت‌ها</li>
+  <li>تسمه تایمینگ، چرخ‌دنده‌ها و زنجیرها</li>
+  <li>پمپ روغن</li>
+  <li>پیستون‌ها و رینگ‌های پیستون</li>
+  <li>لاینرهای سیلندر</li>
+  <li>میل لنگ و یاتاقان‌ها</li>
+  <li>منفیلد ورودی</li>
+  <li>بلوک موتور</li>
+  <li>چرخ‌دنده‌های داخلی گیربکس</li>
+  <li>زردهای سینکرمش و لانه‌ها</li>
+  <li>انتخاب‌کننده‌های دنده</li>
+  <li>شفت‌ها</li>
+  <li>یاتاقان‌ها و بوش‌ها</li>
+  <li>چرخ‌دنده‌های انتقال</li>
+</ul>
+
+<h2>گیربکس اتوماتیک</h2>
+    <p></p>
+    <ul>
+  <li>شفت‌های داخلی</li>
+  <li>چرخ‌دنده‌ها</li>
+  <li>نوارهای ترمز</li>
+  <li>کاهنده</li>
+  <li>پمپ فشار روغن</li>
+  <li>یاتاقان‌ها و بوش‌ها</li>
+  <li>سروو و صفحه</li>
+  <li>چرخ‌دنده‌های انتقال</li>
+</ul>
+
+<h2>CTX / CVT / POWERSHIFT / DURASHIFT و دیگر گیربکس‌های اتوماتیک / نیمه‌اتوماتیک</h2>
+    <p></p>
+<ul>
+  <li>چرخ‌دنده‌های سیاره‌ای</li>
+  <li>چرخ‌دنده‌های کاهنده</li>
+  <li>شفت‌ها</li>
+  <li>کویل‌های متغیر</li>
+  <li>حلقه‌های فشار</li>
+  <li>مهر و موم‌های داخلی</li>
+  <li>یاتاقان‌ها و بوش‌ها</li>
+  <li>واحد تعویض دنده هیدروالکترونیکی</li>
+</ul>
+
+<h2>مبدل گشتاور و توربوشارژر</h2>
+    <p></p>
+    <ul>
+  <li>در صورت خرابی هر قطعه مکانیکی داخلی. (به شرطی که ابتدا بازسازی شده باشد)</li></ul>
+
+  <h2>سیستم الکتریکی</h2>
+    <p></p>
+<ul>
+  <li>موتور استارت</li>
+  <li>سلونوئید بالای موتور استارت</li>
+  <li>کارگران</li>
+  <li>شفت‌ها</li>
+  <li>یاتاقان‌ها و بوش‌ها</li>
+</ul>
+
+
+  <h2>دیفرانسیل</h2>
+    <p></p>
+<ul>
+  <li>چرخ‌دنده‌های رینگ و پینیون</li>
+  <li>چرخ‌دنده‌ها</li>
+  <li>شفت‌ها</li>
+  <li>یاتاقان‌ها و بوش‌ها</li>
+</ul>
+
+  <h2>مزایای کمک جاده‌ای</h2>
+    <p></p>
+<ul>
+  <li>سازمان‌دهی کمک جاده‌ای – حمل و نقل 50 کیلومتر</li>
+  <li>یدک‌کش خودرو – 500 لیره</li>
+  <li>سفر بازگشت به محل اقامت دائم یا ادامه سفر – نامحدود</li>
+  <li>اقامت به دلیل عدم دسترسی به خودرو – 150 لیره / شب (حداکثر 2 شب)</li>
+  <li>سفر برای تحویل گرفتن خودروی تعمیرشده – نامحدود</li>
+</ul>
+
+
+</div>`
+  },
+];
+
+// 2. Grab all buttons
+const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+const modal = document.getElementById('card-modal');
+const modalBody = document.getElementById('modal-body');
+const modalClose = document.getElementById('modal-close');
+
+// 3. Open modal on button click
+cardButtons.forEach((btn, index) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault(); // prevent default link behavior
+    modalBody.innerHTML = cardContents[index].content || "<p>محتوای تعریف‌شده‌ای وجود ندارد</p>";
+    modal.style.display = 'flex';
+  });
+});
+
+// 4. Close modal
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+// 5. Close modal if click outside content
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.style.display = 'none';
+});
+</script>
+
+<div class="the-back-btn">
+<a class="news-detail-back" href="index.fa.html" style="text-decoration: none; color: white;">بازگشت</a>
+</div>
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; خانه شماره 56، بین خیابان‌های 5 و 6، کولولا پشتا، مقابل FMFB، PD 04، کابل، افغانستان
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">بسته‌ها</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fa.html">بسته میکرو کارشناسی خودرو</a></li> 
+  <li><a href="pro-package-auto-expertise.fa.html">بسته حرفه‌ای کارشناسی خودرو</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fa.html">بسته حرفه‌ای پلاس کارشناسی خودرو</a></li>
+  <li><a href="gold-package-auto-expertise.fa.html">بسته طلایی کارشناسی خودرو</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fa.html">بسته طلایی پلاس کارشناسی خودرو</a></li>
+  <li><a href="airbag-control-package.fa.html">بسته کنترل ایربگ</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">شعب بین‌المللی</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a></li>
+</ul>
+<!--
+<button class="showall">نمایش همه</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+    <p>	&copy; کپی‌رایت 2020 - 2025 کارشناسی خودرو داینومارک تمام حقوق محفوظ است | توسعه‌یافته توسط <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخی</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

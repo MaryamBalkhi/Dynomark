@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynomark Oto Ekspertiz</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/packages.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>Noter Öncesi <span style="color: red;">&nbsp;Dynomark&nbsp;</span> Güvencesi</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Phone Icon" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">VEYA</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="English" class="flag" />
+      <span>İngilizce</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="gold-plus-package-auto-expertise.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="English" /> İngilizce
+      </li>
+      <li data-value="fa" data-url="gold-plus-package-auto-expertise.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persian" /> Farsça
+      </li>
+      <li data-value="ps" data-url="gold-plus-package-auto-expertise.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pashto" /> Peştuca
+      </li>
+      <li data-value="fr" data-url="gold-plus-package-auto-expertise.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="French" /> Fransızca
+      </li>
+      <li data-value="tr" data-url="gold-plus-package-auto-expertise.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turkish" /> Türkçe
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.tr.html">Ana Sayfa</a></li>
+      <li>
+        <a href="#">Kurumsal &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.tr.html">Biz Kimiz</a></li>
+          <li><a href="photo-gallery.tr.html">Fotoğraf Galerisi</a></li>
+          <li><a href="news-from-us.tr.html">Bizden Haberler</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.tr.html">Paketler</a></li>
+      <li><a href="auto-expertise.tr.html">Oto Ekspertiz</a></li>
+      <li><a href="checkpoints.tr.html">Kontrol Noktaları</a></li>
+      
+      <li><a href="contact.tr.html">Bize Ulaşın</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="logo-dark">
+    <h1>Uluslararası Şubeler</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>Avrupa</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosova</a>
+     
+    </section>
+
+    <section>
+      <h2>Türkiye</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">İstanbul</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">kocaeli</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+    </section>
+
+    <section>
+      <h2>Orta Doğu</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Fas</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Address">
+    <span>Kulola Poshta, FMFB karşısında, PD 04</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Phone">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="Email">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">Gold Plus Paket Oto Ekspertiz</h1>
+    <p class="title-of-page-p"><a href="index.tr.html"><b>Ana Sayfa &sol;</b></a> <a href="packets.tr.html"><b>Paketler &sol;</b></a>Gold Plus Paket Oto Ekspertiz</p>
+</div>
+
+
+<div class="packages-accordion-wrapper">
+    <div class="packages-accordion" id="packagesAccordion">
+      <!-- Items injected here via JS -->
+    </div>
+  </div>
+  <script>
+    // Function to render accordion items for a given language's tests
+    function renderAccordion(tests) {
+      const accordion = document.getElementById('packagesAccordion');
+      // Clear existing content
+      accordion.innerHTML = '';
+
+      tests.forEach((item) => {
+        const accordionItem = document.createElement('div');
+        accordionItem.classList.add('package-item');
+
+        // Header button
+        const button = document.createElement('button');
+        button.classList.add('package-button');
+        button.textContent = item.title;
+
+        // Body
+        const body = document.createElement('div');
+        body.classList.add('package-body');
+        body.innerHTML = item.content;
+
+        // Toggle functionality
+        button.addEventListener('click', () => {
+          const currentlyOpen = accordion.querySelector('.package-body.open');
+
+          if (currentlyOpen && currentlyOpen !== body) {
+            currentlyOpen.classList.remove('open');
+            currentlyOpen.previousElementSibling.classList.remove('active');
+          }
+
+          body.classList.toggle('open');
+          button.classList.toggle('active');
+        });
+
+        accordionItem.appendChild(button);
+        accordionItem.appendChild(body);
+        accordion.appendChild(accordionItem);
+      });
+    }
+
+    // Specify the language to display
+    const selectedLanguage = 'Turkish';
+
+    // Fetch JSON data and render tests for the selected language
+    fetch('packages-data.json')
+      .then(res => res.json())
+      .then(data => {
+        // Find the tests for the selected language
+        const tests = data.find(item => item.language === selectedLanguage).tests;
+        renderAccordion(tests);
+      })
+      .catch(err => console.error('Error loading JSON:', err));
+  </script>
+
+
+</div>
+<div class="the-back-btn">
+<a class="news-detail-back" href="packets.tr.html" style="text-decoration: none; color: white;">Geri</a>
+</div>
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Ev No. 56, 5. ve 6. Sokaklar arasında, Kulola Poshta, FMFB karşısında, PD 04, Kabil, Afganistan
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">Paketler</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.tr.html">Mikro Paket Oto Ekspertiz</a></li> 
+  <li><a href="pro-package-auto-expertise.tr.html">Pro Paket Oto Ekspertiz</a></li>
+  <li><a href="pro-plus-package-auto-expertise.tr.html">Pro Plus Paket Oto Ekspertiz</a></li>
+  <li><a href="gold-package-auto-expertise.tr.html">Gold Paket Oto Ekspertiz</a></li>
+  <li><a href="gold-plus-package-auto-expertise.tr.html">Gold Plus Paket Oto Ekspertiz</a></li>
+  <li><a href="airbag-control-package.tr.html">Hava Yastığı Kontrol Paketi</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">Uluslararası Şubeler</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Fas</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Türkiye</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosova</a></li>
+</ul>
+<!--
+<button class="showall">Hepsini Göster</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+    <p>	&copy; Telif Hakkı 2020 - 2025 Dynomark Oto Ekspertiz Tüm Hakları Saklıdır | Geliştiren: <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

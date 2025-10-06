@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تخصص خودروی دینومارک</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/services.css">
+</head>
+<body style="direction: rtl;">
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>تضمین <span style="color: red;">&nbsp;دینومارک&nbsp;</span> پیش از دفتر اسناد رسمی</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="آیکون تلفن" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="انگلیسی" class="flag" />
+      <span>انگلیسی</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="services.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="انگلیسی" /> انگلیسی
+      </li>
+      <li data-value="fa" data-url="services.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="فارسی" /> فارسی
+      </li>
+      <li data-value="ps" data-url="services.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پشتو" /> پشتو
+      </li>
+      <li data-value="fr" data-url="services.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوی" /> فرانسوی
+      </li>
+      <li data-value="tr" data-url="services.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکی" /> ترکی
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="لوگو">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fa.html">صفحه اصلی</a></li>
+      <li>
+        <a href="#">شرکت &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fa.html">ما کی هستیم</a></li>
+          <li><a href="photo-gallery.fa.html">گالری تصاویر</a></li>
+          <li><a href="news-from-us.fa.html">اخبار ما</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fa.html">بسته‌ها</a></li>
+      <li><a href="auto-expertise.fa.html">تخصص خودرو</a></li>
+      <li><a href="checkpoints.fa.html">نقاط بررسی</a></li>
+      
+      <li><a href="contact.fa.html">تماس با ما</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="لوگو-تیره">
+    <h1>شعب بین‌المللی</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>اروپا</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a>
+     
+    </section>
+
+    <section>
+      <h2>ترکیه</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">آنتالیا</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجالی</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اوردو</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+    </section>
+
+    <section>
+      <h2>خاورمیانه</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="آدرس">
+    <span>کولولا پشتا، مقابل بانک FMFB، ناحیه ۴</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="تلفن">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="ایمیل">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">نقاط بررسی</h1>
+    <p class="title-of-page-p"><a href="index.fa.html"><b>صفحه اصلی &sol;</b></a> نقاط بررسی</p>
+</div>
+
+
+<section class="grid-section">
+  <div class="grid-container">
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div templo="title">آزمایش ترمز</div>
+      <p class="card-text">در آزمایش ترمز پیشرفته که با دستگاه تست ترمز انجام می‌شود، قدرت ترمز و توزیع نیروی ترمز بین چرخ‌های راست و چپ، پتانسیل کنترل تایر در هنگام ترمز، درجه خوبی ترمز که حداکثر نیروی ترمز قابل دستیابی با چرخ قفل نشده را بیان می‌کند، و حداکثر.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">آزمایش تعلیق</div>
+      <p class="card-text">در فرآیند آزمایش تعلیق، گروه تعلیق خودرویی که باید آزمایش شود، با استفاده از دستگاه تست تعلیق با درایو شوک الکتریکی جدا می‌شود. محورهای جلو و عقب به طور جداگانه بررسی شده و عدم تعادل‌های راست-چپ، اصطکاک و نرخ‌های رول تعیین می‌شوند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">آزمایش عملکرد موتور (دینو)</div>
+      <p class="card-text">آزمایش عملکرد موتور خودرو با استفاده از دستگاه دینامومتر انجام می‌شود. دینامومتر دستگاهی برای اندازه‌گیری توان و گشتاور موتور در خودروهای دستی، اتوماتیک با چرخ‌های جلو یا عقب است.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">آزمایش لغزش جانبی</div>
+      <p class="card-text">آزمایش لغزش جانبی دستگاهی است که زوایای TOE (تنظیم میله‌های اتصال) در تیغه‌های جلو و عقب، که عناصر مهم رانندگی ایمن هستند، را در زمان بسیار کوتاهی آزمایش می‌کند.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">آزمایش تشخیصی (OBD)</div>
+      <p class="card-text">روش‌های تشخیص خودکار در مشکلاتی که با خودروی کنونی خود تجربه می‌کنید، اهمیت زیادی دارند. با پیشرفت تکنولوژی خودرو و افزایش جزئیات تکنولوژیک، تشخیص خطا دشوارتر از قبل شده است.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">ارزیابی رنگ بدنه</div>
+      <p class="card-text">ارزیابی رنگ و بدنه توسط استادان خبره و دارای گواهینامه با دستگاه‌های برند Würth با حساس‌ترین ویژگی‌های اندازه‌گیری موجود در جهان انجام می‌شود.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">کنترل‌های مکانیکی زیر/جلو در بالابر</div>
+      <p class="card-text">فنرها و کمک‌فنرها، دمنده‌های محور، لنت‌های ترمز، پلاستیک‌های باکالیت کف، گوه‌های پایینی موتور و گیربکس...</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+<div id="card-modal" class="card-modal">
+  <div class="modal-content">
+    <button id="modal-close" class="close-btn">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<style>
+/* ---------- MODAL STYLING ---------- */
+.card-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 20px;
+  max-width: 1000px;
+  width: 90%;
+  padding: 2rem;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s ease;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+/* ---------- CARD INSIDE MODAL ---------- */
+.card-service-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.card-content {
+  flex: 1;
+  text-align: left;
+}
+
+.card-content h2 {
+  margin-top: 0;
+  color: #222;
+  font-size: 1.6rem;
+}
+
+.card-content h3 {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.card-content p {
+  line-height: 1.6;
+  color: #444;
+}
+
+.card-content ul {
+  list-style: none;
+  margin-top: 0.8rem;
+  padding-left: 0;
+}
+
+.card-content ul li {
+  position: relative;
+  margin-bottom: 0.4rem;
+  color: #000;
+  padding-left: 1.6rem;
+}
+
+.card-content ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: red;
+  font-weight: bold;
+}
+
+.card-image {
+  flex: 0 0 300px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+  .card-service-container {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .card-image {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+  }
+  .card-content {
+    text-align: center;
+  }
+}
+</style>
+
+<script>
+const cardContents = [
+  {
+    title: "آزمایش ترمز",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>آزمایش ترمز</h2>
+        <p>در آزمایش ترمز پیشرفته که با دستگاه تست ترمز انجام می‌شود، قدرت ترمز و توزیع نیروی ترمز بین چرخ‌های راست و چپ، پتانسیل کنترل تایر در هنگام ترمز، درجه خوبی ترمز که حداکثر نیروی ترمز قابل دستیابی با چرخ قفل نشده را بیان می‌کند، و حداکثر شتاب ترمز و عملکرد تقویت‌کننده ترمز قابل تعیین است.</p>
+        <h3>مقادیر اندازه‌گیری</h3>
+        <ul>
+          <li>نیروی ترمز چپ و راست جلو (نیوتن)</li>
+          <li>تفاوت بین ترمزهای جلو (%)</li>
+          <li>نیروی ترمز چپ و راست عقب (نیوتن)</li>
+          <li>تفاوت بین ترمزهای عقب (%)</li>
+          <li>اثربخشی کل ترمز (%)</li>
+          <li>نیروی ترمز دستی راست (نیوتن)</li>
+          <li>نیروی ترمز دستی چپ (نیوتن)</li>
+          <li>نیروی کل".. کل ترمز دستی (%)</li>
+          <li>شتاب کاهش سرعت (متر بر ثانیه مربع)</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img1.jpg" alt="آزمایش ترمز">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "آزمایش تعلیق",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>آزمایش تعلیق</h2>
+        <p>در فرآیند آزمایش تعلیق، گروه تعلیق خودرویی که باید آزمایش شود، با استفاده از دستگاه تست تعلیق با درایو شوک الکتریکی جدا می‌شود. محورهای جلو و عقب به طور جداگانه بررسی شده و عدم تعادل‌های راست-چپ، اصطکاک و نرخ‌های رول تعیین می‌شوند. دستگاه تست تعلیق وگاتک تنها ابزار آزمایشی است که توسط شرکت‌های بزرگ بین‌المللی خودروسازی پذیرفته شده و دقت آن تأیید شده است. با وگاتک، کنترل استحکام تعلیق خودرو، تعادل کمک‌فنر و نسبت‌های نویز بررسی می‌شود. به این ترتیب، گزارش می‌شود که آیا خودرو نسبت نگهداری جاده مورد نیاز را دارد یا خیر.</p>
+        <h3>کنترل‌های انجام شده در دستگاه تست تعلیق</h3>
+        <ul>
+          <li>کنترل کمک‌فنر و فنر</li>
+          <li>کنترل میله خمشی</li>
+          <li>کنترل‌های نوسان</li>
+          <li>کنترل میله اتصال و انتهای میله</li>
+          <li>کنترل توپ‌های چرخ</li>
+          <li>کنترل شفت محور</li>
+          <li>کنترل شفت کاردان</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img2.jpg" alt="آزمایش تعلیق">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "آزمایش عملکرد موتور (دینو)",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>آزمایش عملکرد موتور (دینو)</h2>
+        <p>آزمایش عملکرد موتور خودرو با استفاده از دستگاه دینامومتر انجام می‌شود. دینامومتر دستگاهی برای اندازه‌گیری توان و گشتاور موتور در خودروهای دستی، اتوماتیک با چرخ‌های جلو یا عقب است. این دستگاه حتی کوچک‌ترین ناهنجاری‌های موتور را با نمودارها نشان می‌دهد و امکان مشاهده سیستم احتراق و سیستم ورودی سوخت در این نمودارها وجود دارد. همچنین، به لطف اندازه‌گیری‌های قبل و بعد از اصلاح، قدرت به‌دست‌آمده از فرآیندها را به وضوح تعیین می‌کند.</p>
+        <h3>با آزمایش عملکرد موتور</h3>
+        <ul>
+          <li>اسب بخار موتور (کیلووات، اسب بخار)</li>
+          <li>گشتاور موتور (نیوتن متر)</li>
+          <li>شتاب</li>
+          <li>سیستم انتقال قدرت</li>
+          <li>سیستم‌هایی مانند سیستم احتراق و تأمین سوخت بررسی می‌شوند.</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img3.jpg" alt="آزمایش عملکرد موتور">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "آزمایش لغزش جانبی",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>آزمایش لغزش جانبی</h2>
+        <p>آزمایش لغزش جانبی دستگاهی است که زوایای TOE (تنظیم میله‌های اتصال) در تیغه‌های جلو و عقب، که عناصر مهم رانندگی ایمن هستند، را در زمان بسیار کوتاهی آزمایش می‌کند.</p>
+        <p>این دستگاه فاصله انحراف احتمالی را که ممکن است هنگام رها کردن خودرو بدون دخالت در فرمان در یک جاده مستقیم ۱ کیلومتری رخ دهد، محاسبه و تعیین می‌کند. با توجه به این اختلالات انحراف، مشکلات در مجموعه جلو، تنظیم میله اتصال و شکاف‌های محور را به صورت متر بر کیلومتر تشخیص داده و گزارش می‌دهد.</p>
+        <p>آزمایش لغزش جانبی مشخص می‌کند که آیا تنظیمات میله‌های ساخته‌شده خودرویی که قصد خرید آن را دارید، درست و سالم است یا خیر.</p>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img4.jpg" alt="آزمایش لغزش جانبی">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "آزمایش تشخیصی (OBD)",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>آزمایش تشخیص الکترونیکی (OBD)</h2>
+        <p>روش‌های تشخیص خودکار در مشکلاتی که با خودروی کنونی خود تجربه می‌کنید، اهمیت زیادی دارند. با پیشرفت تکنولوژی خودرو و افزایش جزئیات تکنولوژیک، تشخیص خطا دشوارتر از قبل شده است. به همین دلیل، شناسایی مشکل با استفاده از دستگاه‌های تشخیصی به‌روز اهمیت پیدا می‌کند. ما در تخصص خودروی دینومارک با استفاده از دستگاه‌هایی که با آخرین تکنولوژی کار می‌کنند، حاشیه خطا در تشخیص عیب را به حداقل می‌رسانیم.</p>
+        <h3>چگونه تشخیص عیب انجام می‌شود؟</h3>
+        <p>هنگامی که خودروی شما دچار نقص می‌شود، معمولاً علامت هشداری روی صفحه ابزار ظاهر می‌شود. با این حال، گاهی اوقات حتی بدون علامت هشدار، از راحتی رانندگی می‌توان متوجه وجود مشکل شد. در چنین مواردی، انجام تشخیص خودرو برای درک علت مشکل ضروری است.</p>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img5.jpg" alt="آزمایش OBD">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "ارزیابی رنگ بدنه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>ارزیابی رنگ بدنه</h2>
+        <p>ارزیابی رنگ و بدنه توسط استادان خبره و دارای گواهینامه با دستگاه‌های برند Würth با حساس‌ترین ویژگی‌های اندازه‌گیری موجود در جهان انجام می‌شود. بازرسی‌ها و اندازه‌گیری‌های دقیق در هر نقطه از خودرو انجام می‌شود.</p>
+        <h3>بازرسی شامل:</h3>
+        <ul>
+          <li>بازرسی قطعات تعویض‌شده و رنگ‌شده</li>
+          <li>تشخیص مقادیر میکرون</li>
+          <li>گزارش قطعات پردازش‌شده</li>
+          <li>شاسی جلو، شاسی عقب، برج، گلگیر، ورق‌های در</li>
+          <li>ستون داخلی میانی، سپر جلو، سپر عقب</li>
+          <li>پانل داخلی جلوی موتور، تراورس، کاپوت جلو، ورق سقف</li>
+          <li>شیشه عقب، ورق صندوق عقب، پانل داخلی عقب</li>
+          <li>رینگ‌ها، عیوب رنگ، خراش‌ها، فرورفتگی‌ها</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img6.jpg" alt="ارزیابی رنگ بدنه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "کنترل‌های مکانیکی زیر/جلو در بالابر",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>کنترل‌های مکانیکی زیر/جلو در بالابر</h2>
+        <ul>
+          <li>فنرها و کمک‌فنرها</li>
+          <li>دمنده‌های محور</li>
+          <li>لنت‌های ترمز</li>
+          <li>باکالیت پلاستیکی کف</li>
+          <li>گوه‌های پایینی موتور و گیربکس</li>
+          <li>بوش‌های نوسان وروتیل</li>
+          <li>میله اتصال و انتهای میله</li>
+          <li>مهر و موم روغن دیفرانسیل جلو</li>
+          <li>مهر و موم روغن جعبه فرمان</li>
+          <li>محفظه موتور و مهر و موم روغن موتور</li>
+          <li>کمپرسور تهویه مطبوع و مهر و موم روغن</li>
+          <li>بوش‌های تورسیون و بازوهای تعادل</li>
+          <li>شفت انتقال دیفرانسیل و گوه</li>
+          <li>مخزن سوخت و شیلنگ‌های سوخت</li>
+          <li>نشتی‌های سیستم اگزوز</li>
+          <li>تمام شرایط قابل مشاهده در قسمت زیرین و تیم جلویی بررسی می‌شود.</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img7.jpg" alt="کنترل‌های مکانیکی زیر/جلو">
+      </div>
+    </div>`
+  }
+];
+
+const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+const modal = document.getElementById('card-modal');
+const modalBody = document.getElementById('modal-body');
+const modalClose = document.getElementById('modal-close');
+
+cardButtons.forEach((btn, index) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalBody.innerHTML = cardContents[index].content || "<p>محتوایی تعریف نشده است</p>";
+    modal.style.display = 'flex';
+  });
+});
+
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.style.display = 'none';
+});
+</script>
+
+<div class="the-back-btn">
+<a class="news-detail-back" href="index.fa.html" style="text-decoration: none; color: white;">بازگشت</a>
+</div>
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; خانه شماره ۵۶، بین خیابان ۵ و ۶، کولولا پشتا، مقابل بانک FMFB، ناحیه ۴، کابل، افغانستان
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">بسته‌ها</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fa.html">بسته میکرو تخصص خودرو</a></li> 
+  <li><a href="pro-package-auto-expertise.fa.html">بسته حرفه‌ای تخصص خودرو</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fa.html">بسته حرفه‌ای پلاس تخصص خودرو</a></li>
+  <li><a href="gold-package-auto-expertise.fa.html">بسته طلایی تخصص خودرو</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fa.html">بسته طلایی پلاس تخصص خودرو</a></li>
+  <li><a href="airbag-control-package.fa.html">بسته کنترل ایربگ</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">شعب بین‌المللی</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a></li>
+</ul>
+<!--
+<button class="showall">نمایش همه</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+    </div>
+    <p>	&copy; کپی‌رایت ۲۰۲۰ - ۲۰۲۵ تخصص خودروی دینومارک، تمام حقوق محفوظ است | توسعه‌یافته توسط <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخی</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

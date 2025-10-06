@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تخصص خودرو داینومارک</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/who-are-we.css">
+</head>
+<body style="direction: rtl;">
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>قبل از دفتر اسناد رسمی<span style="color: red;">&nbsp;داینومارک&nbsp;</span>تضمین</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="آیکون تلفن" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="انگلیسی" class="flag" />
+      <span>انگلیسی</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="who-are-we.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="انگلیسی" /> انگلیسی
+      </li>
+      <li data-value="fa" data-url="who-are-we.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="فارسی" /> فارسی
+      </li>
+      <li data-value="ps" data-url="who-are-we.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پشتو" /> پشتو
+      </li>
+      <li data-value="fr" data-url="who-are-we.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوی" /> فرانسوی
+      </li>
+      <li data-value="tr" data-url="who-are-we.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکی" /> ترکی
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="لوگو">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fa.html">خانه</a></li>
+      <li>
+        <a href="#">شرکتی &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fa.html">ما کی هستیم</a></li>
+          <li><a href="photo-gallery.fa.html">گالری تصاویر</a></li>
+          <li><a href="news-from-us.fa.html">اخبار ما</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fa.html">بسته‌ها</a></li>
+      <li><a href="auto-expertise.fa.html">تخصص خودرو</a></li>
+      <li><a href="checkpoints.fa.html">نقاط بررسی</a></li>
+      
+      <li><a href="contact.fa.html">تماس با ما</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="لوگوی تیره">
+    <h1>شعب بین‌المللی</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>اروپا</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a>
+     
+    </section>
+
+    <section>
+      <h2>ترکیه</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">آنتالیا</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجایلی</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اوردو</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+    </section>
+
+    <section>
+      <h2>خاورمیانه</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="آدرس">
+    <span>کولوله پشتا، مقابل بانک FMFB، منطقه 04</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="تلفن">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="ایمیل">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">ما کی هستیم؟</h1>
+    <p class="title-of-page-p"><a href="index.fa.html"><b>خانه &sol;</b></a> ما کی هستیم؟</p>
+</div>
+
+
+<div class="who-we-are">
+    <h2>ما کی هستیم؟</h2>
+    <p>داینومارک یک شرکت مهندسی و نرم‌افزاری فرانچایز است که توسط کارآفرینان و سرمایه‌گذارانی که می‌خواهند کسب‌وکار تخصص خودرو را راه‌اندازی کنند، ترجیح داده می‌شود.</p>
+    <p><strong style="font-size: 22px; color: red;">تخصص خودرو داینومارک</strong></p>
+    <p>از سال ۱۹۸۶، شرکت ما در زمینه‌های مختلف بخش خودرو فعالیت می‌کند.</p>
+    <p>در سال ۲۰۱۰، داینومارک تصمیم گرفت با نام داینومارک در بخش تخصص خودرو برندسازی کند و خدمات تضمین‌شده‌ای را در سراسر ترکیه ارائه دهد و خوشحال است که در این مسیر به سرعت به هدف خود رسیده است.</p>
+    <p>در حال حاضر، شرکت ما که به بیش از ۴۰ نمایندگی تخصص خودرو در سراسر کشور رسیده است، با بهبود بیشتر کیفیت و اعتماد، تعداد نمایندگی‌ها را افزایش می‌دهد و با عزم راسخ به سمت هدف خود برای تبدیل شدن به نام پیشرو در بخش تخصص خودرو پیش می‌رود.</p>
+    <p>نمایندگی‌ها و کارکنان متخصص ما؛ با شرکت در آموزش‌ها و سمینارهای داخلی و بین‌المللی، همیشه پیشرفت‌های فناوری را دنبال می‌کنند و در بخش خودروسازی در حال توسعه به‌روز می‌مانند.</p>
+</div>
+
+<div class="why-dynomark">
+    <h2>چرا داینومارک؟</h2>
+    <p><strong style="font-size: 22px; color: red;">مزایای تبلیغات و ترویج</strong></p>
+    <p>یکی دیگر از مزایای نمایندگی داینومارک، تبلیغات و ترویج است. در شرایط رقابتی امروز، افرادی که قصد راه‌اندازی کسب‌وکار جدیدی دارند، برای موفقیت نیاز به برنامه‌ریزی بودجه تبلیغاتی جدی دارند. زیرا هر چقدر محصول یا خدمات ارائه‌شده با کیفیت باشد، بدون معرفی به مشتریان، موفقیت کسب‌وکار دشوار است. در سیستم فرانچایز، کارآفرین فرانچایز از کمپین‌های تبلیغاتی ملی یا بین‌المللی برندی که حقوق فرانچایز آن را استفاده می‌کند، بهره‌مند می‌شود. کاری که کارآفرین باید انجام دهد تنها تبلیغات و فعالیت‌های بازاریابی محلی در منطقه خود است.</p>
+
+    <p><strong style="font-size: 22px; color: red;">استفاده از قدرت برند</strong></p>
+    <ul>
+        <li>مهم‌ترین مزیت برای کارآفرین در مدل کسب‌وکار فرانچایز، بهره‌مندی از هویت استراتژیک و قدرت برند داینومارک است که در بازار شناخته شده است.</li>
+        <li>به جای زمانی که برای راه‌اندازی کسب‌وکار خود صرف می‌کنید، با سیستم آماده تخصص خودرو داینومارک بدون اتلاف وقت شروع به کسب سود می‌کنید.</li>
+        <li>به لطف سال‌ها دانش، در کوتاه‌ترین زمان ممکن به مزیت رقابتی دست خواهید یافت.</li>
+        <li>شما قادر خواهید بود راه‌حل‌هایی برای مشکلات پیش‌رو پیدا کنید و با وجود شخصی که در هر زمان در دسترس است، هم در زمان و هم از نظر مالی صرفه‌جویی خواهید کرد.</li>
+        <li>از آنجا که این یک سیستم آماده است، زمان کمتری برای تبلیغ شرکت خود صرف می‌کنید و سریع‌تر درآمد کسب می‌کنید.</li>
+    </ul>
+</div>
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; خانه شماره ۵۶، بین خیابان‌های ۵ و ۶، کولوله پشتا، مقابل بانک FMFB، منطقه ۰۴، کابل، افغانستان
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">بسته‌ها</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fa.html">بسته میکرو تخصص خودرو</a></li> 
+  <li><a href="pro-package-auto-expertise.fa.html">بسته حرفه‌ای تخصص خودرو</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fa.html">بسته حرفه‌ای پلاس تخصص خودرو</a></li>
+  <li><a href="gold-package-auto-expertise.fa.html">بسته طلایی تخصص خودرو</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fa.html">بسته طلایی پلاس تخصص خودرو</a></li>
+  <li><a href="airbag-control-package.fa.html">بسته کنترل ایربگ</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">شعب بین‌المللی</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a></li>
+</ul>
+<!--
+<button class="showall">نمایش همه</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+    </div>
+    <p>	&copy; کپی‌رایت ۲۰۲۰ - ۲۰۲۵ تخصص خودرو داینومارک، تمامی حقوق محفوظ است | توسعه‌یافته توسط <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخی</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expertise Automobile Dynomark</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/services.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>Garantie <span style="color: red;">&nbsp;Dynomark&nbsp;</span> avant notaire</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Icône de téléphone" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">ou</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="Anglais" class="flag" />
+      <span>Anglais</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="services.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="Anglais" /> Anglais
+      </li>
+      <li data-value="fa" data-url="services.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persan" /> Persan
+      </li>
+      <li data-value="ps" data-url="services.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pachto" /> Pachto
+      </li>
+      <li data-value="fr" data-url="services.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="Français" /> Français
+      </li>
+      <li data-value="tr" data-url="services.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turc" /> Turc
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="Logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fr.html">Accueil</a></li>
+      <li>
+        <a href="#">Entreprise &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fr.html">Qui sommes-nous</a></li>
+          <li><a href="photo-gallery.fr.html">Galerie de photos</a></li>
+          <li><a href="news-from-us.fr.html">Nos actualités</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fr.html">Forfaits</a></li>
+      <li><a href="auto-expertise.fr.html">Expertise automobile</a></li>
+      <li><a href="checkpoints.fr.html">Points de contrôle</a></li>
+      
+      <li><a href="contact.fr.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="Logo sombre">
+    <h1>Filiales internationales</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>Europe</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+     
+    </section>
+
+    <section>
+      <h2>Turquie</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+    </section>
+
+    <section>
+      <h2>Moyen-Orient</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Adresse">
+    <span>Kolola Pushta, en face de la banque FMFB, 4e district</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Téléphone">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="E-mail">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">Points de contrôle</h1>
+    <p class="title-of-page-p"><a href="index.fr.html"><b>Accueil &sol;</b></a> Points de contrôle</p>
+</div>
+
+
+<section class="grid-section">
+  <div class="grid-container">
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Test de freinage</div>
+      <p class="card-text">Dans le test de freinage avancé effectué avec un dispositif de test de freins, la puissance de freinage et la répartition de la force de freinage entre les roues droite et gauche, le potentiel de contrôle des pneus pendant le freinage, le degré de qualité du freinage indiquant la force de freinage maximale atteignable avec une roue non bloquée, et le maximum...</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Test de suspension</div>
+      <p class="card-text">Dans le processus de test de suspension, le groupe de suspension du véhicule à tester est séparé à l'aide d'un dispositif de test de suspension avec entraînement par choc électrique. Les essieux avant et arrière sont examinés séparément, et les déséquilibres droite-gauche, les frottements et les taux de roulis sont déterminés.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Test de performance moteur (Dyno)</div>
+      <p class="card-text">Le test de performance moteur du véhicule est effectué à l'aide d'un dispositif dynamométrique. Le dynamomètre est un appareil qui mesure la puissance et le couple du moteur dans les véhicules à transmission manuelle, automatique, à traction avant ou arrière.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Test de dérive latérale</div>
+      <p class="card-text">Le test de dérive latérale est un dispositif qui teste les angles TOE (réglage de la barre de direction) des lames avant et arrière, qui sont des éléments importants pour une conduite sécurisée, en très peu de temps.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Test de diagnostic (OBD)</div>
+      <p class="card-text">Les méthodes de diagnostic automatique sont d'une grande importance pour les problèmes rencontrés avec votre véhicule actuel. Avec l'avancement de la technologie automobile et l'augmentation des détails techniques, la détection des erreurs est devenue plus difficile qu'auparavant.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Évaluation de la peinture de carrosserie</div>
+      <p class="card-text">L'évaluation de la peinture et de la carrosserie est réalisée par des experts certifiés à l'aide d'appareils de marque Würth dotés des caractéristiques de mesure les plus précises au monde.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Contrôles mécaniques sous/avant sur élévateur</div>
+      <p class="card-text">Ressorts et amortisseurs, soufflets d'essieu, plaquettes de frein, bakélites plastiques de plancher, cales inférieures de moteur et de boîte de vitesses...</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+<div id="card-modal" class="card-modal">
+  <div class="modal-content">
+    <button id="modal-close" class="close-btn">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<style>
+/* ---------- MODAL STYLING ---------- */
+.card-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 20px;
+  max-width: 1000px;
+  width: 90%;
+  padding: 2rem;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s ease;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+/* ---------- CARD INSIDE MODAL ---------- */
+.card-service-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.card-content {
+  flex: 1;
+  text-align: left;
+}
+
+.card-content h2 {
+  margin-top: 0;
+  color: #222;
+  font-size: 1.6rem;
+}
+
+.card-content h3 {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.card-content p {
+  line-height: 1.6;
+  color: #444;
+}
+
+.card-content ul {
+  list-style: none;
+  margin-top: 0.8rem;
+  padding-left: 0;
+}
+
+.card-content ul li {
+  position: relative;
+  margin-bottom: 0.4rem;
+  color: #000;
+  padding-left: 1.6rem;
+}
+
+.card-content ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: red;
+  font-weight: bold;
+}
+
+.card-image {
+  flex: 0 0 300px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+  .card-service-container {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .card-image {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+  }
+  .card-content {
+    text-align: center;
+  }
+}
+</style>
+
+<script>
+const cardContents = [
+  {
+    title: "Test de freinage",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Test de freinage</h2>
+        <p>Dans le test de freinage avancé effectué avec un dispositif de test de freins, la puissance de freinage et la répartition de la force de freinage entre les roues droite et gauche, le potentiel de contrôle des pneus pendant le freinage, le degré de qualité du freinage indiquant la force de freinage maximale atteignable avec une roue non bloquée, et l'accélération de freinage maximale ainsi que la performance du servofrein peuvent être déterminés.</p>
+        <h3>Valeurs mesurées</h3>
+        <ul>
+          <li>Puissance de freinage avant droite et gauche (Newton)</li>
+          <li>Différence entre les freins avant (%)</li>
+          <li>Puissance de freinage arrière droite et gauche (Newton)</li>
+          <li>Différence entre les freins arrière (%)</li>
+          <li>Efficacité totale du freinage (%)</li>
+          <li>Puissance du frein à main droit (Newton)</li>
+          <li>Puissance du frein à main gauche (Newton)</li>
+          <li>Puissance totale du frein à main (%)</li>
+          <li>Accélération de décélération (mètres par seconde carrée)</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img1.jpg" alt="Test de freinage">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "Test de suspension",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Test de suspension</h2>
+        <p>Dans le processus de test de suspension, le groupe de suspension du véhicule à tester est séparé à l'aide d'un dispositif de test de suspension avec entraînement par choc électrique. Les essieux avant et arrière sont examinés séparément, et les déséquilibres droite-gauche, les frottements et les taux de roulis sont déterminés. La machine de test de suspension Vogatec est le seul dispositif de test accepté par les grandes entreprises automobiles internationales et dont la précision est validée. Avec Vogatec, le contrôle de la force de suspension du véhicule, l'équilibre des amortisseurs et les ratios de bruit sont vérifiés. Ainsi, il est rapporté si le véhicule possède ou non le ratio de tenue de route requis.</p>
+        <h3>Contrôles effectués sur le dispositif de test de suspension</h3>
+        <ul>
+          <li>Contrôle des amortisseurs et des ressorts</li>
+          <li>Contrôle de la barre de torsion</li>
+          <li>Contrôles des oscillations</li>
+          <li>Contrôles de la biellette de direction et de son extrémité</li>
+          <li>Contrôles des rotules de roue</li>
+          <li>Contrôle de l'arbre d'essieu</li>
+          <li>Contrôle de l'arbre à cardan</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img2.jpg" alt="Test de suspension">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "Test de performance moteur (Dyno)",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Test de performance moteur (Dyno)</h2>
+        <p>Le test de performance moteur du véhicule est effectué à l'aide d'un dispositif dynamométrique. Le dynamomètre est un appareil qui mesure la puissance et le couple du moteur dans les véhicules à transmission manuelle, automatique, à traction avant ou arrière. Cet appareil affiche même les plus petites anomalies du moteur avec des graphiques, et il est possible de voir le système d'allumage et le système d'admission de carburant dans ces graphiques. De plus, grâce aux mesures avant et après correction, il détermine clairement la puissance obtenue à partir des processus.</p>
+        <h3>Avec le test de performance moteur</h3>
+        <ul>
+          <li>Puissance moteur en chevaux (kilowatts, HP)</li>
+          <li>Couple moteur (Newton-mètres)</li>
+          <li>Accélération</li>
+          <li>Système de transmission</li>
+          <li>Des systèmes tels que le système d'allumage et d'alimentation en carburant sont vérifiés.</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img3.jpg" alt="Test de performance moteur">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "Test de dérive latérale",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Test de dérive latérale</h2>
+        <p>Le test de dérive latérale est un dispositif qui teste les angles TOE (réglage de la barre de direction) des lames avant et arrière, qui sont des éléments importants pour une conduite sécurisée, en très peu de temps.</p>
+        <p>Ce dispositif calcule et détermine la distance de déviation potentielle qui peut se produire sur une route droite de 1 kilomètre sans intervention sur le volant. En fonction de ces perturbations de déviation, il détecte et rapporte les problèmes dans l'assemblage avant, le réglage de la barre de direction et les écarts d'essieu en mètres par kilomètre.</p>
+        <p>Le test de dérive latérale détermine si les réglages de la barre de direction du véhicule que vous envisagez d'acheter sont corrects et solides.</p>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img4.jpg" alt="Test de dérive latérale">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "Test de diagnostic (OBD)",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Test de diagnostic électronique (OBD)</h2>
+        <p>Les méthodes de diagnostic automatique sont d'une grande importance pour les problèmes rencontrés avec votre véhicule actuel. Avec l'avancement de la technologie automobile et l'augmentation des détails techniques, la détection des erreurs est devenue plus difficile qu'auparavant. C'est pourquoi il est crucial d'identifier le problème à l'aide de dispositifs de diagnostic à jour. Chez Dynomark Expertise Automobile, nous réduisons la marge d'erreur dans la détection des défauts en utilisant des appareils fonctionnant avec la dernière technologie.</p>
+        <h3>Comment le diagnostic des défauts est-il effectué ?</h3>
+        <p>Lorsqu'une panne survient dans votre véhicule, un voyant d'avertissement apparaît généralement sur le tableau de bord. Cependant, il est parfois possible de détecter un problème à partir du confort de conduite, même sans voyant d'avertissement. Dans de tels cas, un diagnostic du véhicule est nécessaire pour comprendre la cause du problème.</p>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img5.jpg" alt="Test OBD">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "Évaluation de la peinture de carrosserie",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Évaluation de la peinture de carrosserie</h2>
+        <p>L'évaluation de la peinture et de la carrosserie est réalisée par des experts certifiés à l'aide d'appareils de marque Würth dotés des caractéristiques de mesure les plus précises au monde. Des inspections et des mesures détaillées sont effectuées à chaque point du véhicule.</p>
+        <h3>L'inspection comprend :</h3>
+        <ul>
+          <li>Inspection des pièces remplacées et peintes</li>
+          <li>Détection des valeurs en microns</li>
+          <li>Rapport des pièces traitées</li>
+          <li>Châssis avant, châssis arrière, tour, aile, tôles de porte</li>
+          <li>Poteau central intérieur, pare-chocs avant, pare-chocs arrière</li>
+          <li>Panneau intérieur avant du moteur, traverse, capot avant, tôle de toit</li>
+          <li>Vitre arrière, tôle de coffre arrière, panneau intérieur arrière</li>
+          <li>Jantes, défauts de peinture, rayures, bosses</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img6.jpg" alt="Évaluation de la peinture de carrosserie">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "Contrôles mécaniques sous/avant sur élévateur",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>Contrôles mécaniques sous/avant sur élévateur</h2>
+        <ul>
+          <li>Ressorts et amortisseurs</li>
+          <li>Soufflets d'essieu</li>
+          <li>Plaquettes de frein</li>
+          <li>Bakélites plastiques de plancher</li>
+          <li>Cales inférieures de moteur et de boîte de vitesses</li>
+          <li>Coussinets d'oscillation et rotules</li>
+          <li>Biellette de direction et son extrémité</li>
+          <li>Joints d'huile de différentiel avant</li>
+          <li>Joints d'huile de boîte de direction</li>
+          <li>Carter de moteur et joints d'huile de moteur</li>
+          <li>Compresseur de climatisation et joints d'huile</li>
+          <li>Coussinets de torsion et bras d'équilibrage</li>
+          <li>Arbre de transmission de différentiel et cale</li>
+          <li>Réservoir de carburant et tuyaux de carburant</li>
+          <li>Fuites du système d'échappement</li>
+          <li>Toutes les conditions visibles sous le véhicule et dans l'ensemble avant sont vérifiées.</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img7.jpg" alt="Contrôles mécaniques sous/avant">
+      </div>
+    </div>`
+  }
+];
+
+const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+const modal = document.getElementById('card-modal');
+const modalBody = document.getElementById('modal-body');
+const modalClose = document.getElementById('modal-close');
+
+cardButtons.forEach((btn, index) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalBody.innerHTML = cardContents[index].content || "<p>Aucun contenu défini</p>";
+    modal.style.display = 'flex';
+  });
+});
+
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.style.display = 'none';
+});
+</script>
+
+<div class="the-back-btn">
+<a class="news-detail-back" href="index.fr.html" style="text-decoration: none; color: white;">Retour</a>
+</div>
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Maison n° 56, entre les rues 5 et 6, Kolola Pushta, en face de la banque FMFB, 4e district, Kaboul, Afghanistan
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">Forfaits</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fr.html">Forfait Micro Expertise Automobile</a></li> 
+  <li><a href="pro-package-auto-expertise.fr.html">Forfait Pro Expertise Automobile</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fr.html">Forfait Pro Plus Expertise Automobile</a></li>
+  <li><a href="gold-package-auto-expertise.fr.html">Forfait Or Expertise Automobile</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fr.html">Forfait Or Plus Expertise Automobile</a></li>
+  <li><a href="airbag-control-package.fr.html">Forfait Contrôle Airbag</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">Filiales internationales</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Turquie</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a></li>
+</ul>
+<!--
+<button class="showall">Tout afficher</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+    </div>
+    <p>	&copy; Copyright 2020 - 2025 Expertise Automobile Dynomark, Tous droits réservés | Développé par <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

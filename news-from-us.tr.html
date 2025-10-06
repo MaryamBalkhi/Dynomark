@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynomark Oto Ekspertiz</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="stuff/styles/news-from-us.css">
+</head>
+<body>
+    <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>Noter Öncesi <span style="color: red;">&nbsp;Dynomark&nbsp;</span> Güvencesi</h1>
+        </div>
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="Telefon Simgesi" style="margin-right: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-right: 5px;">VEYA</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+            <div class="separator"></div>
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+            <div class="separator"></div>
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="İngilizce" class="flag" />
+                        <span>İngilizce</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="news-from-us.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="İngilizce" /> İngilizce
+                        </li>
+                        <li data-value="fa" data-url="news-from-us.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Farsça" /> Farsça
+                        </li>
+                        <li data-value="ps" data-url="news-from-us.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Peştuca" /> Peştuca
+                        </li>
+                        <li data-value="fr" data-url="news-from-us.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="Fransızca" /> Fransızca
+                        </li>
+                        <li data-value="tr" data-url="news-from-us.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="Türkçe" /> Türkçe
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                    select.classList.remove('open');
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+                if (!selected || !options) return;
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        items[0]?.focus();
+                    }
+                });
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="Logo">
+        <nav>
+            <ul>
+                <li><a href="index.tr.html">Ana Sayfa</a></li>
+                <li>
+                    <a href="#">Kurumsal &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.tr.html">Biz Kimiz</a></li>
+                        <li><a href="photo-gallery.tr.html">Fotoğraf Galerisi</a></li>
+                        <li><a href="news-from-us.tr.html">Bizden Haberler</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.tr.html">Paketler</a></li>
+                <li><a href="auto-expertise.tr.html">Oto Ekspertiz</a></li>
+                <li><a href="checkpoints.tr.html">Kontrol Noktaları</a></li>
+                <li><a href="contact.tr.html">Bize Ulaşın</a></li>
+            </ul>
+        </nav>
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="Koyu Logo">
+            <h1>Uluslararası Şubeler</h1>
+        </div>
+        <div class="separator"></div>
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>Avrupa</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosova</a>
+            </section>
+            <section>
+                <h2>Türkiye</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">İstanbul</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+            </section>
+            <section>
+                <h2>Orta Doğu</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Fas</a>
+            </section>
+        </div>
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="Adres">
+                <span>Kulola Poshta, FMFB karşısında, PD 04</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="Telefon">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="E-posta">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">Bizden Haberler</h1>
+        <p class="title-of-page-p"><a href="index.tr.html"><b>Ana Sayfa &sol;</b></a> Bizden Haberler</p>
+    </div>
+    <section class="dealers-grid-section">
+        <div class="dealers-grid-container">
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img1.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Afyon bayimiz hizmetinizde!</b>
+                    <p>Afyon bayimiz, profesyonel kadrosu ve son teknoloji cihazlarıyla hizmet vermeye başladı.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img2.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Samsun / Vezirköprü bayimiz çok yakında hizmetinizde.</b>
+                    <p>Vezirköprü bayimiz, profesyonel kadrosu ve son teknoloji cihazlarıyla çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img3.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Şanlıurfa / Siverek bayimiz çok yakında hizmetinizde.</b>
+                    <p>Oto ekspertiz bayisi, oto ekspertiz bayilikleri, oto ekspertiz bayileri, oto ekspertiz bayiliği alma, oto ekspertiz bayilik şirketleri.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img4.png');"></div>
+                <div class="dealers-grid-text">
+                    <b>Samsun Vezirköprü bayisi hizmet vermeye başladı.</b>
+                    <p>Oto ekspertiz bayisi, oto ekspertiz bayilikleri, oto ekspertiz bayileri, oto ekspertiz bayiliği alma, oto ekspertiz bayilik şirketleri.</p>
+                    <a class="dealers-grid-btn" href="/en/samsun-vezi̇rkopru-dealer-started-to-serve/news/130">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img5.jpg')"></div>
+                <div class="dealers-grid-text">
+                    <b>Mardin / Kızıltepe bayimiz çok yakında hizmetinizde.</b>
+                    <p>Oto ekspertiz bayisi, oto ekspertiz bayilikleri, oto ekspertiz bayileri, oto ekspertiz bayiliği alma, oto ekspertiz bayilik şirketleri.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img6.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Tokat / Erbaa bayimiz çok yakında hizmetinizde.</b>
+                    <p>Tokat / Erbaa bayimiz, profesyonel kadrosu ve son teknoloji cihazlarıyla çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img7.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Hatay / Arsuz bayimiz çok yakında hizmetinizde.</b>
+                    <p>Hatay / Arsuz bayimiz, profesyonel kadrosu ve son teknoloji cihazlarıyla çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img8.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Dynomark Oto Ekspertiz Siverek / Şanlıurfa bayisi hizmetinizde.</b>
+                    <p>Oto ekspertiz bayisi, oto ekspertiz bayilikleri, oto ekspertiz bayileri, oto ekspertiz bayiliği alma, oto ekspertiz bayilik şirketleri.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img9.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Tekirdağ / Kapaklı bayimiz hizmetinizde</b>
+                    <p>Oto ekspertiz bayisi, oto ekspertiz bayilikleri, oto ekspertiz bayileri, oto ekspertiz bayiliği alma, oto ekspertiz bayilik şirketleri.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img10.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Antalya / Kepez bayimiz hizmetinizde.</b>
+                    <p>Oto ekspertiz bayisi, oto ekspertiz bayilikleri, oto ekspertiz bayileri, oto ekspertiz bayiliği satın alma, oto ekspertiz bayilik şirketleri.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img11.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Hatay / Arsuz bayisi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Hatay / Arsuz bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Arsuz Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img12.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Tokat / Erbaa bayisi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Tokat / Erbaa bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Erbaa Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img13.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Denizli / Tavas bayimiz hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Denizli / Tavas bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Tavas Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img14.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Tekirdağ / Çorlu bayimiz çok yakında hizmetinizde</b>
+                    <p>Profesyonel kadrosu ve son teknoloji oto ekspertiz makineleriyle donatılmış Dynomark Çorlu oto ekspertiz, çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img15.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Dynomark Çorlu / Tekirdağ bayisi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Çorlu / Tekirdağ bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Çorlu Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img16.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Kars bayimiz çok yakında hizmetinizde</b>
+                    <p>Profesyonel kadrosu ve son teknoloji oto ekspertiz makineleriyle donatılmış Dynomark Kars oto ekspertiz, çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img17.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Kars bayimiz hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Kars bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Kars Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img18.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Bandırma bayimiz çok yakında hizmetinizde</b>
+                    <p>Profesyonel kadrosu ve son teknoloji oto ekspertiz makineleriyle donatılmış Dynomark Bandırma oto ekspertiz, çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img19.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Sonbahar kampanyası</b>
+                    <p>SBH10 kodu ile tüm ekspertiz paketlerinde %10 indirim alabilirsiniz.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img20.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Balıkesir / Bandırma bayisi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Bandırma / Balıkesir bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Bandırma Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img21.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Ünye / Ordu bayimiz çok yakında hizmetinizde</b>
+                    <p>Profesyonel kadrosu ve son teknoloji oto ekspertiz makineleriyle donatılmış Dynomark Ünye oto ekspertiz, çok yakında hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img22.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Esenyurt Haramidere E5 şubesi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Esenyurt / İstanbul bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Esenyurt Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img23.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Oto ekspertiz sektörü Dynomark ile dünyaya açılıyor</b>
+                    <p>Ülkede 40 şubeye ulaştıktan sonra, Dynomark Oto Ekspertiz şimdi Kuzey Afrika, Avrupa ve Orta Doğu’ya yayılmasını sağlayacak bir ana franchise anlaşması imzaladı...</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-color: rgb(106, 106, 106);"></div>
+                <div class="dealers-grid-text">
+                    <b>Ünye / Ordu bayisi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Ünye / Ordu bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Ünye Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="optional-button-grid" href="grid24news.html">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img25.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Tüm ekspertiz paketlerinde %15 indirim</b>
+                    <p>Dynomark şubelerinde Ocak ayı boyunca tüm ekspertiz paketlerinde %15 indirim geçerli.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img26.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Dynomark şubelerinde tüm ekspertiz paketlerinde %15 indirim</b>
+                    <p>Dynomark Oto Ekspertiz yakında tüm dünyada. Ülke distribütörümüz Kazablanka / Fas bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış FAS Oto Ekspertiz, size hizmet vermek için...</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img27.jpeg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Artvin / Hopa bayisi hizmet vermeye başladı</b>
+                    <p>Dynomark Oto Ekspertiz Hopa / Artvin bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Hopa Oto Ekspertiz, profesyonel kadrosuyla size mükemmel hizmet sunmak için hizmetinizde.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img28.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Bağdat Irak bayisi hizmet vermeye başladı!</b>
+                    <p>Dynomark Oto Ekspertiz yakında tüm dünyada. Ülke distribütörümüz Bağdat / Irak bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Irak Oto Ekspertiz, size hizmet vermek için...</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img29.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Bağdat Irak bayisi hizmet vermeye başladı!</b>
+                    <p>Dynomark Oto Ekspertiz yakında tüm dünyada. Ülke distribütörümüz Bağdat / Irak bayisi hizmet vermeye başladı. Son teknoloji oto ekspertiz makineleriyle donatılmış Irak Oto Ekspertiz, size hizmet vermek için...</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+            <div class="dealers-grid-item">
+                <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img30.jpg');"></div>
+                <div class="dealers-grid-text">
+                    <b>Bahar kampanyası: Tüm ekspertiz paketlerinde %10 indirim</b>
+                    <p>01.04.2023 - 01.06.2023 tarihleri arasında Dynomark şubelerinde tüm ekspertiz paketlerinde %10 indirim geçerli.</p>
+                    <a class="dealers-grid-btn" href="#">Daha Fazla >></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gridContainer = document.querySelector('.dealers-grid-container');
+            if (!gridContainer) {
+                console.warn('Grid container not found');
+                return;
+            }
+            const items = Array.from(gridContainer.querySelectorAll('.dealers-grid-item'));
+            items.forEach(item => {
+                const btn = item.querySelector('.dealers-grid-btn');
+                if (!btn) return;
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = btn.getAttribute('href');
+                    console.log('Button clicked, href:', href);
+                    if (href === 'news-from-us.html') {
+                        try {
+                            window.location.assign(href);
+                            console.log('Navigating to:', href);
+                        } catch (error) {
+                            console.error('Navigation failed:', error);
+                            alert('news-from-us.html sayfasına yönlendirme başarısız oldu. Lütfen dosyanın var olduğunu ve erişilebilir olduğunu kontrol edin.');
+                        }
+                    } else {
+                        openDetail(item);
+                    }
+                });
+            });
+            function openDetail(item) {
+                const imgDiv = item.querySelector('.dealers-grid-image');
+                const titleEl = item.querySelector('.dealers-grid-text b');
+                const pEl = item.querySelector('.dealers-grid-text p');
+                const bg = (imgDiv && (imgDiv.style.backgroundImage || getComputedStyle(imgDiv).backgroundImage)) || 'none';
+                const titleText = titleEl ? titleEl.textContent.trim() : '';
+                const descText = pEl ? pEl.textContent.trim() : '';
+                gridContainer.style.display = 'none';
+                const detailWrap = document.createElement('div');
+                detailWrap.className = 'news-detail';
+                const inner = document.createElement('div');
+                inner.className = 'news-detail-inner';
+                const textCol = document.createElement('div');
+                textCol.className = 'news-detail-text';
+                const titleNode = document.createElement('b');
+                titleNode.className = 'news-detail-title';
+                titleNode.textContent = titleText;
+                const descNode = document.createElement('p');
+                descNode.className = 'news-detail-desc';
+                descNode.textContent = descText;
+                const backBtn = document.createElement('button');
+                backBtn.className = 'news-detail-back';
+                backBtn.type = 'button';
+                backBtn.textContent = 'Geri';
+                textCol.appendChild(titleNode);
+                textCol.appendChild(descNode);
+                textCol.appendChild(backBtn);
+                const imgCol = document.createElement('div');
+                imgCol.className = 'news-detail-image';
+                const urlMatch = bg.match(/url\(["']?(.*?)["']?\)/);
+                const imgUrl = urlMatch ? urlMatch[1] : '';
+                const imgTag = document.createElement('img');
+                imgTag.src = imgUrl || '';
+                imgTag.alt = titleText || 'Haber resmi';
+                imgCol.appendChild(imgTag);
+                inner.appendChild(textCol);
+                inner.appendChild(imgCol);
+                detailWrap.appendChild(inner);
+                gridContainer.parentNode.insertBefore(detailWrap, gridContainer.nextSibling);
+                backBtn.addEventListener('click', function () {
+                    detailWrap.remove();
+                    gridContainer.style.display = '';
+                    window.scrollTo({ top: gridContainer.getBoundingClientRect().top + window.pageYOffset - 20, behavior: 'smooth' });
+                });
+            }
+        });
+        const items = document.querySelectorAll('.dealers-grid-item');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        items.forEach(item => {
+            observer.observe(item);
+        });
+        fetch(href, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`${href} exists, proceeding with navigation`);
+                } else {
+                    console.error(`${href} not found (status: ${response.status})`);
+                    alert(`${href} bulunamadı. Lütfen dosya yolunu veya sunucu yapılandırmasını kontrol edin.`);
+                }
+            })
+            .catch(error => {
+                console.error(`Fetch check failed for ${href}: ${error.message}`);
+                alert(`${href} kontrol edilemedi. Hata: ${error.message}`);
+            });
+    </script>
+    <footer>
+        <div class="footer-contents">
+            <div>
+                <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+                <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Ev No. 56, 5. ve 6. sokaklar arasında, Kulola Poshta, FMFB karşısında, PD 04, Kabil, Afganistan</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+            </div>
+            <div>
+                <h2 style="color: white;">Paketler</h2>
+                <ul class="arrow-list">
+                    <li><a href="micro-package-auto-expertise.tr.html">Mikro Oto Ekspertiz Paketi</a></li>
+                    <li><a href="pro-package-auto-expertise.tr.html">Pro Oto Ekspertiz Paketi</a></li>
+                    <li><a href="pro-plus-package-auto-expertise.tr.html">Pro Plus Oto Ekspertiz Paketi</a></li>
+                    <li><a href="gold-package-auto-expertise.tr.html">Gold Oto Ekspertiz Paketi</a></li>
+                    <li><a href="gold-plus-package-auto-expertise.tr.html">Gold Plus Oto Ekspertiz Paketi</a></li>
+                    <li><a href="airbag-control-package.tr.html">Hava Yastığı Kontrol Paketi</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: white;">Uluslararası Şubeler</h2>
+                <ul class="arrow-list">
+                    <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Fas</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Türkiye</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosova</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-media">
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+            <p>&copy; Telif Hakkı 2020 - 2025 Dynomark Oto Ekspertiz Tüm hakları saklıdır | Geliştiren <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a></p>
+        </div>
+    </footer>
+</body>
+</html>

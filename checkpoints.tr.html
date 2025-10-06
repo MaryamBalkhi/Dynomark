@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNOMARK OTO EKSPERTİZ</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/checkpoints.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+        <div class="the-text">
+            <h1>Noter Öncesi<span style="color: red;">&nbsp;Dynomark&nbsp;</span>Güvence</h1>
+        </div>
+
+        <div class="info-and-languages-options">
+            <div class="info">
+                <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="stuff/icons/phone-call.png" alt="Telefon İkonu" style="margin-right: 8px;">
+                    <p style="margin: 0;">0731 170 170</p>
+                </a>
+
+                <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+                    <span style="color: red; font-style: italic; margin-right: 5px;">VEYA</span>
+                    <p style="margin: 0;">0786 000 075</p>
+                </a>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="language-selector">
+                <div class="custom-select">
+                    <div class="selected">
+                        <img src="stuff/icons/united-states-flag.png" alt="İngilizce" class="flag" />
+                        <span>İngilizce</span>
+                    </div>
+                    <ul class="options">
+                        <li data-value="en" data-url="checkpoints.html">
+                            <img src="stuff/icons/united-states-flag.png" class="flag" alt="İngilizce" /> İngilizce
+                        </li>
+                        <li data-value="fa" data-url="checkpoints.fa.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Farsça" /> Farsça
+                        </li>
+                        <li data-value="ps" data-url="checkpoints.ps.html">
+                            <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Peştuca" /> Peştuca
+                        </li>
+                        <li data-value="fr" data-url="checkpoints.fr.html">
+                            <img src="stuff/icons/france-flag.png" class="flag" alt="Fransızca" /> Fransızca
+                        </li>
+                        <li data-value="tr" data-url="checkpoints.tr.html">
+                            <img src="stuff/icons/turkey-flag.png" class="flag" alt="Türkçe" /> Türkçe
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.querySelector('.custom-select');
+            const selected = select.querySelector('.selected');
+            const options = select.querySelectorAll('.options li');
+
+            // Toggle dropdown visibility on click
+            selected.addEventListener('click', () => {
+                select.classList.toggle('open');
+            });
+
+            // Handle language selection
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const url = option.getAttribute('data-url');
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent.trim();
+                    const imgSrc = option.querySelector('img').src;
+
+                    // Update the selected option display
+                    selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+                    
+                    // Navigate to the selected URL
+                    if (url) {
+                        window.location.href = url;
+                    }
+
+                    // Close the dropdown
+                    select.classList.remove('open');
+                });
+            });
+
+            // Close dropdown if clicking outside
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Close all dropdowns helper
+            function closeAll() {
+                document.querySelectorAll('.custom-select .options').forEach(o => {
+                    o.style.display = 'none';
+                    const sel = o.closest('.custom-select')?.querySelector('.selected');
+                    if (sel) {
+                        sel.setAttribute('aria-expanded', 'false');
+                        sel.classList.remove('open');
+                    }
+                });
+            }
+
+            // Initialize each custom-select
+            document.querySelectorAll('.custom-select').forEach(custom => {
+                const selected = custom.querySelector('.selected');
+                const options = custom.querySelector('.options');
+                const items = Array.from(custom.querySelectorAll('.options li'));
+
+                if (!selected || !options) return;
+
+                // Ensure options start hidden
+                options.style.display = 'none';
+                selected.setAttribute('tabindex', '0');
+                selected.setAttribute('role', 'button');
+                selected.setAttribute('aria-expanded', 'false');
+
+                // Toggle open/close on click
+                selected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = options.style.display === 'block';
+                    closeAll();
+                    if (!isOpen) {
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        selected.classList.add('open');
+                        // focus first item for keyboard users
+                        items[0]?.focus();
+                    }
+                });
+
+                // Keyboard on the selected control
+                selected.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selected.click();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        options.style.display = 'block';
+                        selected.setAttribute('aria-expanded', 'true');
+                        items[0]?.focus();
+                    } else if (e.key === 'Escape') {
+                        closeAll();
+                        selected.focus();
+                    }
+                });
+
+                // Option click & keyboard support
+                items.forEach((item, idx) => {
+                    item.setAttribute('tabindex', '0');
+                    item.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        // Replace the selected content visually
+                        selected.innerHTML = item.innerHTML;
+                        selected.dataset.value = item.dataset.value || '';
+                        options.style.display = 'none';
+                        selected.setAttribute('aria-expanded', 'false');
+                        selected.classList.remove('open');
+
+                        // Redirect to the page
+                        const url = item.dataset.url;
+                        if (url) window.location.href = url;
+                    });
+
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            (items[idx + 1] || items[0]).focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            (items[idx - 1] || items[items.length - 1]).focus();
+                        } else if (e.key === 'Escape') {
+                            closeAll();
+                            selected.focus();
+                        }
+                    });
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.custom-select')) closeAll();
+            });
+
+            // Close on global Escape
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+        });
+    </script>
+
+    <!--header-->
+    <script>
+        const topHeader = document.querySelector(".top-headline");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY === 0) {
+                // Only at the very top → show top headline
+                topHeader.style.opacity = "1";
+                topHeader.style.pointerEvents = "auto";
+            } else {
+                // Anywhere else on the page → hide it
+                topHeader.style.opacity = "0";
+                topHeader.style.pointerEvents = "none";
+            }
+        });
+    </script>
+
+    <header>
+        <img src="stuff/logos/logo-white.png" alt="logo">
+        
+        <nav>
+            <ul>
+                <li><a href="index.tr.html">Ana Sayfa</a></li>
+                <li>
+                    <a href="#">Kurumsal &#11206;</a>
+                    <ul>
+                        <li><a href="who-are-we.tr.html">Biz Kimiz</a></li>
+                        <li><a href="photo-gallery.tr.html">Fotoğraf Galerisi</a></li>
+                        <li><a href="news-from-us.tr.html">Bizden Haberler</a></li>
+                    </ul>
+                </li>
+                <li><a href="packets.tr.html">Paketler</a></li>
+                <li><a href="auto-expertise.tr.html">Oto Ekspertiz</a></li>
+                <li><a href="checkpoints.tr.html">Kontrol Noktaları</a></li>
+                <li><a href="contact.tr.html">Bize Ulaşın</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Drop Menu -->
+    <div class="drop-menu" id="dropMenu">
+        <!-- Close button inside drop menu -->
+        <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="logo-box">
+            <img src="stuff/logos/logo-dark.png" alt="koyu logo">
+            <h1>ULUSLARARASI ŞUBELER</h1>
+        </div>
+        <div class="separator"></div>
+        
+        <div class="capitalcites-and-options">
+            <section>
+                <h2>AVRUPA</h2>
+                <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosova</a>
+            </section>
+
+            <section>
+                <h2>TÜRKİYE</h2>
+                <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+                <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+                <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+                <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">İstanbul</a>
+                <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+                <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+                <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+                <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+            </section>
+
+            <section>
+                <h2>ORTA DOĞU</h2>
+                <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+                <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Fas</a>
+            </section>
+        </div>
+
+        <div class="drop-menu-contact-icons">
+            <div class="contact-item">
+                <img src="stuff/icons/placeholder.png" alt="Adres">
+                <span>Kulola Poshta, FMFB'nin karşısında, PD 04</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/phone-call.png" alt="Telefon">
+                <span>0731 170 170</span>
+            </div>
+            <div class="contact-item">
+                <img src="stuff/icons/email.png" alt="E-posta">
+                <span>info@dynomark.af</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropMenu").classList.toggle("active");
+            document.getElementById("hamburger").classList.toggle("active");
+            document.getElementById("closeBtn").classList.toggle("active");
+        }
+    </script>
+
+    <div class="title-of-page">
+        <h1 class="title-of-page-h1">KONTROL NOKTALARI</h1>
+        <p class="title-of-page-p"><a href="index.tr.html"><b>Ana Sayfa &sol;</b></a> Kontrol Noktaları</p>
+    </div>
+
+    <section class="grid-section">
+        <div class="grid-container">
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Kaporta-Boya Kontrolleri</div>
+                <p class="card-text">Araç kaporta parçaları detaylı bir şekilde kontrol edilir.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Arka Düzen Kontrolleri</div>
+                <p class="card-text">Arka düzen kontrolleri, araç altındaki tüm mekanik sistemlerin ve düzenin genel kontrolüdür.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Ön Düzen Kontrolleri</div>
+                <p class="card-text">Ön düzen kontrolleri, araçtaki tüm mekanik sistemlerin ve düzenin genel kontrolüdür.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Yakıt ve Egzoz Sistemi Kontrolleri</div>
+                <p class="card-text">Egzoz sistemi, kullanım sırasında iç ve dış faktörlere bağlı olarak zorlu koşullara maruz kalır.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">İç Ekspertiz/Elektronik Kontroller</div>
+                <p class="card-text">Bu kontrol biriminde, araç içinden veya dışından kontrol ettiğimiz tüm mekanik ve elektronik sistemlerin genel kontrolleri yapılır.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">DYNO Testi</div>
+                <p class="card-text">DYNO güç testi, araç motorunun üretebileceği maksimum gücü belirler.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Dış Ekspertiz Kontrolleri</div>
+                <p class="card-text">Dış ekspertiz kontrolleri, ikinci el araç alım ve satımında müşterilerimiz tarafından sıkça tercih edilen oto ekspertiz kontrol noktalarından biridir.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Motor Üst Kontrolleri</div>
+                <p class="card-text">Motor Üst Kontrolleri: Aracın kaput kısmını açtığımızda karşılaştığımız motorun üst kısımlarının kontrol edildiği bölümdür.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Motor ve Aktarma Organları Kontrolü</div>
+                <p class="card-text">Motor ve Aktarma Organları Kontrolleri: Motor ve aktarma organları denetimlerimiz, motor mekanikerlerimiz tarafından profesyonel, detaylı ve tarafsız bir şekilde incelenir.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Diagnostik Testi (Beyin Testi)</div>
+                <p class="card-text">Diagnostik testi ile aracın tüm elektronik ve elektro-mekanik sistemlerinin genel kontrolleri kontrol üniteleri üzerinden yapılır.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Borç/Hasar/Değişen/Km/Araç Detay Sorgulama</div>
+                <p class="card-text">Satın almayı planladığınız aracın varsa hasar ve hasar maliyet bilgisi, geriye dönük hasar ve hasar maliyeti, değişen parça sorgulaması ve muayeneye dayalı kilometre sorgulaması hakkında bilgi almanızı sağlar. Sonuçlar SBM (Sigorta Bilgi ve Gözetim Merkezi) üzerinden alınır.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Fren/Süspansiyon/Yan Kayma Testi</div>
+                <p class="card-text">Ölçüm istasyonunda gerçekleştirilen bu testlerle, aracın fren, süspansiyon ve yol tutuş kabiliyeti belirlenir.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Karbon Kaçak Testi</div>
+                <p class="card-text">Karbon Kaçak Testi, aracınızın blok ve silindir kapağı yüzeylerinde oluşabilecek sızıntı ve çatlakları özel CO2 tespit sıvısı ile tespit etmeyi sağlar.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Yol Sürüş Testi</div>
+                <p class="card-text">Ekspertiz yapılan araç, son olarak teknisyen kontrolü altında yol sürüş testine alınır.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">1 Yıl-2500 km Boya Tespit Garantisi</div>
+                <p class="card-text">Dynomark Garantisi ile ikinci el araç alım ve satımlarında aracınızın kaporta boya kontrolleri garanti altındadır.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+
+            <div class="grid-card">
+                <div class="ribbon"></div>
+                <div class="title">Mekanik Garanti (Tur Assist)</div>
+                <p class="card-text">Tur Assist motor mekanik garantisi; aracınızı olası arızalara karşı koruyan ve otomobillerin özel sağlık sigortası olarak görülebilecek bir garanti türüdür.</p>
+                <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+            </div>
+        </div>
+    </section>
+
+    <div id="card-modal" class="card-modal">
+        <div class="modal-content">
+            <button id="modal-close" class="close-btn">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Define content for each card by index or unique title
+        const cardContents = [
+            {
+                title: "Kaporta-Boya Kontrolleri",
+                content: `<div class="who-we-are">
+                    <h2>Kaporta-Boya Kontrolleri</h2>
+                    <p>Kaput: Aracın dış yüzeyini kaplayan ve iskeleti oluşturan en önemli parçalardan biridir. Hareket halindeyken olası bir kazada bizi dış etkenlerden koruyan parçalardan oluşur. Böylesine önemli bir kontrol noktası, ikinci el araç alım ve satımından önce kontrol edilmelidir. Araç satıcıları, araç değerinin düşmesini istemedikleri için kaporta-boya kısmındaki işlemleri gizlemeye çalışırlar. İkinci el araç alacak müşterilerimizin, araç satın almadan önce Dynomark Oto Ekspertiz Şubelerine gelerek aracın Kaporta-Boya Kontrollerini yaptırmalarının önemini belirtiyoruz.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde Kaporta-Boya Kontrollerinde Neler Kontrol Edilir?</h2>
+                    <p>
+                        Dynomark Oto Ekspertizde Kaporta-Boya Kontrolleri, teknolojik araçlarımızla birlikte profesyonel, tarafsız ve detaylı bir şekilde kontrol edilir. Aracın Kaporta-Boya Kontrollerinde; değişen parça tespiti, işlenen parça tespiti, sökme-takma, ayar işlemleri, boya-mikron ölçümleri gibi birçok noktadan incelenir.<br>
+
+                        Bu denetimlerde öncelikle, aracın tüm kaporta parçalarında sökme/takma veya değişim kontrolleri yapılır. Boya mikron kalınlıkları ölçülür ve boyalı veya yerel olarak boyanmış kaporta parçaları tespit edilir. Araç şasisinde işlem veya hasar kontrolü yapılır, iç-dış direk ve podye kontrolleri ile hasar tespiti yapılır. Son olarak, aracın tüm kaportası incelenir ve göçük, çöküntü ve boyasız göçük düzeltme işlemleri tespit edilir ve rapor hazırlanır.<br>
+
+                        Bu incelemeler sırasında aşağıdaki tüm parçalar kontrol edilir.
+                    </p>
+                    <ul>
+                        <li>Tavan</li>
+                        <li>Kaput</li>
+                        <li>Sol Ön Çamurluk</li>
+                        <li>Sol Ön Kapı</li>
+                        <li>Sol Arka Kapı</li>
+                        <li>Sol Arka Çamurluk</li>
+                        <li>Sol Orta Direk</li>
+                        <li>Sol Ön Direk</li>
+                        <li>Sol Üst Direk</li>
+                        <li>Sol Arka İç Direk</li>
+                        <li>Bagaj</li>
+                        <li>Havuz Sacı</li>
+                        <li>Arka Panel</li>
+                        <li>Sağ Arka Çamurluk</li>
+                        <li>Sağ Arka Kapı</li>
+                        <li>Sağ Ön Kapı</li>
+                        <li>Sağ Ön Çamurluk</li>
+                        <li>Sağ Ön Direk</li>
+                        <li>Sağ Orta Direk</li>
+                        <li>Sağ Üst Direk</li>
+                        <li>Sağ Arka İç Direk</li>
+                        <li>Ön Panel</li>
+                        <li>Sol Ön Şasi</li>
+                        <li>Sağ Ön Şasi</li>
+                        <li>Sol Tüfek Sacı</li>
+                        <li>Sağ Tüfek Sacı</li>
+                        <li>Sol Arka Şasi</li>
+                        <li>Sağ Arka Şasi</li>
+                        <li>Sol Taban Sacı</li>
+                        <li>Sağ Taban Sacı</li>
+                        <li>Sol Marşpiyel</li>
+                        <li>Sağ Marşpiyel</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Arka Düzen Kontrolleri",
+                content: `<div class="who-we-are">
+                    <h2>Arka Düzen Kontrolleri</h2>
+                    <p>Arka Düzen: Ön düzen parçaları gibi, arka düzen parçaları da hareket halindeki aracın sürüş kalitesini etkileyen parçalardır. İkinci el araç alım ve satımında diğer kontrol noktalarında olduğu gibi arka düzen kontrolleri büyük önem taşır.<br>
+
+                    Aracınızın hareket halindeyken akıcı ve konforlu bir şekilde hareket etmesi için arka düzen parçalarının görevlerini en iyi şekilde yerine getirmesi gerekir. Eğer parçalar görevlerini yerine getirmezse, bu durum hareket halindeki araç sürüşünüzü olumsuz etkiler.<br>
+
+                    Bu durumu örneklemek gerekirse, aracınızla hareket ederken düz yolda herhangi bir manevra hareketi yapmadığınız halde aracınız düz gitmez, tıkırtı ve gürültü yapar ve aynı zamanda sağa-sola çeker, araç size konforlu bir sürüş sağlamaz ve aynı zamanda hayat güvenliğinizi tehlikeye atar. Bu nedenlerle, ikinci el araç alacak müşterilerimizin araç satın almadan önce Dynomark Oto Ekspertiz Şubelerine gelerek aracın arka düzen kontrollerini yaptırmalarının önemini belirtiyoruz.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde Arka Düzen Kontrollerinde Neler Kontrol Edilir?</h2>
+                    <p>
+                        Dynomark Oto Ekspertizde Arka Düzen Kontrolleri, motor mekanikerleri tarafından profesyonel, tarafsız ve detaylı bir şekilde araç kaldırma platformunda aydınlatılmış bir ortamda kontrol edilir. Ön Düzen Kontrollerimizde, araç; tıkırtı, sarsıntı ve bileşenlerin sağlıklı çalışıp çalışmadığı kontrol edilir ve her parça kontrol edilerek raporlanır. Bu kontrol sırasında aşağıdaki kontrol noktaları kontrol edilir.
+                    </p>
+                    <ul>
+                        <li>Sol Lastik</li>
+                        <li>Sağ Lastik</li>
+                        <li>Sol Jant</li>
+                        <li>Sağ Jant</li>
+                        <li>Sol Fren Diski</li>
+                        <li>Sağ Fren Diski</li>
+                        <li>Sol Fren Balatası</li>
+                        <li>Sağ Fren Balatası</li>
+                        <li>Sol Fren Kaliperi</li>
+                        <li>Sağ Fren Kaliperi</li>
+                        <li>Sol Amortisör Üst Bağlantısı</li>
+                        <li>Sağ Amortisör Üst Bağlantısı</li>
+                        <li>Sol Helezon Yay</li>
+                        <li>Sağ Helezon Yay</li>
+                        <li>Sol Arka Üst Kontrol Kolu</li>
+                        <li>Sağ Arka Üst Kontrol Kolu</li>
+                        <li>Sol Arka Alt Kontrol Kolu</li>
+                        <li>Sağ Arka Alt Kontrol Kolu</li>
+                        <li>Sol Arka Porş</li>
+                        <li>Sağ Arka Porş</li>
+                        <li>Sol Viraj Rotu</li>
+                        <li>Sağ Viraj Rotu</li>
+                        <li>Arka Viraj Demiri</li>
+                        <li>Arka Denge Kolu</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Ön Düzen Kontrolleri",
+                content: `<div class="who-we-are">
+                    <h2>Ön Düzen Kontrolleri</h2>
+                    <p>Ön Düzen: Hareket halindeki aracın sürüş kalitesini etkileyen önemli parçaların bulunduğu bölümdür. İkinci el araç alım ve satımında diğer kontrol noktalarında olduğu gibi ön düzen kontrolleri büyük önem taşır. Aracınızın hareket halindeyken akıcı ve konforlu bir şekilde hareket etmesi için ön düzen parçalarının görevlerini en iyi şekilde yerine getirmesi gerekir. Örneğin, aracınızla hareket ederken düz yolda herhangi bir direksiyon hareketi yapmadığınız halde aracınız düz gitmez, araç size konforlu bir sürüş sağlamaz ve aynı zamanda hayat güvenliğinizi tehlikeye atar. Ön düzen parçalarınız ayarlı ve parçalar düzgün çalışıyorsa, engebeli yollarda bile sürüş konforunuzu maksimize eder ve araç sarsıntılarını en aza indirir. Bu nedenle, ikinci el araç alacak müşterilerimizin araç satın almadan önce Dynomark Oto Ekspertiz Şubelerine gelerek aracın Ön Düzen Kontrollerini yaptırmalarının önemini vurguluyoruz.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde Ön Düzen Kontrollerinde Neler Kontrol Edilir?</h2>
+                    <p>
+                        Dynomark Oto Ekspertizde Ön Düzen Kontrolleri, motor mekanikerleri tarafından profesyonel, tarafsız ve detaylı bir şekilde araç kaldırma platformunda aydınlatılmış bir ortamda kontrol edilir. Ön Düzen Kontrollerimizde, araç tıkırtı, sarsıntı ve bileşenlerin düzgün çalışıp çalışmadığı kontrol edilerek raporlanır. Bu kontrol sırasında aşağıdaki kontrol noktaları kontrol edilir.
+                    </p>
+                    <ul>
+                        <li>Sol Lastik</li>
+                        <li>Sağ Lastik</li>
+                        <li>Sol Jant</li>
+                        <li>Sağ Jant</li>
+                        <li>Sol Fren Diski</li>
+                        <li>Sağ Fren Diski</li>
+                        <li>Sol Fren Balatası</li>
+                        <li>Sağ Fren Balatası</li>
+                        <li>Sol Fren Kaliperi</li>
+                        <li>Sağ Fren Kaliperi</li>
+                        <li>Sol Helezon Yay</li>
+                        <li>Sağ Helezon Yay</li>
+                        <li>Sol Amortisör</li>
+                        <li>Sağ Amortisör</li>
+                        <li>Sol Amortisör Üst Bağlantısı</li>
+                        <li>Sağ Amortisör Üst Bağlantısı</li>
+                        <li>Sol Süspansiyon Rotili</li>
+                        <li>Sağ Süspansiyon Rotili</li>
+                        <li>Sol Rot Kolu</li>
+                        <li>Sağ Rot Kolu</li>
+                        <li>Sol Rot Başı</li>
+                        <li>Sağ Rot Başı</li>
+                        <li>Sol Rot Körüğü</li>
+                        <li>Sağ Rot Körüğü</li>
+                        <li>Sol Salıncak</li>
+                        <li>Sağ Salıncak</li>
+                        <li>Sol Aks Mili</li>
+                        <li>Sağ Aks Mili</li>
+                        <li>Sol Dış Aks Körüğü</li>
+                        <li>Sağ Dış Aks Körüğü</li>
+                        <li>Sol İç Aks Körüğü</li>
+                        <li>Sağ İç Aks Körüğü</li>
+                        <li>Sol İç Aks Kafası</li>
+                        <li>Sağ İç Aks Kafası</li>
+                        <li>Sol Porye</li>
+                        <li>Sağ Porye</li>
+                        <li>Sol Motor Kulağı</li>
+                        <li>Motor Beşiği</li>
+                        <li>Viraj Demiri</li>
+                        <li>Direksiyon Kutusu</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Yakıt ve Egzoz Sistemi Kontrolleri",
+                content: `<div class="who-we-are">
+                    <h2>Yakıt ve Egzoz Sistemi Kontrolleri</h2>
+                    <p>Yakıt ve egzoz sistemi, oto ekspertiz kontrollerinde önemli bir yere sahiptir.<br>
+
+                    Egzoz sistemi, kullanım sırasında iç ve dış faktörlere bağlı olarak zorlu koşullara maruz kalır. Açıklayacak olursak, motor silindirlerinde tüketilen gazların araçtan çıkışı sırasında egzoz sistemini kullanır. Yanmış gazlar bu çıkışı yaparken belirli bir ısı ve basınca sahiptir. Bu sıcaklıklar ve basınçlar egzoz parçalarını çok fazla ısıtır. Bu arada, ısıtılmış egzoza gelen ani su ile soğuma durumuyla karşılaşabilir. Soğuktan sıcağa-sıcaktan soğuğa geçişlerde egzoz zamanla deforme olabilir.<br>
+
+                    Hareket halindeki araçta tüm bu koşullara maruz kalan egzoz sistemi, dış etkenlerden de payını alır. Taş, çamur, su, toprak, çakıl... Bu kadar ağır koşullarda çalışan yakıt ve egzoz bileşenlerinde zamanla delinme, çatlama, düzensiz çalışma, sızıntı, yakıt kokusu vb. durumlar oluşur. Bu durumlar araç performansını olumsuz etkiler ve fazla yakıt tüketimine neden olur. Bunlara ek olarak, zararlı gazların işlenmeden (zarar en aza indirilmeden) dışarı çıkması doğaya ve insan sağlığına zarar verir.<br>
+
+                    Bu nedenlerle, ikinci el araç alacak müşterilerimizin araç satın almadan önce Dynomark Oto Ekspertiz Şubelerine gelerek aracın Yakıt ve Egzoz Sistemi Kontrollerini yaptırmalarının önemini belirtiyoruz.<br>
+
+                    Dynomark Oto Ekspertizde Yakıt ve Egzoz Sistemi Kontrolleri, motor mekanikerleri tarafından profesyonel, tarafsız ve detaylı bir şekilde araç kaldırma platformunda aydınlatılmış bir ortamda kontrol edilir. Aynı zamanda, araç çalışır durumdayken yakıt ve egzoz sistemi kontrol edilir.<br>
+
+                    Yakıt ve egzoz kontrollerimizde, aracın egzoz ve yakıt bileşenlerinde delinme, çatlama, deformasyon, sızıntı, düzensiz çalışma, siyah duman, ham yakıt tüketimi gibi birçok fonksiyon ve parça kontrol edilir ve raporlanır. Bu kontrol sırasında aşağıdaki kontrol noktaları kontrol edilir.
+                    </p>
+                    <ul>
+                        <li>Oksijen Sensörü</li>
+                        <li>Yakıt Boru Hattı</li>
+                        <li>Yakıt Filtresi</li>
+                        <li>Yakıt Soğutucusu</li>
+                        <li>Egzoz Manifoldu</li>
+                        <li>Katalizör</li>
+                        <li>Egzoz Borusu</li>
+                        <li>Egzoz Püskürtücüsü</li>
+                        <li>Orta Susturucu</li>
+                        <li>Arka Susturucu</li>
+                        <li>Yakıt Deposu Borusu</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "İç Ekspertiz/Elektronik Kontroller",
+                content: `<div class="who-we-are">
+                    <h2>İç Ekspertiz/Elektronik Kontroller</h2>
+                    <p>İkinci el araç alım ve satımlarında iç ekspertiz kontrolleri, oto ekspertizde önemli bir yere sahiptir. İç ekspertiz/elektronik kontroller, ikinci el araç alım ve satımında müşterilerimiz tarafından sıkça tercih edilen oto ekspertiz kontrol noktalarından biridir. Araç satın almadan önce yapılan kontroller sayesinde, araç alıcıları araç hakkında detaylı bilgiye sahip olur. Bu bilgiler sayesinde, aracın anlık durumunu bilir ve buna göre aracı satın alır. Satın alma sonrasında ekstra bir sürprizle karşılaşmaz.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde İç Ekspertiz/Elektronik Kontrollerde Neler Kontrol Edilir?</h2>
+                    <p>
+                        Dynomark Oto Ekspertizde İç Ekspertiz/Elektronik Kontroller, ustalarımız tarafından profesyonel, tarafsız ve detaylı bir şekilde incelenir. Her kontrol noktası, işlevine göre deforme, yırtık, çizik, kırık ve çalışma durumunda olup olmadığı kontrol edilir ve raporlanır. Herhangi bir noktada değişiklik varsa, görsellerle raporlanır ve sunum sırasında açıklanır.<br>
+
+                        Dynomark Oto Ekspertizde iç ekspertiz/elektronik kontroller yapılırken aşağıdaki kontrol noktaları kontrol edilir.
+                    </p>
+                    <ul>
+                        <li>Gösterge Paneli</li>
+                        <li>Korna</li>
+                        <li>Sol Ön Kapı Düğme Grubu</li>
+                        <li>Cam Düğmeleri</li>
+                        <li>Far Kontrol Düğmeleri</li>
+                        <li>Ayna Kontrol Düğmeleri</li>
+                        <li>İç Dikiz Aynası</li>
+                        <li>Radyo CD Çalar</li>
+                        <li>Klima Isıtma Kontrol Paneli</li>
+                        <li>Havalandırma Izgaraları</li>
+                        <li>Güneşlik</li>
+                        <li>Emniyet Kemeri</li>
+                        <li>İç Aydınlatma</li>
+                        <li>Direksiyon</li>
+                        <li>Vites</li>
+                        <li>Dörtlü-Park Freni Anahtarı</li>
+                        <li>El Freni Kolu</li>
+                        <li>Torpedo</li>
+                        <li>Park Sensörü</li>
+                        <li>Kapı İçi Döşeme</li>
+                        <li>Sol Ön Koltuk</li>
+                        <li>Sağ Ön Koltuk</li>
+                        <li>Arka Koltuklar</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "DYNO Testi",
+                content: `<div class="who-we-are">
+                    <h2>DYNO Testi</h2>
+                    <p>Bu test sırasında, araç motoru en düşük devirlerden üst devirlere alınır. Test sırasında vites geçişleri, soğutma sistemi, egzoz gazı, motor gürültüsü ve titreşim kontrolleri yapılır. Motor performansı, fabrika güç değeri ile test sonucu karşılaştırılarak belirlenir.<br>
+
+                    DYNO güç testine alınan aracın çekiş sistemi özelliğine göre, 4x4 / 4x2 veya önden çekiş / arkadan çekiş gibi aktarma organlarının çalışma koşulları kontrol edilir. Dinamometre testi, araç motorunun ürettiği gücün tekerleklere ne kadarının aktarıldığını belirlememizi sağlar. Ayrıca, aktarma organlarının bir parçası olan debriyaj sistemi, şanzıman, diferansiyel, şaft, aks gibi unsurları sorun gidermemizi sağlar.<br>
+
+                    DYNO güç testi sırasında motor titreşimi, tekerlek rulmanları, araç içindeki titreşimler de kontrol edilir. DYNO güç testi, aracınızın sürüş sırasındaki tepkilerini görmemizi sağlayan bir sürüş simülasyonudur.</p>
+                </div>`
+            },
+            {
+                title: "Dış Ekspertiz Kontrolleri",
+                content: `<div class="who-we-are">
+                    <h2>Dış Ekspertiz Kontrolleri</h2>
+                    <p>İkinci el araç alım ve satımlarında dış ekspertiz kontrolleri, oto ekspertizde önemli bir yere sahiptir. İkinci el araç alım ve satımında dış ekspertiz kontrolleri, müşterilerimiz tarafından sıkça tercih edilen oto ekspertiz kontrol noktalarından biridir. Araç satın almadan önce yapılan kontroller sayesinde, araç alacak kişiler araç hakkında detaylı bilgiye sahip olur. Bu bilgiler sayesinde, aracın anlık durumunu bilir ve buna göre aracı satın alır. Bu şekilde, satın alma sonrasında ekstra bir sürprizle karşılaşmaz.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde Dış Ekspertiz Kontrolleri Neden Önemlidir?</h2>
+                    <p>
+                        Sürüş sırasında kullanıcıların çevreyle iletişim kurmasını sağlayan parçaların kontrol edildiği bölümdür. Bu parçaların düzenli çalışmasıyla kontrollü bir sürüş gerçekleşir ve yağmurlu, karlı ve sisli hava koşullarında yapılacak hareketler ve manevralar hakkında hareket halindeki diğer araçları bilgilendirebilir. Bu şekilde, kaza riskini en aza indiririz.
+                    </p>
+                    <h2>Dynomark Oto Ekspertizde Dış Ekspertiz Kontrollerinde Neler Kontrol Edilir?</h2>
+                    <p>
+                        Dynomark Oto Ekspertizde dış ekspertiz kontrolleri, ustalarımız tarafından profesyonel, tarafsız ve detaylı bir şekilde incelenir. Her kontrol noktası, işlevine göre deforme, yırtık, çizik, kırık ve çalışma durumunda olup olmadığı kontrol edilir ve raporlanır. Herhangi bir noktada çalışmama durumu veya değişiklik varsa, görsellerle raporlanır ve sunum sırasında açıklanır.
+                    </p>
+                    <ul>
+                        <li>Şasi Numarası Kontrolü</li>
+                        <li>Ön Cam</li>
+                        <li>Arka Cam</li>
+                        <li>Sol Ön Cam</li>
+                        <li>Sol Arka Cam</li>
+                        <li>Sağ Ön Cam</li>
+                        <li>Sağ Arka Cam</li>
+                        <li>Sol Kelebek Cam</li>
+                        <li>Açılır Tavan Cam Çatı</li>
+                        <li>Dış Kapı Kolları</li>
+                        <li>Sol Dış Dikiz Aynası</li>
+                        <li>Sağ Dış Dikiz Aynası</li>
+                        <li>Sol Far</li>
+                        <li>Sağ Far</li>
+                        <li>Sol Sis Farı</li>
+                        <li>Sağ Sis Farı</li>
+                        <li>Sol Sinyal</li>
+                        <li>Sağ Sinyal</li>
+                        <li>Sağ Stop</li>
+                        <li>Sol Stop</li>
+                        <li>Sağ İç Stop</li>
+                        <li>Sol İç Stop</li>
+                        <li>Park Sensörü</li>
+                        <li>Plaka Aydınlatması</li>
+                        <li>Silecekler</li>
+                        <li>Far Yıkama</li>
+                        <li>Bagaj İçi Kontroller</li>
+                        <li>Bagaj Amortisörü</li>
+                        <li>Yedek Lastik</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Motor Üst Kontrolleri",
+                content: `<div class="who-we-are">
+                    <h2>Motor Üst Kontrolleri</h2>
+                    <p>Dynomark Oto Ekspertiz, ikinci el araç alım ve satımlarında oto ekspertiz kontrolleri sırasında kontrol noktalarından biridir.<br>
+
+                    Motor Üst Kontrolleri: Aracın kaput kısmını açtığımızda karşılaştığımız motorun üst kısımlarının kontrol edildiği bölümdür. Motor Üst Kontrollerimiz, motor mekanikerlerimiz tarafından profesyonel, detaylı ve tarafsız bir şekilde incelenir. Bu denetimlerde bulunan kusurlar fotoğraflanır ve detaylı bir şekilde raporlanır.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde Motor Kontrollerinde Neler Kontrol Edilir?</h2>
+                    <p>
+                        İncelemeler sırasında, motor mekaniker ustalarımız, motor üst kontrollerinde; motor yağı seviyesi, antifriz derecesi, motor yağı sızıntıları, rulmanlar, motorun gürültülü çalışması, motordan gelen sesler, motor çalışma durumu, akü ölçümü gibi birçok detay incelenir.<br>
+
+                        İkinci el araç alacak müşterilerimizin araç satın almadan önce Dynomark Oto Ekspertiz Şubelerine gelerek aracın motor üst kontrollerini yaptırmalarının önemini vurguluyoruz.
+                    </p>
+                    <ul>
+                        <li>Kontrol Noktaları</li>
+                        <li>Kaput Isı ve Ses Yalıtkanı</li>
+                        <li>Motor Toz Kapağı</li>
+                        <li>Hava Filtresi Kabini</li>
+                        <li>Enjektör</li>
+                        <li>Enjektör Yakıt Hattı</li>
+                        <li>Yakıt Pompası</li>
+                        <li>V-Kayışı Kasnağı ve Bilgisayar</li>
+                        <li>Klima Borusu</li>
+                        <li>Direksiyon Pompası</li>
+                        <li>Termostat Muhafazası</li>
+                        <li>Motor Soğutma Suyu Borusu</li>
+                        <li>Motor Soğutma Göstergesi</li>
+                        <li>Yağ Seviyesi Kontrol Çubuğu</li>
+                        <li>Fren Hidrolik Yağ Tankı</li>
+                        <li>Hidrolik Direksiyon Yağ Tankı</li>
+                        <li>Yağ Soğutucusu</li>
+                        <li>Supap Külbütör Kapağı</li>
+                        <li>Yağ Sızıntısı</li>
+                        <li>Motor Ön Kapağı</li>
+                        <li>Yağ Filtresi Billet</li>
+                        <li>Motor Ön Contası</li>
+                        <li>Motor Buhar Yağı Yanması</li>
+                        <li>Motor Elektrik Tesisatı</li>
+                        <li>Akü</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Motor ve Aktarma Organları Kontrolü",
+                content: `<div class="who-we-are">
+                    <h2>Motor ve Aktarma Organları Kontrolü</h2>
+                    <p>Dynomark Oto Ekspertiz, ikinci el araç alım ve satımlarında oto ekspertiz kontrolleri sırasında kontrol noktalarından biri olan motor üst kontrolüdür.<br>
+
+                    Motor ve Aktarma Organları Kontrolleri: Motor ve Aktarma Organları Kontrollerimiz, motor mekanikerlerimiz tarafından profesyonel, detaylı ve tarafsız bir şekilde incelenir. Bu incelemelerde bulunan kusurlar fotoğraflanır ve detaylı bir şekilde raporlanır.</p>
+                    
+                    <h2>Dynomark Oto Ekspertizde Motor ve Aktarma Organları Kontrollerinde Neler Kontrol Edilir?</h2>
+                    <p>
+                        Denetimlerde, motor mekanikerlerimiz motor ve aktarma organlarını kontrol eder; kırık, hasar, vites geçişleri, debriyaj, intercooler ve hortumlardaki sızıntılar, motor bloğundaki yağ sızıntıları gibi birçok detay incelenir.<br>
+
+                        İkinci el araç alacak müşterilerimizin araç satın almadan önce Dynomark Oto Ekspertiz şubelerine gelerek aracın motor ve aktarma organları kontrollerini yaptırmalarının önemini vurguluyoruz.
+                    </p>
+                    <ul>
+                        <li>Kontrol Noktaları</li>
+                        <li>Sol Ön Kaput</li>
+                        <li>Sağ Ön Kaput</li>
+                        <li>Sol Arka Kaput</li>
+                        <li>Sağ Arka Kaput</li>
+                        <li>Motor Su Radyatörü</li>
+                        <li>Turbo</li>
+                        <li>Intercooler</li>
+                        <li>Motor Ön Kapağı</li>
+                        <li>Motor Bloğu</li>
+                        <li>Silindir Kapağı</li>
+                        <li>Yağ Karteri</li>
+                        <li>Karter Tapası</li>
+                        <li>Krank Keçesi</li>
+                        <li>Krank Arka Keçesi</li>
+                        <li>Şanzıman Manşet Bölümü</li>
+                        <li>Debriyaj Topu</li>
+                        <li>Debriyaj Çatalı</li>
+                        <li>Debriyaj Baskısı</li>
+                        <li>Debriyaj Balatası</li>
+                        <li>Volan</li>
+                    </ul>
+                </div>`
+            },
+            {
+                title: "Diagnostik Testi (Beyin Testi)",
+                content: `<div class="who-we-are">
+                    <h2>Diagnostik Testi (Beyin Testi)</h2>
+                    <p>Diagnostik testi ile aracınızın tüm elektronik ve elektro-mekanik sistemlerini yöneten kontrol ünitelerine bağlantı kurulur. Araç kontrol ünitesinde (beyin) kayıtlı tüm pasif ve aktif hata bildirimleri tespit edilir ve rapor oluşturulur.<br>
+
+                    Bu kontrollerden sonra, aracın MOTOR ENJEKSİYON, MOTOR, GÜÇ ÜRETİMİ, ABS, ESP, ASR, EDC, HAVA YASTIĞI, OTOMATİK ŞANZIMAN, ŞANZIMAN ÇEKİŞ SİSTEMİ gibi elektronik ve elektro-mekanik sistemlerinin AKTİF veya PASİF olduğu ve doğru değer aralığında çalışıp çalışmadığı belirlenir.<br>
+
+                    Diagnostik testi, aracınızın tüm sinyalizasyon, konfor ve güvenlik sistemlerini de kontrol eder. ABS modülatörü, hava yastığı tetikleyici ve şişirme sistemi, emniyet kemeri kilitleme sistemi, koltuk altı yolcu tespit ağları, hava yastığı çarpışma sensörleri, hava yastığı kablosu, soket ve yüksek gerilim manipülasyonlarına bağlı hatlar da tespit edilir. Sistem üzerindeki tüm kısa devreler belirlenir.<br>
+
+                    Aracınızın 4x4 çekiş sistemi kontrolü, otomatik şanzıman solenoid valfleri ve şanzıman vites geçişi alt ve üst sınır aşımları da kontrol edilir.<br>
+
+                    Diagnostik testi ile aracınızın konfor özelliklerinin çalışma koşulları da belirlenebilir. Cam düğmeleri, modüler direksiyon kontrol düğmeleri, şerit takip sistemi, park asistanı, farlar, sinyaller, stoplar, iç aydınlatma, plaka ışıkları, ses sistemi, immobilizer, uzaktan kumanda, anahtar kodu, direksiyon açısı sensörü, far yıkama sistemi, açılır tavan, far ve yağmur sensörü, yokuş kalkış desteği, aracınızın sahip olduğu ve onu farklı kılan tüm sistemler de kontrol edilir.<br>
+
+                    Aracınızda diagnostik testler yapılırken kullanılan test cihazının kalitesi ve kullanılan lisanslı program çok önemlidir. Dynomark Oto Ekspertiz, tüm şubelerinde AVRUPA'da tercih edilen HELLA GUTMANN SOLUTIONS test cihazını kullanır.</p>
+                </div>`
+            },
+            {
+                title: "Borç/Hasar/Değişen/Km/Araç Detay Sorgulama",
+                content: `<div class="who-we-are">
+                    <h2>Borç/Hasar/Değişen/Km/Araç Detay Sorgulama</h2>
+                    <p>Satın almayı planladığınız aracın varsa hasar ve hasar maliyet bilgisi, geriye dönük hasar ve hasar maliyeti, değişen parça sorgulaması ve muayeneye dayalı kilometre sorgulaması hakkında bilgi almanızı sağlar. Sonuçlar SBM (Sigorta Bilgi ve Gözetim Merkezi) üzerinden alınır.</p>
+                </div>`
+            },
+            {
+                title: "Fren/Süspansiyon/Yan Kayma Testi",
+                content: `<div class="who-we-are">
+                    <h2>Fren Testi</h2>
+                    <p>Oto Ekspertiz Hizmetlerinde Fren Testi ile aracın tekerleklerine iletilen fren gücü belirlenir. Frenleme sırasında sapma oranı belirlenir. Bu dağıtım güvenli bir duruş için çok önemlidir. Süspansiyon sisteminin temel parçalarından biri olan amortisörlerin çalışması kontrol edilir. Bu test güvenli bir sürüş için çok önemlidir. Yan Kayma Testi ile tekerleklerin yola uyguladığı sapma dirençleri belirlenir. Bu test güvenli bir yol tutuşu için çok önemlidir.<br>
+
+                    Fren testi ile araç lastiklerinin tutuşu, fren balataları ve fren diskleri tespit edilir. El freni sisteminin çalışması ve tüm fren sistemi üzerindeki frenleme gücü dağılımı belirlenir. Araçların fren sistemlerinin doğru çalışması sürüş güvenliği için hayati önem taşır.</p>
+                    
+                    <h2>Amortisör Testi</h2>
+                    <p>
+                        Amortisör test istasyonuna giren araçların amortisör sistemi ve tüm parçalarının genel kontrolleri sağlanır. Amortisör üst takozu ve alt bağlantı burçları ile birlikte sistemin çalışma sırasındaki sesleri ve çalışma değerleri belirlenir. Amortisörlerin çalışma şekli, yol tutuşu ve aracın rüzgara karşı direnci açısından çok önemlidir.
+                    </p>
+                    <h2>Yan Kayma Testi</h2>
+                    <p>
+                        Yan kayma ölçümü ile aracın tüm tekerleklerinin açıları belirlenir. Ön ve arka aks grubundaki tüm açısal bozulmalar belirlenir. Kaza sonrası veya sert çukur ve hız tümseği geçişlerinde oluşan ön ve arka aks grubu eğrilikleri ve sapmaları da yan kayma testi ile belirlenir.
+                    </p>
+                </div>`
+            },
+            {
+                title: "Karbon Kaçak Testi",
+                content: `<div class="who-we-are">
+                    <h2>Karbon Kaçak Testi</h2>
+                    <p>Karbon Kaçak Testi, aracınızın blok ve silindir kapağı yüzeylerinde oluşabilecek sızıntı ve çatlakların özel kimyasal sıvı ile test edilmesi ve tespitidir. Bu test, aracınızın motoru için hayati testlerden biridir ve aracınızın geçmişte conta ile ilgili bir sorun veya aşırı ısınma sorunuyla karşılaşıp karşılaşmadığını ve bu arızaların anlık olarak mevcut olup olmadığını belirlemek için kullanılır.</p>
+                </div>`
+            },
+            {
+                title: "Yol Sürüş Testi",
+                content: `<div class="who-we-are">
+                    <h2>Yol Sürüş Testi</h2>
+                    <p>Bu test ile atölyede tüm kontrolleri tamamlanan aracın satıcısı ve alıcısı yol sürüş testine davet edilir. Aracın fren sistemi, amortisör sistemi, yol tutuşu, araç içindeki ses yalıtımı, motor çekişi ve şanzıman sistemleri bir kez daha kontrol edilir ve rapor oluşturulur.<br>
+
+                    Hasar Sorgulama/Değişen Sorgulama/Km Sorgulama<br>
+
+                    Satın almayı planladığınız aracın varsa geçmiş hasar ve hasar maliyeti hakkında bilgi almanızı sağlar. Sonuçlar SBM (Sigorta Bilgi ve Gözetim Merkezi) üzerinden alınır. Ayrıca, tramer kayıtları ile kaydedilen plastik ve mekanik parça değişimleri de değişen parça sorgulamasıyla onaylanır. Aracın FENNI muayene kayıt tarihleri ve KM bilgileri erişilir. Sonuçlar PTT AVM sistemi üzerinden alınır.</p>
+                </div>`
+            },
+            {
+                title: "1 Yıl-2500 km Boya Tespit Garantisi",
+                content: `<div class="who-we-are">
+                    <h2>1 Yıl-2500 km Boya Tespit Garantisi (Dynomark Garantisi)</h2>
+                    <p>Dynomark Garantisi ile ikinci el araç alım ve satımlarında aracınızın kaporta boya kontrolleri garanti altındadır.</p>
+                    <h2>Dynomark Garantisi (Boya Tespit Garantisi Kapsamı):</h2>
+                    <p>Tavan, Kaput, Sol Ön Çamurluk, Sol Ön Kapı, Sol Arka Kapı, Sol Arka Çamurluk, Sol Orta Direk, Sol Ön Direk, Sol Üst Direk, Sol Arka İç Direk, Bagaj, Havuz Sacı, Arka Panel, Sağ Arka Çamurluk, Sağ Arka Kapı, Sağ Ön Kapı, Sağ Ön Çamurluk, Sağ Ön Direk, Sağ Orta Direk, Sağ Üst Direk, Sağ Arka İç Direk, Ön Panel, Sol Ön Şasi, Sağ Ön Şasi, Sol Tüfek Sacı, Sağ Tüfek Sacı, Sol Arka Şasi, Sağ Arka Şasi, Sol Taban Sacı, Sağ Taban Sacı, Sol Marşpiyel, Sağ Marşpiyel kontrol noktaları.</p>
+                    <h2>Dynomark Garantisi (Boya Tespit Garantisi Şartları ve Kapsamı):</h2>
+                    <p>Ekspertiz raporunda araç için belirtilen kilometreden itibaren 1 yıl veya 2.500 kilometre.<br>
+
+                    Ekspertiz işlemi sırasında veya sonrasında 20 yıldan eski olan araçlar garanti kapsamına alınmaz.<br>
+
+                    Sözleşmeye konu araç 1 yılı tamamlamamış veya 2.500 kilometreyi aşmamış olsa bile, garanti şartlarından faydalanabilmek için bu süre veya kilometre içinde kazaya karışmamış ve tramer dosyası açılmamış veya sonuçlanmamış olmalıdır.<br>
+
+                    Aynı şekilde, ekspertiz raporundan sonra göçük, çizik, çöküntü tamirleri, seramik kaplama, boya koruma, boyasız göçük düzeltme, yerel boya, rötuş işlemleri yapılmamalı ve kaporta parçalarını sabitleyen vidalar, klipsler, geçme halkalar, perçinler, cıvatalar üzerinde işlem, ayar, sökme ve montaj işlemleri yapılmamalıdır. Ekspertiz raporunda belirtilen mikron boya kalınlığı değerleri farklı olmamalıdır.<br>
+
+                    Detaylı bilgi için garanti politikamızı okuyabilirsiniz.</p>
+                </div>`
+            },
+            {
+                title: "Mekanik Garanti (Tur Assist)",
+                content: `<div class="who-we-are">
+                    <h2>Tur Assist Motor Mekanik Garantisi</h2>
+                    <p>Dynomark Oto Ekspertiz, ikinci el araç alım ve satımlarında oto ekspertiz hizmeti sonrasında müşterilerine Tur Assist ile motor mekanik garantisi sunar. Tur Assist motor mekanik garantisi; aracınızı olası arızalara karşı koruyan ve otomobillerin özel sağlık sigortası olarak görülebilecek bir garanti türüdür.<br>
+
+                    İkinci el araçlarda motor mekanik garantisi, aracınızda en büyük masrafa neden olan motor ve şanzıman gibi pahalı parçaları garanti ederek, arızaların meydana gelmesi durumunda arızaların giderilmesini kapsar.<br>
+
+                    Tur Assist tarafından sunulan iki hizmetten faydalanabilirsiniz. Seçeceğiniz oto ekspertiz paketlerine göre;<br>
+
+                    <b>1 Ay 1000 km Motor Mekanik Garantisi ve</b><br>
+                    <b>3 Ay 5000 km Motor Mekanik Garantisi, iki farklı motor mekanik garantisinden faydalanabilirsiniz.</b>
+                    </p>
+                    <h2>Müşterilerimize Tur Assist Garantisinin Avantajları</h2>
+                    <p> - İkinci El Araba Garantisi "Tur Assist Garantisi" ürünü, aracınızın karşılaşabileceği mekanik ve elektrik arızalarının mali yükünden sizi kurtarır.<br>
+                    - Aracın en kritik parçalarını, işçilik ücretlerini ve yol yardım hizmetlerini kapsar.<br>
+
+                    - Garanti, ilgili kriterleri karşılamaları koşuluyla aşağıda listelenen araçlara uygulanabilir.<br>
+
+                    Binek Araçlar ve Hafif Ticari Araçlar;<br>
+
+                    . 8 yıldan eski olmamalı ve<br>
+
+                    . 160.000 km'den az olmalıdır.<br>
+
+                    1 Ay 1000 km limiti (motor-mekanik garanti için 1 ay)<br>
+
+                    3 Ay 5000 km limiti (motor-mekanik garanti için 3 ay) aşılmamalıdır.</p>
+                    <h2>GARANTİ KAPSAMINDAKİ NOKTALAR<br>
+                        Motor<br>
+                        Manuel Şanzıman</h2>
+                    <p></p>
+                    <ul>
+                        <li>Silindir kapağı ve contası</li>
+                        <li>Emme ve egzoz valfleri (yanmış olanlar hariç)</li>
+                        <li>Valf iticileri (hidrolik ayarlayıcılar dahil)</li>
+                        <li>Valf yayları ve valf keçeleri</li>
+                        <li>Eksantrik mili ve iticiler</li>
+                        <li>Triger kayışları, dişliler ve zincirler</li>
+                        <li>Yağ pompası</li>
+                        <li>Pistonlar ve piston segmanları</li>
+                        <li>Silindir gömlekleri</li>
+                        <li>Krank mili ve yataklar</li>
+                        <li>Emme manifoldu</li>
+                        <li>Motor bloğu</li>
+                        <li>İç dişli dişliler</li>
+                        <li>Senkromeş sarılar ve yuvalar</li>
+                        <li>Vites seçiciler</li>
+                        <li>Şaftlar</li>
+                        <li>Rulmanlar ve burçlar</li>
+                        <li>Transfer dişlileri</li>
+                    </ul>
+
+                    <h2>Otomatik Şanzıman</h2>
+                    <p></p>
+                    <ul>
+                        <li>İç şaftlar</li>
+                        <li>Dişliler</li>
+                        <li>Fren bantları</li>
+                        <li>Redüktör</li>
+                        <li>Yağ basınç pompası</li>
+                        <li>Rulmanlar ve burçlar</li>
+                        <li>Servo ve plaka</li>
+                        <li>Transfer dişlileri</li>
+                    </ul>
+
+                    <h2>CTX / CVT / POWERSHIFT / DURASHIFT VE DİĞER OTOMATİK / YARI OTOMATİK ŞANZIMANLAR</h2>
+                    <p></p>
+                    <ul>
+                        <li>Planetary dişliler</li>
+                        <li>Redüktör dişlileri</li>
+                        <li>Şaftlar</li>
+                        <li>Değişken bobinler</li>
+                        <li>Basınç halkaları</li>
+                        <li>İç keçeler</li>
+                        <li>Rulmanlar ve burçlar</li>
+                        <li>Hidro-elektronik vites değiştirme ünitesi</li>
+                    </ul>
+
+                    <h2>TORK KONVERTÖRÜ & TURBOŞARJÖR</h2>
+                    <p></p>
+                    <ul>
+                        <li>Herhangi bir mekanik iç parça arızası durumunda. (Öncelikle revize edilmiş olması koşuluyla)</li>
+                    </ul>
+
+                    <h2>ELEKTRİK SİSTEMİ</h2>
+                    <p></p>
+                    <ul>
+                        <li>Marş motoru</li>
+                        <li>Marş motoru üst solenoid</li>
+                        <li>Çalışanlar</li>
+                        <li>Şaftlar</li>
+                        <li>Rulmanlar ve burçlar</li>
+                    </ul>
+
+                    <h2>DİFERANSİYEL</h2>
+                    <p></p>
+                    <ul>
+                        <li>Çember ve pinyon dişlileri</li>
+                        <li>Dişliler</li>
+                        <li>Şaftlar</li>
+                        <li>Rulmanlar ve burçlar</li>
+                    </ul>
+
+                    <h2>YOL YARDIM AVANTAJLARI</h2>
+                    <p></p>
+                    <ul>
+                        <li>Yol yardım organizasyonu – Taşıma 50 km</li>
+                        <li>Aracın çekilmesi – 500 TL</li>
+                        <li>Kalıcı ikametgaha dönüş veya yolculuğa devam – Sınırsız</li>
+                        <li>Aracın kullanılamaması nedeniyle konaklama – 150 TL / Gece (Maks. 2 Gece)</li>
+                        <li>Tamir edilmiş aracı almak için seyahat – Sınırsız</li>
+                    </ul>
+                </div>`
+            },
+        ];
+
+        // 2. Grab all buttons
+        const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+        const modal = document.getElementById('card-modal');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
+
+        // 3. Open modal on button click
+        cardButtons.forEach((btn, index) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault(); // prevent default link behavior
+                modalBody.innerHTML = cardContents[index].content || "<p>Tanımlı içerik yok</p>";
+                modal.style.display = 'flex';
+            });
+        });
+
+        // 4. Close modal
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // 5. Close modal if click outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
+    </script>
+
+    <div class="the-back-btn">
+        <a class="news-detail-back" href="index.tr.html" style="text-decoration: none; color: white;">Geri</a>
+    </div>
+
+    <footer>
+        <div class="footer-contents">
+            <div>
+                <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+                
+                <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Ev No. 56, 5. ve 6. Sokaklar Arasında, Kulola Poshta, FMFB'nin karşısında, PD 04, Kabil, Afganistan</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075</a>
+                <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af</a>
+            </div>
+            <div>
+                <h2 style="color: white;">Paketler</h2>
+                <ul class="arrow-list">
+                    <li><a href="micro-package-auto-expertise.tr.html">Mikro Paket Oto Ekspertiz</a></li> 
+                    <li><a href="pro-package-auto-expertise.tr.html">Pro Paket Oto Ekspertiz</a></li>
+                    <li><a href="pro-plus-package-auto-expertise.tr.html">Pro Plus Paket Oto Ekspertiz</a></li>
+                    <li><a href="gold-package-auto-expertise.tr.html">Gold Paket Oto Ekspertiz</a></li>
+                    <li><a href="gold-plus-package-auto-expertise.tr.html">Gold Plus Paket Oto Ekspertiz</a></li>
+                    <li><a href="airbag-control-package.tr.html">Hava Yastığı Kontrol Paketi</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: white;">Uluslararası Şubeler</h2>
+                <ul class="arrow-list">
+                    <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Fas</a></li> 
+                    <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Türkiye</a></li>
+                    <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosova</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-media">
+            <div class="media">
+                <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+            </div>
+            <p>&copy; Telif Hakkı 2020 - 2025 DYNOMARK OTO EKSPERTİZ Tüm Hakları Saklıdır | Geliştiren: <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

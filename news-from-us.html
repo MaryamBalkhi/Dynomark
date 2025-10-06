@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNOMARK AUTO EXPERTISE</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/news-from-us.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>Pre-Notary<span style="color: red;">&nbsp;Dynomark&nbsp;</span>Assurance</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Phone Icon" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">OR</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="English" class="flag" />
+      <span>English</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="news-from-us.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="English" /> English
+      </li>
+      <li data-value="fa" data-url="news-from-us.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persian" /> Persian
+      </li>
+      <li data-value="ps" data-url="news-from-us.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pashto" /> Pashto
+      </li>
+      <li data-value="fr" data-url="news-from-us.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="French" /> French
+      </li>
+      <li data-value="tr" data-url="news-from-us.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turkish" /> Turkish
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Corporate &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.html">Who we are</a></li>
+          <li><a href="photo-gallery.html">Photo Gallery</a></li>
+          <li><a href="news-from-us.html">News From Us</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.html">Packets</a></li>
+      <li><a href="auto-expertise.html">Auto Expertise</a></li>
+      <li><a href="checkpoints.html">Checkpoints</a></li>
+      
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="logo-dark">
+    <h1>INTERNATIONAL BRANCHES</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>EUROPE</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+     
+    </section>
+
+    <section>
+      <h2>TURKEY</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">kocaeli</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+    </section>
+
+    <section>
+      <h2>MIDDLE EAST</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Iraq</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Morocco</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Address">
+    <span>Kulola Poshta, Opposite of FMFB, PD 04</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Phone">
+    <span> 0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="Email">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">NEWS FROM US</h1>
+    <p class="title-of-page-p"><a href="index.html"><b>Home &sol;</b></a>news from us</p>
+</div>
+
+
+
+<section class="dealers-grid-section">
+    <div class="dealers-grid-container">
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img1.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>Our Afyon dealer is at your service!</b>
+                <p>Our Afyon dealer has started service with its professional staff and state-of-the-art technology devices.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img2.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>Our Samsun / Vezirköprü dealer is at your service very soon.</b>
+                <p>Our Vezirköprü dealer is at your service very soon with its professional staff and state-of-the-art technology devices.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img3.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>Our Şanliurfa / Siverek Dealer is at your service very soon.</b>
+                <p>Auto Expertise Dealer, Auto Expertise Dealership, Auto Expertise Dealers, Getting Auto Expertise Dealership, Auto Expertise Dealership Companies.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img4.png');"></div>
+            <div class="dealers-grid-text">
+                <b>SAMSUN VEZİRKÖPRÜ DEALER STARTED TO SERVE.</b>
+                <p>Auto Expertise Dealer, Auto Expertise Dealership, Auto Expertise Dealers, Getting Auto Expertise Dealership, Auto Expertise Dealership Companies.</p>
+                <a class="dealers-grid-btn" href="/en/samsun-vezi̇rkopru-dealer-started-to-serve/news/130">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img5.jpg')"></div>
+            <div class="dealers-grid-text">
+                <b>OUR MARDIN/KIZILTEPE DEALER IS AT YOUR SERVICE VERY SOON.</b>
+                <p>Auto Expertise Dealer, Auto Expertise Dealership, Auto Expertise Dealers, Getting Auto Expertise Dealership, Auto Expertise Dealership Companies.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img6.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>TOKAT / ERBA DEALER IS AT YOUR SERVICE VERY SOON.</b>
+                <p>TOKAT / ERBAA Our dealer is at your service very soon with its professional staff and state-of-the-art technology devices.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img7.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>HATAY / ARSUZ DEALER IS AT YOUR SERVICE VERY SOON.</b>
+                <p>HATAY / ARSUZ Our dealer is at your service very soon with its professional staff and state-of-the-art technology devices.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img8.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>DYNOMARK AUTO EXPERTISE SİVEREK /ŞANLIURFA DEALER IS AT YOUR SERVICE.</b>
+                <p>Auto Expertise Dealer, Auto Expertise Dealership, Auto Expertise Dealers, Getting Auto Expertise Dealership, Auto Expertise Dealership Companies.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+                <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img9.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR DEALER IN TEKİRDAĞ/KAPAKLI IS AT YOUR SERVICE</b>
+                <p>Auto Expertise Dealer, Auto Expertise Dealership, Auto Expertise Dealers, Getting Auto Expertise Dealership, Auto Expertise Dealership Companies,</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img10.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>ANTALYA / KEPEZ DEALER AT YOUR SERVICE.</b>
+                <p>Auto Expertise Dealer, Auto Expertise Dealership, Auto Expertise Dealers, Buying Auto Expertise Dealership, Auto Expertise Dealership Companies</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img11.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>HATAY/ARSUZ DEALER STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Hatay / Arsuz dealer started to serve. Arsuz Auto Expertise, equipped with the latest technology auto expertise machines, is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img12.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>TOKAT / ERBAA DEALER STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Tokat / Erbaa dealer started to serve. Equipped with the latest technology auto expertise machines, Erbaa Auto Expertise is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img13.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR DEALER IN DENZLI / TAVAS STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Denizli / Tavas dealer started to serve. Equipped with the latest technology auto expertise machines, Tavas Auto Expertise is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img14.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR DEALER IN TEKIRDAG / CORLU IS AT YOUR SERVICE VERY SOON</b>
+                <p>Dynomark Çorlu auto expertise, equipped with professional staff and the latest technology auto expertise machines, is at your service very soon.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img15.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR DYNOMARK ÇORLU / TEKİRDAĞ DEALER STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Çorlu / TEKIRDAĞ dealer started to serve. Equipped with the latest technology auto expertise machines, Çorlu Auto Expertise is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img16.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR KARS DEALER IS AT YOUR SERVICE VERY SOON</b>
+                <p>Equipped with professional staff and the latest technology auto expertise machines, Dynomark Kars auto expertise is at your service very soon.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img17.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>
+OUR KARS DEALER STARTED TO SERVE</b>
+                <p>Our Dynomark Auto Expertise Kars dealer has started to serve. Equipped with the latest technology auto expertise machines, Kars Auto Expertise is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+        <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img18.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR BANDIRMA DEALER IS AT YOUR SERVICE VERY SOON</b>
+                <p>Dynomark Bandirma auto expertise, equipped with professional staff and the latest technology auto expertise machines, is at your service very soon.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img19.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>Fall campaign</b>
+                <p>With SBH10 code you can get 10% discount on all appraisal packages.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img20.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR BALIKESİR / BANDIRMA DEALER STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Bandirma / Balikesir dealer started to serve. Equipped with the latest technology auto expertise machines, Bandirma Auto Expertise is at your service to provide you with perfect service with its</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img21.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>UNYE / ORDU OUR DEALER IS AT YOUR SERVICE VERY SOON</b>
+                <p>Dynomark Ünye auto expertise, equipped with professional staff and the latest technology auto expertise machines, is at your service very soon.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img22.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>ESENYURT HARAMİDERE E5 BRANCH STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Esenyurt / ISTANBUL dealer started to serve. Equipped with the latest technology auto expertise machines, Esenyurt Auto Expertise is at your service to provide you with perfect service with its</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img23.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>
+Auto Expertise Sector Opens to the World with Dynomark</b>
+                <p>After reaching 40 branches in the country, Dynomark Auto Expertise has now signed a master franchise agreement that will enable the sector to spread to North Africa, Europe and the Middle East... The brand, which will take the first</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-color: rgb(106, 106, 106);"></div>
+            <div class="dealers-grid-text">
+                <b>UNYE/ORDU DEALER STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Ünye / ORDU dealer started to serve. Equipped with the latest technology auto expertise machines, Ünye Auto Expertise is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="optional-button-grid" href="grid24news.html">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img25.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>15% DISCOUNT ON ALL EXPERTISE PACKAGES</b>
+                <p>Valid at Dynomark Branches 15% Discount on All Appraisal Packages Throughout January.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img26.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>Valid at Dynomark Branches 15% Discount on All Appraisal Packages Throughout January</b>
+                <p>Dynomark Auto Expertise is soon all over the world. Our Country Distributor Casablanca / Morocco dealer started to serve. Equipped with the latest technology auto expertise machines, FAS Auto Expertise is at your service to</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img27.jpeg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR ARTVIN/HOPA DEALER STARTED TO SERVE</b>
+                <p>Dynomark Auto Expertise Hopa / Artvin dealer started to serve. Equipped with the latest technology auto expertise machines, Hopa Auto Expertise is at your service to provide you with perfect service with its professional staff.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img28.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR BAGHDAD IRAQ DEALER STARTED TO SERVE!</b>
+                <p>Dynomark Auto Expertise is soon all over the world. Our Country Distributor Baghdad / IRAQ dealer started to serve. Equipped with the latest technology auto expertise machines, Iraq Auto Expertise is at your service to provide you</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+         <div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img29.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>OUR BAGHDAD IRAQ DEALER STARTED TO SERVE!</b>
+                <p>Dynomark Auto Expertise is soon all over the world. Our Country Distributor Baghdad / IRAQ dealer started to serve. Equipped with the latest technology auto expertise machines, Iraq Auto Expertise is at your service to provide you</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+<div class="dealers-grid-item">
+            <div class="dealers-grid-image" style="background-image: url('stuff/images/news-from-us-imgs/img30.jpg');"></div>
+            <div class="dealers-grid-text">
+                <b>SPRING CAMPAIGN 10% DISCOUNT ON ALL EXPERTISE PACKAGES</b>
+                <p>10% Discount on All Appraisal Packages Valid Between 01.04.2023-01.06.2023 at Dynomark Branches.</p>
+                <a class="dealers-grid-btn" href="#">More >></a>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const gridContainer = document.querySelector('.dealers-grid-container');
+  if (!gridContainer) {
+    console.warn('Grid container not found');
+    return; // nothing to do
+  }
+
+  // Find all grid items and attach click handlers to their "More" buttons
+  const items = Array.from(gridContainer.querySelectorAll('.dealers-grid-item'));
+  items.forEach(item => {
+    const btn = item.querySelector('.dealers-grid-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); // stop anchor navigation
+      const href = btn.getAttribute('href');
+      console.log('Button clicked, href:', href); // Debug log
+      // Check if the button has the specific href for UNYE/ORDU card
+      if (href === 'news-from-us.html') {
+        try {
+          window.location.assign(href); // Use assign for navigation
+          console.log('Navigating to:', href);
+        } catch (error) {
+          console.error('Navigation failed:', error);
+          alert('Failed to navigate to news-from-us.html. Please ensure the file exists and is accessible.');
+        }
+      } else {
+        openDetail(item); // trigger detail view for other cards
+      }
+    });
+  });
+
+  // Create and show detail view for one item
+  function openDetail(item) {
+    const imgDiv = item.querySelector('.dealers-grid-image');
+    const titleEl = item.querySelector('.dealers-grid-text b');
+    const pEl = item.querySelector('.dealers-grid-text p');
+
+    // Get background-image string (works for inline style or computed style)
+    const bg = (imgDiv && (imgDiv.style.backgroundImage || getComputedStyle(imgDiv).backgroundImage)) || 'none';
+    const titleText = titleEl ? titleEl.textContent.trim() : '';
+    const descText = pEl ? pEl.textContent.trim() : '';
+
+    // Hide the whole grid container
+    gridContainer.style.display = 'none';
+
+    // Build detail DOM (safer to use textContent to avoid injecting raw HTML)
+    const detailWrap = document.createElement('div');
+    detailWrap.className = 'news-detail';
+
+    const inner = document.createElement('div');
+    inner.className = 'news-detail-inner';
+
+    // Text column
+    const textCol = document.createElement('div');
+    textCol.className = 'news-detail-text';
+
+    const titleNode = document.createElement('b');
+    titleNode.className = 'news-detail-title';
+    titleNode.textContent = titleText;
+
+    const descNode = document.createElement('p');
+    descNode.className = 'news-detail-desc';
+    descNode.textContent = descText;
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'news-detail-back';
+    backBtn.type = 'button';
+    backBtn.textContent = 'Back';
+
+    textCol.appendChild(titleNode);
+    textCol.appendChild(descNode);
+    textCol.appendChild(backBtn);
+
+    // Image column
+    const imgCol = document.createElement('div');
+    imgCol.className = 'news-detail-image';
+
+    // Extract plain URL from background-image: url("...") string
+    const urlMatch = bg.match(/url\(["']?(.*?)["']?\)/);
+    const imgUrl = urlMatch ? urlMatch[1] : '';
+
+    const imgTag = document.createElement('img');
+    imgTag.src = imgUrl || '';
+    imgTag.alt = titleText || 'News image';
+    imgCol.appendChild(imgTag);
+
+    inner.appendChild(textCol);
+    inner.appendChild(imgCol);
+    detailWrap.appendChild(inner);
+
+    // Insert the detail view right after the grid container
+    gridContainer.parentNode.insertBefore(detailWrap, gridContainer.nextSibling);
+
+    // Back behavior
+    backBtn.addEventListener('click', function () {
+      detailWrap.remove();
+      gridContainer.style.display = ''; // restore original display
+      // optionally scroll to the grid
+      window.scrollTo({ top: gridContainer.getBoundingClientRect().top + window.pageYOffset - 20, behavior: 'smooth' });
+    });
+  }
+});
+
+// Fade-in on scroll
+const items = document.querySelectorAll('.dealers-grid-item');
+
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target); // animate once
+    }
+  });
+}, { threshold: 0.15 });
+
+items.forEach(item => {
+  observer.observe(item);
+});
+
+fetch(href, { method: 'HEAD' })
+  .then(response => {
+    if (response.ok) {
+      console.log(`${href} exists, proceeding with navigation`);
+    } else {
+      console.error(`${href} not found (status: ${response.status})`);
+      alert(`${href} not found. Please check the file path or server configuration.`);
+    }
+  })
+  .catch(error => {
+    console.error(`Fetch check failed for ${href}: ${error.message}`);
+    alert(`Unable to verify ${href}. Error: ${error.message}`);
+  });
+</script>
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; House No. 56, Between Street 5 &6, Kulola Poshta, Opposite of FMFB, PD 04, Kabul, Afghanistan
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">Packets</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.html">Micro Package Auto Expertise</a></li> 
+  <li><a href="pro-package-auto-expertise.html">Pro Package Auto Expertise</a></li>
+  <li><a href="pro-plus-package-auto-expertise.html">Pro Plus Package Auto Expertise</a></li>
+  <li><a href="gold-package-auto-expertise.html">Gold Package Auto Expertise</a></li>
+  <li><a href="gold-plus-package-auto-expertise.html">Gold Plus Package Auto Expertise</a></li>
+  <li><a href="airbag-control-package.html">Airbag Control Package</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">International Branches</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284"> Morroco</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292"> Iraq</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">  Turkey</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302"> Kosovo</a></li>
+</ul>
+<!--
+<button class="showall">Show all</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+    <p>	&copy; Copyright 2020 - 2025 DYNOMARK AUTO EXPERTISE All Rights Reserved | Developed by <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

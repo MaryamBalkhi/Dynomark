@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPERTISE AUTOMOBILE DYNOMARK</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/photo-gallery.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>Garantie <span style="color: red;">&nbsp;Dynomark&nbsp;</span> avant notaire</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Icône de téléphone" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">OU</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="Anglais" class="flag" />
+      <span>Anglais</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="photo-gallery.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="Anglais" /> Anglais
+      </li>
+      <li data-value="fa" data-url="photo-gallery.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persan" /> Persan
+      </li>
+      <li data-value="ps" data-url="photo-gallery.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pachto" /> Pachto
+      </li>
+      <li data-value="fr" data-url="photo-gallery.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="Français" /> Français
+      </li>
+      <li data-value="tr" data-url="photo-gallery.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turc" /> Turc
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="Logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fr.html">Accueil</a></li>
+      <li>
+        <a href="#">Entreprise &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fr.html">Qui sommes-nous</a></li>
+          <li><a href="photo-gallery.fr.html">Galerie de photos</a></li>
+          <li><a href="news-from-us.fr.html">Nos actualités</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fr.html">Forfaits</a></li>
+      <li><a href="auto-expertise.fr.html">Expertise automobile</a></li>
+      <li><a href="checkpoints.fr.html">Points de contrôle</a></li>
+      
+      <li><a href="contact.fr.html">Contactez-nous</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="Logo sombre">
+    <h1>FILIALES INTERNATIONALES</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>EUROPE</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+     
+    </section>
+
+    <section>
+      <h2>TURQUIE</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">Kocaeli</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+    </section>
+
+    <section>
+      <h2>MOYEN-ORIENT</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Adresse">
+    <span>Kulola Poshta, en face de la banque FMFB, 4e district</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Téléphone">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="E-mail">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">GALERIE DE PHOTOS</h1>
+    <p class="title-of-page-p"><a href="index.fr.html"><b>Accueil &sol;</b></a>Galerie de photos</p>
+</div>
+
+<!--photos section-->
+<section class="grids-photo-container">
+    <div class="grids-photo-row">
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg1.jpg" alt="Photo 1" data-index="0"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg2.jpg" alt="Photo 2" data-index="1"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg3.jpg" alt="Photo 3" data-index="2"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg4.jpg" alt="Photo 4" data-index="3"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg5.jpg" alt="Photo 5" data-index="4"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg6.jpg" alt="Photo 6" data-index="5"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg7.jpg" alt="Photo 7" data-index="6"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg8.jpg" alt="Photo 8" data-index="7"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg9.jpg" alt="Photo 9" data-index="8"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg10.jpg" alt="Photo 10" data-index="9"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg11.jpg" alt="Photo 11" data-index="10"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg12.jpg" alt="Photo 12" data-index="11"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg13.jpg" alt="Photo 13" data-index="12"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg14.jpg" alt="Photo 14" data-index="13"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg15.jpg" alt="Photo 15" data-index="14"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg16.jpg" alt="Photo 16" data-index="15"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg17.jpg" alt="Photo 17" data-index="16"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg18.jpg" alt="Photo 18" data-index="17"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg19.jpg" alt="Photo 19" data-index="18"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg20.jpg" alt="Photo 20" data-index="19"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg21.jpg" alt="Photo 21" data-index="20"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg22.jpg" alt="Photo 22" data-index="21"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg23.jpg" alt="Photo 23" data-index="22"></div>
+        <div class="grids-photo-item"><img src="stuff/images/photo-gallery/jpg24.jpg" alt="Photo 24" data-index="23"></div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+            <div class="lightbox-nav">
+            <span id="prev">&#10094;</span>
+            <span id="next">&#10095;</span>
+        </div>
+    <div class="lightbox-thumbnails" id="lightbox-thumbs"></div>
+</div>
+
+<script>
+const images = [
+    {src:"stuff/images/photo-gallery/jpg1.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg2.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg3.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg4.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg5.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg6.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg7.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg8.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg9.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg10.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg11.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg12.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg13.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg14.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg15.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg16.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg17.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg18.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg19.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg20.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg21.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg22.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg23.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"},
+    {src:"stuff/images/photo-gallery/jpg24.jpg", caption:"EXPERTISE AUTOMOBILE DYNOMARK"}
+];
+
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const thumbsContainer = document.getElementById('lightbox-thumbs');
+let currentIndex = 0;
+
+// Open lightbox
+document.querySelectorAll('.grids-photo-item img').forEach(img => {
+    img.addEventListener('click', (e) => {
+        currentIndex = parseInt(e.target.dataset.index);
+        showImage(currentIndex);
+        lightbox.style.display = 'flex';
+    });
+});
+
+// Close lightbox
+document.getElementById('lightbox-close').addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
+
+// Navigate
+document.getElementById('prev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+});
+
+document.getElementById('next').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+});
+
+// Generate thumbnails
+images.forEach((imgObj, index) => {
+    const thumb = document.createElement('img');
+    thumb.src = imgObj.src;
+    thumb.dataset.index = index;
+    thumb.addEventListener('click', () => {
+        currentIndex = index;
+        showImage(currentIndex);
+    });
+    thumbsContainer.appendChild(thumb);
+});
+
+// Show image in lightbox
+function showImage(index) {
+    lightboxImg.src = images[index].src;
+    lightboxCaption.textContent = images[index].caption;
+    document.querySelectorAll('#lightbox-thumbs img').forEach(img => img.classList.remove('active'));
+    thumbsContainer.children[index].classList.add('active');
+}
+
+// Add click-to-zoom
+lightboxImg.addEventListener('click', () => {
+    lightboxImg.classList.toggle('zoomed');
+});
+</script>
+
+
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; Maison n° 56, entre les rues 5 et 6, Kulola Poshta, en face de la banque FMFB, 4e district, Kaboul, Afghanistan
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">Forfaits</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fr.html">Forfait Micro Expertise Automobile</a></li> 
+  <li><a href="pro-package-auto-expertise.fr.html">Forfait Pro Expertise Automobile</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fr.html">Forfait Pro Plus Expertise Automobile</a></li>
+  <li><a href="gold-package-auto-expertise.fr.html">Forfait Or Expertise Automobile</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fr.html">Forfait Or Plus Expertise Automobile</a></li>
+  <li><a href="airbag-control-package.fr.html">Forfait Contrôle Airbag</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">Filiales internationales</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Maroc</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Irak</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Turquie</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a></li>
+</ul>
+<!--
+<button class="showall">Tout afficher</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="YouTube"></a>
+    </div>
+    <p>	&copy; Copyright 2020 - 2025 DYNOMARK EXPERTISE AUTOMOBILE Tous droits réservés | Développé par <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>د ډینومارک موټر تخصص</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/services.css">
+</head>
+<body style="direction: rtl;">
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>د نوټري دمخه <span style="color: red;">&nbsp;ډینومارک&nbsp;</span> تضمین</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="د تلیفون آیکون" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="ټویټر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="انسټاګرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوټیوب"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="انګلیسي" class="flag" />
+      <span>انګلیسي</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="services.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="انګلیسي" /> انګلیسي
+      </li>
+      <li data-value="fa" data-url="services.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پارسي" /> پارسي
+      </li>
+      <li data-value="ps" data-url="services.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پښتو" /> پښتو
+      </li>
+      <li data-value="fr" data-url="services.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوي" /> فرانسوي
+      </li>
+      <li data-value="tr" data-url="services.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکي" /> ترکي
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="لوګو">
+  
+  <nav>
+    <ul>
+      <li><a href="index.ps.html">کور</a></li>
+      <li>
+        <a href="#">کارپوریټ &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.ps.html">موږ څوک یو</a></li>
+          <li><a href="photo-gallery.ps.html">د عکسونو ګالري</a></li>
+          <li><a href="news-from-us.ps.html">زموږ خبرونه</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.ps.html">بستې</a></li>
+      <li><a href="auto-expertise.ps.html">د موټر تخصص</a></li>
+      <li><a href="checkpoints.ps.html">د چک نقطې</a></li>
+      
+      <li><a href="contact.ps.html">موږ سره اړیکه ونیسئ</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="تور لوګو">
+    <h1>نړیوالې څانګې</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>اروپا</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a>
+     
+    </section>
+
+    <section>
+      <h2>ترکیه</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">انټالیا</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجالي</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اردو</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+    </section>
+
+    <section>
+      <h2>منځنی ختیځ</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="پته">
+    <span>کولولا پوستا، د FMFB بانک مخې ته، ۴ ناحیه</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="تلیفون">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="ایمیل">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">د چک نقطې</h1>
+    <p class="title-of-page-p"><a href="index.ps.html"><b>کور &sol;</b></a> د چک نقطې</p>
+</div>
+
+
+<section class="grid-section">
+  <div class="grid-container">
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د بریک ازموینه</div>
+      <p class="card-text">په پرمختللې بریک ازموینې کې چې د بریک ټیسټر سره ترسره کیږي، د بریک ځواک او د ښي او کیڼ ویلو ترمنځ د بریک ځواک ویش، د بریک کولو پر مهال د ټایر د کنټرول وړتیا، د بریک د ښه والي درجه چې د بریک کولو پر مهال د غیر قفل شوي ویل سره د اعظمي بریک ځواک څرګندوي، او اعظمي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د تعلیق ازموینه</div>
+      <p class="card-text">د تعلیق ازموینې په پروسه کې، د موټر تعلیق ګروپ چې باید ازمول شي، د بریښنایی شاک ډرایو سره د تعلیق ټیسټر پرته اخیستل کیږي. مخکینۍ او شاتني محورونه په جلا توګه درملنه کیږي او د ښي-کیڼ عدم توازن، رګونه او د رول نرخونه ټاکل کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د انجن فعالیت (ډاینو) ازموینه</div>
+      <p class="card-text">د موټر د انجن فعالیت ازموینه د ډاینامومیټر آلې په کارولو سره ترسره کیږي. ډاینامومیټر یو وسیله ده چې د لاسي، اتوماتیک لیږدونو مخکیني یا شاتني ویل ډرایو موټرو کې د انجن ځواک او تورک اندازه کوي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د اړخیز لغزش ازموینه</div>
+      <p class="card-text">د اړخیز لغزش ازموینه یوه اله ده چې د مخکیني او شاتني تیغونو د TOE زاویې (د ټای راډ تنظیم) ازموي، کوم چې د خوندي موټر چلولو مهم عناصر دي، په ډیر لنډ وخت کې.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">تشخیصي (OBD) ازموینه</div>
+      <p class="card-text">د موټر تشخیصي میتودونه ستاسو د اوسني موټر سره ستونزو کې خورا مهم دي. لکه څنګه چې د موټر ټیکنالوژي پرمختګ کوي او تخنیکي توضیحات زیاتیږي، د خطا کشف د پخوا په پرتله ډیر ستونزمن کیږي.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">د بدن رنګ ارزونه</div>
+      <p class="card-text">د رنګ او بدن ارزونه زموږ د متخصص او تصدیق شوي ماسټرانو لخوا د Würth برانډ وسایلو سره ترسره کیږي چې په نړۍ کې د حساسو اندازه کولو ځانګړتیاوې لري.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">په لیفټ کې د لاندې/مخکیني میخانیکي کنټرولونه</div>
+      <p class="card-text">چینې او شاک جذبوونکي، د محور بیلو، د بریک پیډونه، د فرش پلاستیکي باکیلیټ، د انجن او لیږدونې لاندې وجونه...</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+<div id="card-modal" class="card-modal">
+  <div class="modal-content">
+    <button id="modal-close" class="close-btn">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<style>
+/* ---------- MODAL STYLING ---------- */
+.card-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 20px;
+  max-width: 1000px;
+  width: 90%;
+  padding: 2rem;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s ease;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+/* ---------- CARD INSIDE MODAL ---------- */
+.card-service-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.card-content {
+  flex: 1;
+  text-align: left;
+}
+
+.card-content h2 {
+  margin-top: 0;
+  color: #222;
+  font-size: 1.6rem;
+}
+
+.card-content h3 {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.card-content p {
+  line-height: 1.6;
+  color: #444;
+}
+
+.card-content ul {
+  list-style: none;
+  margin-top: 0.8rem;
+  padding-left: 0;
+}
+
+.card-content ul li {
+  position: relative;
+  margin-bottom: 0.4rem;
+  color: #000;
+  padding-left: 1.6rem;
+}
+
+.card-content ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: red;
+  font-weight: bold;
+}
+
+.card-image {
+  flex: 0 0 300px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+  .card-service-container {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .card-image {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+  }
+  .card-content {
+    text-align: center;
+  }
+}
+</style>
+
+<script>
+const cardContents = [
+  {
+    title: "د بریک ازموینه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>د بریک ازموینه</h2>
+        <p>په پرمختللې بریک ازموینې کې چې د بریک ټیسټر سره ترسره کیږي، د بریک ځواک او د ښي او کیڼ ویلو ترمنځ د بریک ځواک ویش، د بریک کولو پر مهال د ټایر د کنټرول وړتیا، د بریک د ښه والي درجه چې د بریک کولو پر مهال د غیر قفل شوي ویل سره د اعظمي بریک ځواک څرګندوي، او د اعظمي بریک شتاب او د بریک بوسټر فعالیت معلوم کیدی شي.</p>
+        <h3>د اندازه کولو ارزښتونه</h3>
+        <ul>
+          <li>د مخکیني ښي او کیڼ بریک ځواک (نیوټن)</li>
+          <li>د مخکیني بریکونو ترمنځ توپیر (%)</li>
+          <li>د شاتني ښي او کیڼ بریک ځواک (نیوټن)</li>
+          <li>د شاتني بریکونو ترمنځ توپیر (%)</li>
+          <li>د ټولو بریکونو اغیزمنتیا (%)</li>
+          <li>د ښي لاسي بریک ځواک (نیوټن)</li>
+          <li>د کیڼ لاسي بریک ځواک (نیوټن)</li>
+          <li>د ټولو لاسي بریک ځواک (%)</li>
+          <li>د کمیدو شتاب (میټر فی ثانیه مربع)</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img1.jpg" alt="د بریک ازموینه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "د تعلیق ازموینه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>د تعلیق ازموینه</h2>
+        <p>د تعلیق ازموینې په پروسه کې، د موټر تعلیق ګروپ چې باید ازمول شي، د بریښنایی شاک ډرایو سره د تعلیق ټیسټر پرته اخیستل کیږي. مخکینۍ او شاتني محورونه په جلا توګه درملنه کیږي او د ښي-کیڼ عدم توازن، رګونه او د رول نرخونه ټاکل کیږي. د ویګاټیک تعلیق ټیسټ ماشین یوازینی ازموینې وسیله ده چې د لویو نړیوالو موټر شرکتونو لخوا منل شوې او د هغې دقت منل شوی دی. د ویګاټیک سره، ستاسو د موټر د تعلیق قوت کنټرول، د شاک جذبونکي توازن او د غږ تناسبات چک کیږي. په دې توګه، راپور ورکول کیږي چې ایا موټر د سړک د ساتلو اړین تناسب لري.</p>
+        <h3>په تعلیق ازموینې وسیله کې ترسره شوي کنټرولونه</h3>
+        <ul>
+          <li>د شاک جذبونکي او چینې کنټرول</li>
+          <li>د خم بار کنټرول</li>
+          <li>د سوینګ کنټرولونه</li>
+          <li>د ټای راډ او د ټای راډ پای کنټرولونه</li>
+          <li>د ویل بالونو چکونه</li>
+          <li>د محور شافټ کنټرول</li>
+          <li>د کاردان شافټ کنټرول</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img2.jpg" alt="د تعلیق ازموینه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "د انجن فعالیت (ډاینو) ازموینه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>د انجن فعالیت (ډاینو) ازموینه</h2>
+        <p>د موټر د انجن فعالیت ازموینه د ډاینامومیټر آلې په کارولو سره ترسره کیږي. ډاینامومیټر یو وسیله ده چې د لاسي، اتوماتیک لیږدونو مخکیني یا شاتني ویل ډرایو موټرو کې د انجن ځواک او تورک اندازه کوي. دا حتی د انجن لږ تر لږه بې نظمۍ په ګرافونو سره ښیي، دا ممکنه ده چې د اور لګیدنې سیسټم او د تیلو اخیستلو سیسټم په دې ګرافونو کې وګورئ. دا هم په واضح ډول د بدلونونو دمخه او وروسته د اندازه کولو له امله ترلاسه شوي ځواک ټاکي.</p>
+        <h3>د انجن فعالیت ازموینې سره</h3>
+        <ul>
+          <li>د انجن اسب بخار (کیلوواټ، HP)</li>
+          <li>د انجن تورک (نیوټن میټر)</li>
+          <li>شتاب</li>
+          <li>د لیږد سیسټم</li>
+          <li>سیسټمونه لکه د اور لګیدنې سیسټم او د تیلو رسولو سیسټم چک کیږي.</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img3.jpg" alt="د انجن فعالیت ازموینه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "د اړخیز لغزش ازموینه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>د اړخیز لغزش ازموینه</h2>
+        <p>د اړخیز لغزش ازموینه یوه اله ده چې د مخکیني او شاتني تیغونو د TOE زاویې (د ټای راډ تنظیم) ازموي، کوم چې د خوندي موټر چلولو مهم عناصر دي، په ډیر لنډ وخت کې.</p>
+        <p>دا د انحراف واټن محاسبه او ټاکي چې ممکن د ۱ کیلو میټر مستقیم سړک په اوږدو کې د موټر پرته له سټیرینګ مداخلې سره رامنځته شي. د دې انحرافي اختلالاتو په رڼا کې، دا د مخکیني اسمبلۍ، د ټای راډ تنظیم او د محور تشو په اړه اختلالات په میټر/کیلومتر کې کشف او راپور ورکوي.</p>
+        <p>د اړخیز لغزش ازموینه دا ټاکي چې ایا د هغه موټر د ټای راډ تنظیمات چې تاسو یې د اخیستلو په اړه یاست سم او سالم دي.</p>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img4.jpg" alt="د اړخیز لغزش ازموینه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "تشخیصي (OBD) ازموینه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>د بریښنایی تشخیص (OBD) ازموینه</h2>
+        <p>د موټر تشخیصي میتودونه ستاسو د اوسني موټر سره ستونزو کې خورا مهم دي. لکه څنګه چې د موټر ټیکنالوژي پرمختګ کوي او تخنیکي توضیحات زیاتیږي، د خطا کشف د پخوا په پرتله ډیر ستونزمن کیږي. له همدې امله، د وروستي تشخیصي وسایلو سره کار کولو سره د ستونزې پیژندل مهم کیږي. موږ د ډینومارک موټر تخصص په توګه د وروستي ټیکنالوژي سره کار کونکي وسایلو په کارولو سره د خطا کشف کې د غلطۍ حاشیه کموو.</p>
+        <h3>د خطا کشف څنګه ترسره کیږي؟</h3>
+        <p>کله چې ستاسو په موټر کې خرابي رامنځته کیږي، معمولا د وسایلو په پینل کې د خبرداري نښه ښکاره کیږي. په هرصورت، ځینې وختونه دا ممکنه ده چې د موټر چلولو له آرامۍ څخه پوه شئ چې ستونزه شتون لري حتی که د خبرداري نښه هم نه وي. په داسې حالاتو کې، د ستونزې د لامل د پوهیدو لپاره د موټر تشخیص اړین دی.</p>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img5.jpg" alt="د OBD ازموینه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "د بدن رنګ ارزونه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>د بدن رنګ ارزونه</h2>
+        <p>د رنګ او بدن ارزونه زموږ د متخصص او تصدیق شوي ماسټرانو لخوا د Würth برانډ وسایلو سره ترسره کیږي چې په نړۍ کې د حساسو اندازه کولو ځانګړتیاوې لري. په هره نقطه کې د موټر تفصيلي تفتیش او اندازه کول ترسره کیږي.</p>
+        <h3>تفتیش شامل دي:</h3>
+        <ul>
+          <li>د بدل شوي او رنګ شوي برخو تفتیش</li>
+          <li>د مایکرون ارزښتونو کشف</li>
+          <li>د پروسس شوي برخو راپور ورکول</li>
+          <li>د مخکیني شاسي، شاتني شاسي، برج، فینډر، د دروازو شیټونه</li>
+          <li>منځنۍ داخلي قطب، مخکیني بمپر، شاتني بمپر</li>
+          <li>د انجن مخکیني داخلي پینل، ټراورس، مخکیني هوډ، د چت شیټ</li>
+          <li>شاتني کړکۍ، د شا ټرنک شیټ، شاتني داخلي پینل</li>
+          <li>ریمونه، د رنګ نیمګړتیاوې، سکریچونه، ډنټونه</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img6.jpg" alt="د بدن رنګ ارزونه">
+      </div>
+    </div>`
+  },
+
+  {
+    title: "په لیفټ کې د لاندې/مخکیني میخانیکي کنټرولونه",
+    content: `
+    <div class="card-service-container">
+      <div class="card-content">
+        <h2>په لیفټ کې د لاندې/مخکیني میخانیکي کنټرولونه</h2>
+        <ul>
+          <li>چینې او شاک جذبوونکي</li>
+          <li>د محور بیلو</li>
+          <li>د بریک پیډونه</li>
+          <li>د فرش پلاستیکي باکیلیټ</li>
+          <li>د انجن او لیږدونې لاندې وجونه</li>
+          <li>د سوینګ بوشینګ ویټرول</li>
+          <li>د ټای راډ او د ټای راډ پای</li>
+          <li>د مخکیني فرق مهر او موم تیل</li>
+          <li>د سټیرینګ بکس د تیلو مهر او موم</li>
+          <li>د موټر کیسینګ او د انجن د تیلو مهر او موم</li>
+          <li>د ایئر کنډیشن کمپرسور او د تیلو مهر او موم</li>
+          <li>د تورشن بوشینګ او د توازن بازو</li>
+          <li>د فرق لیږدونې شافټ او وج</li>
+          <li>د تیلو ټانک او د تیلو نلونه</li>
+          <li>د اګزوز سیسټم لیکونه</li>
+          <li>ټول شرایط چې د لاندې حرکت او مخکیني ټیم په لیدلو سره لیدل کیږي چک کیږي.</li>
+        </ul>
+      </div>
+      <div class="card-image">
+        <img src="stuff/images/service-img/service-img7.jpg" alt="په لیفټ کې د لاندې/مخکیني میخانیکي کنټرولونه">
+      </div>
+    </div>`
+  }
+];
+
+const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+const modal = document.getElementById('card-modal');
+const modalBody = document.getElementById('modal-body');
+const modalClose = document.getElementById('modal-close');
+
+cardButtons.forEach((btn, index) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalBody.innerHTML = cardContents[index].content || "<p>هیڅ محتوا تعریف شوې نه ده</p>";
+    modal.style.display = 'flex';
+  });
+});
+
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.style.display = 'none';
+});
+</script>
+
+<div class="the-back-btn">
+<a class="news-detail-back" href="index.ps.html" style="text-decoration: none; color: white;">شاته</a>
+</div>
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; کور شمیره ۵۶، د ۵ او ۶ کوڅو ترمنځ، کولولا پوستا، د FMFB بانک مخې ته، ۴ ناحیه، کابل، افغانستان
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">بستې</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.ps.html">د مایکرو بسته موټر تخصص</a></li> 
+  <li><a href="pro-package-auto-expertise.ps.html">د پرو بسته موټر تخصص</a></li>
+  <li><a href="pro-plus-package-auto-expertise.ps.html">د پرو پلس بسته موټر تخصص</a></li>
+  <li><a href="gold-package-auto-expertise.ps.html">د طلایی بسته موټر تخصص</a></li>
+  <li><a href="gold-plus-package-auto-expertise.ps.html">د طلایی پلس بسته موټر تخصص</a></li>
+  <li><a href="airbag-control-package.ps.html">د ایئر بیګ کنټرول بسته</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">نړیوالې څانګې</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوسوو</a></li>
+</ul>
+<!--
+<button class="showall">ټول وښایاست</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="ټویټر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="انسټاګرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوټیوب"></a>
+    </div>
+    <p>	&copy; کاپي رایټ ۲۰۲۰ - ۲۰۲۵ د ډینومارک موټر تخصص، ټول حقونه خوندي دي | د <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخي</a> لخوا پرمختللی </p>
+  </div>
+</footer>
+
+</body>
+</html>

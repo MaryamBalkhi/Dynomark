@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNOMARK AUTO EXPERTISE</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/checkpoints.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>Pre-Notary<span style="color: red;">&nbsp;Dynomark&nbsp;</span>Assurance</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="Phone Icon" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">OR</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="English" class="flag" />
+      <span>English</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="checkpoints.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="English" /> English
+      </li>
+      <li data-value="fa" data-url="checkpoints.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Persian" /> Persian
+      </li>
+      <li data-value="ps" data-url="checkpoints.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="Pashto" /> Pashto
+      </li>
+      <li data-value="fr" data-url="checkpoints.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="French" /> French
+      </li>
+      <li data-value="tr" data-url="checkpoints.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="Turkish" /> Turkish
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="logo">
+  
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Corporate &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.html">Who we are</a></li>
+          <li><a href="photo-gallery.html">Photo Gallery</a></li>
+          <li><a href="news-from-us.html">News From Us</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.html">Packets</a></li>
+      <li><a href="auto-expertise.html">Auto Expertise</a></li>
+      <li><a href="checkpoints.html">Checkpoints</a></li>
+      
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="logo-dark">
+    <h1>INTERNATIONAL BRANCHES</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>EUROPE</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">Kosovo</a>
+     
+    </section>
+
+    <section>
+      <h2>TURKEY</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">Hatay</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">Antalya</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">Kütahya</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">Istanbul</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">Tokat</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">kocaeli</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">Ordu</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">Gaziantep</a>
+    </section>
+
+    <section>
+      <h2>MIDDLE EAST</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">Iraq</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">Morocco</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="Address">
+    <span>Kulola Poshta, Opposite of FMFB, PD 04</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="Phone">
+    <span> 0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="Email">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+
+<div class="title-of-page">
+    <h1 class="title-of-page-h1">CHECKPOINTS</h1>
+    <p class="title-of-page-p"><a href="index.html"><b>Home &sol;</b></a> checkpoints</p>
+</div>
+
+
+<section class="grid-section">
+  <div class="grid-container">
+
+        <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Body-Paint Controls</div>
+      <p class="card-text">Vehicle body parts are checked in detail.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Rear Layout Controls</div>
+      <p class="card-text">Rear Assembly Checks are a general check of all under vehicle mechanical systems and layout.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Pre-Order Controls</div>
+      <p class="card-text">Front Layout Controls are the general control of all mechanical systems and layout on the vehicle.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Fuel and Exhaust System Controls</div>
+      <p class="card-text">The exhaust system is exposed to harsh conditions due to internal and external factors during use.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Internal Expertise/Electronic Controls</div>
+      <p class="card-text">In this control unit, general controls of all mechanical and electronic systems that we control from inside or outside the vehicle are carried out.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">DYNO Test</div>
+      <p class="card-text">The dyno power test determines the maximum power that the vehicle engine can produce.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">External Expertise Controls</div>
+      <p class="card-text">External expertise checks are one of the frequently preferred auto expertise control points by our customers in the purchase and sale of used vehicles.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Engine Top Controls</div>
+      <p class="card-text">Engine Top Controls: It is the section where the upper parts of the engine, which we encounter by opening the bonnet part of the vehicle, are controlled.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Engine and Drive Train Control</div>
+      <p class="card-text">Engine and Driveline Checks: Our Engine and Drive Train Inspections are professionally inspected by our engine mechanics in a detailed and impartial manner.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Diagnostic Test (Brain Test)</div>
+      <p class="card-text">With the diagnostic test, general controls of all electronic and electro-mechanical systems of the vehicle are carried out over the control units.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Debt/Damage/Changed/Km/Vehicle Detail Query</div>
+      <p class="card-text">It allows you to get information about the damage and damage cost of the vehicle you intend to purchase, if any, retrospective damage and damage cost, changing parts inquiry and inspection-based mileage query. Results are obtained from SBM (Insurance Information and Surveillance Centre).</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Brake/Suspension/Side Slip Test</div>
+      <p class="card-text">With these tests performed at the measuring station, the Brake, Suspension and road holding ability of the vehicle is determined.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Carbon Leakage Test</div>
+      <p class="card-text">Carbon Leakage Test enables the detection of leaks and cracks that may occur on the block and cylinder head surfaces of your vehicle with Special CO2 detection fluid.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Road Driving Test</div>
+      <p class="card-text">The expertised vehicle is finally taken to the road driving test under the control of the technician.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">1 Year-2500 km Paint Detection Warranty</div>
+      <p class="card-text">With Dynomark Guarantee, your vehicle's body paint controls are under guarantee in your second-hand vehicle purchases and sales.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+
+    <div class="grid-card">
+      <div class="ribbon"></div>
+      <div class="title">Mechanical Guarantee(Tur Assist)</div>
+      <p class="card-text">Tur Assist engine mechanical warranty; It is a type of warranty that covers your vehicle against possible malfunctions and can be seen as a private health insurance of automobiles.</p>
+      <button class="card-btn"><img src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+    </div>
+  </div>
+</section>
+
+<div id="card-modal" class="card-modal">
+  <div class="modal-content">
+    <button id="modal-close" class="close-btn">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// 1. Define content for each card by index or unique title
+const cardContents = [
+  {
+    title: "Body-Paint Controls",
+    content: `<div class="who-we-are">
+                <h2>Body-Paint Controls</h2>
+                <p>Bonnet: It is one of the most important parts that covers the outer surface of the vehicle and forms the skeleton. It consists of parts that protect us from external factors in a possible accident in motion. Such an important control point must be checked before buying and selling a second-hand vehicle. Vehicle dealers try to hide the operations in the body-paint part because they do not want the vehicle value to decrease. 2.We state the importance of our customers who will buy a used vehicle to come to Dynomark Auto Expertise Branches and have the vehicle's Body-Paint Checks done before buying the vehicle.</p>
+                
+                <h2>What is looked at in Dynomark Auto Expertise in Body-Paint Controls?</h2>
+                <p>
+                    Body Paint Controls in Dynomark Auto Expertise Body paint is checked by our technological tools together with our technological tools in a professional, impartial and detailed way. In our Body Paint Controls of the vehicle; We examine from many points such as changing parts detection, detection of processed parts, disassembly-insertion, adjustment operations, paint-micron measurements.<br>
+
+                    In these inspections, firstly, Dismantling / Inserting or Changing controls are made on all body parts of the vehicle. Paint micron thicknesses are measured and painted or locally painted body parts are detected. Process or damage control is performed on the vehicle chassis, damage detection is performed with internal-external pole and podye controls. Finally, the entire vehicle body is examined and dents, dimples and unpainted dent correction process are detected and a report is prepared.<br>
+
+                    During these examinations, all of the following parts are examined.
+                    </P>
+                    <ul>
+                    <li>Ceiling</li>
+                    <li>Kaput</li>
+                    <li>Left Front Fender</li>
+                    <li>Left front door</li>
+                    <li>Left rear door</li>
+                    <li>Left Rear Fender</li>
+                    <li>Left centre post</li>
+                    <li>Left Front Pillar</li>
+                    <li>Left Upper Mast</li>
+                    <li>Left Rear Inner Pillar</li>
+                    <li>Luggage</li>
+                    <li>Pool Sheet</li>
+                    <li>Back Panel</li>
+                    <li>Right Rear Fender</li>
+                    <li>Right rear door</li>
+                    <li>Right front door</li>
+                    <li>Right Front Fender</li>
+                    <li>Right Front Pillar</li>
+                    <li>Right centre</li>
+                    <li>Right Upper Mast</li>
+                    <li>Right Rear Inner Pillar</li>
+                    <li>Front Panel</li>
+                    <li>Left Front Chassis</li>
+                    <li>Right Front Chassis</li>
+                    <li>Left rifle stock</li>
+                    <li>Right rifle stock</li>
+                    <li>Left Rear Chassis</li>
+                    <li>Right Rear Chassis</li>
+                    <li>Left Base Plate</li>
+                    <li>Right Base Plate</li>
+                    <li>Left rocker panel</li>
+                    <li>Right Hand Marshal</li>
+                    </ul>
+              </div>`
+  },
+    {
+    title: "Rear Layout Controls",
+    content: `<div class="who-we-are">
+                <h2>Rear Layout Controls</h2>
+                <p>Rear Assembly: Rear layout parts, like front layout parts, are the parts that affect the driving quality of the vehicle in motion. 2. As with other control points in the purchase and sale of used vehicles, rear order controls are of great importance.<br>
+
+In order for your vehicle to move smoothly and comfortably in motion, the rear order parts must fulfil their functions in the best way. If the parts do not fulfil their functions, it negatively affects your vehicle driving in motion.<br>
+
+To give an example of this situation, if you do not make any manoeuvring movements on the straight road while moving with your vehicle, your vehicle does not go straight, makes knocking and noise, and at the same time pulls to the right-left, the vehicle does not provide you with a comfortable ride, but also endangers your life safety. For these reasons, we state that it is important for our customers who will buy a second-hand vehicle to come to Dynomark Auto Expertise Branches before buying the vehicle and have the vehicle's rear order controls done.</p>
+                
+                <h2>What is looked at in Dynomark Auto Expertise in Rear Order Controls?</h2>
+                <p>
+                    In Dynomark Auto Expertise, Rear Order Controls are checked by engine mechanics in a professional, impartial and detailed manner in a lighted environment in the vehicle lift. In our Front Order Controls, the vehicle; Knocking, shaking and whether the components are working healthily and every part is checked and reported. During this control, the following control points are checked.
+                    </P>
+                    <ul>
+  <li>Left Tyre</li>
+  <li>Right Tyre</li>
+  <li>Sol Rim</li>
+  <li>Right Rim</li>
+  <li>Left Brake Disc</li>
+  <li>Right Brake Disc</li>
+  <li>Left Brake Pad</li>
+  <li>Right Brake Pad</li>
+  <li>Left Brake Caliper</li>
+  <li>Right Brake Caliper</li>
+  <li>Left Shock Absorber Upper Mount</li>
+  <li>Right Shock Absorber Upper Mount</li>
+  <li>Left Coil Spring</li>
+  <li>Right Coil Spring</li>
+  <li>Left Rear Upper Upper Control Arm</li>
+  <li>Right Rear Upper Upper Control Arm</li>
+  <li>Left Rear Lower Control Arm</li>
+  <li>Right Rear Lower Lower Control Arm</li>
+  <li>Left Rear Porch</li>
+  <li>Right Rear Porch</li>
+  <li>Left Bend Ball Joint</li>
+  <li>Right Bend Ball Joint</li>
+  <li>Rear Bend Iron</li>
+  <li>Rear Balance Arm</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Pre-Order Controls",
+    content: `<div class="who-we-are">
+                <h2>Pre-Order Controls</h2>
+                <p>Front Arrangement: It is the section with important parts that affect the driving quality of the vehicle in motion. 2. As with other control points in the purchase and sale of used vehicles, front layout controls are of great importance. In order for your vehicle to move smoothly and comfortably in motion, the front layout parts must fulfil their functions in the best way. For example, if you do not make any steering movements on the straight road while moving with your vehicle, if your vehicle does not go straight, the vehicle does not provide you with a comfortable ride, but also endangers your life safety. In case your front order parts are adjusted and the parts work properly, it maximises your driving comfort even on rough roads and minimises vehicle shocks. For this reason, we emphasise the importance of our customers who will buy a second-hand vehicle to come to Dynomark Auto Expertise Branches before buying the vehicle and have the vehicle's Front Order Controls done.</p>
+                
+                <h2>What is looked at in Dynomark Auto Expertise in Front Order Controls?</h2>
+                <p>
+                    In Dynomark Auto Expertise, Front Order Controls are checked by engine mechanics in a professional, impartial and detailed manner in a lighted environment in the vehicle lift. In our Front Order Controls, the vehicle is reported by checking whether the knocking, shaking and components are working properly. During this control, the following control points are checked.
+                    </P>
+                   <ul>
+  <li>Left Tyre</li>
+  <li>Right Tyre</li>
+  <li>Sol Rim</li>
+  <li>Right Rim</li>
+  <li>Left Brake Disc</li>
+  <li>Right Brake Disc</li>
+  <li>Left Brake Pad</li>
+  <li>Right Brake Pad</li>
+  <li>Left Brake Caliper</li>
+  <li>Right Brake Caliper</li>
+  <li>Left Brake Caliper</li>
+  <li>Right Brake Caliper</li>
+  <li>Left Coil Spring</li>
+  <li>Right Coil Spring</li>
+  <li>Left Shock Absorber</li>
+  <li>Right Amotisor</li>
+  <li>Left Shock Absorber Upper Mount</li>
+  <li>Right Shock Absorber Upper Mount</li>
+  <li>Left Suspension Ball Joint</li>
+  <li>Right Hanger Rolit</li>
+  <li>Left Tie Rod</li>
+  <li>Right Tie Rod</li>
+  <li>Left Tie Rod End</li>
+  <li>Right Tie Rod End</li>
+  <li>Left Tie Rod Boot</li>
+  <li>Right Tie Rod Boot</li>
+  <li>Left Swing</li>
+  <li>Right Swing</li>
+  <li>Left Axle Shaft</li>
+  <li>Right Axle Shaft</li>
+  <li>Left Outer Axle Boot</li>
+  <li>Right Outer Axle Boot</li>
+  <li>Left Inner Axle Boot</li>
+  <li>Right Inner Axle Boot</li>
+  <li>Left Outer Axle Boot</li>
+  <li>Right Outer Axle Boot</li>
+  <li>Left Inner Axle Head</li>
+  <li>Right Inner Axle Head</li>
+  <li>Sol Porye</li>
+  <li>Right Porye</li>
+  <li>Left Motor Ear</li>
+  <li>Sleeper; Motor Cradle</li>
+  <li>Bend Iron</li>
+  <li>Steering Box</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Fuel and Exhaust System Controls",
+    content: `<div class="who-we-are">
+                <h2>BFuel and Exhaust System Controls</h2>
+                <p>The fuel exhaust system has an important point in auto expertise controls.<br>
+
+The exhaust system is exposed to harsh conditions depending on internal and external factors during use. If we explain, it uses the exhaust system during the exit of the gases consumed in the cylinders of the engine from the vehicle. Burnt gases have certain heat and pressure when making this exit. These temperatures and pressures heat the exhaust parts too much. In the meantime, it may be exposed to cooling with the sudden water coming to the heated exhaust. In transitions from cold to hot-hot to cold, the exhaust may be deformed depending on time.<br>
+
+The exhaust system, which is exposed to all these in the moving vehicle, also gets its share from external factors. Stone, mud, water, soil, gravel ... In fuel exhaust components working under such heavy conditions, puncture, cracking, irregular operation, leakage, fuel odour, etc. situations occur over time. These situations adversely affect vehicle performance and cause excess fuel consumption. In addition to these, it harms the nature and human health with the output of harmful gases without being processed (without minimising the harm).<br>
+
+ For these reasons, we state that it is important for our customers who will buy a second-hand vehicle to come to Dynomark Auto Expertise Branches before buying the vehicle and have the Fuel Exhaust System Controls of the vehicle.<br>
+
+In Dynomark Auto Expertise, Fuel Exhaust System Controls are controlled by engine mechanics in a professional, impartial and detailed manner by engine mechanics in a lighted environment on the vehicle lift. At the same time, the fuel exhaust system is checked while the vehicle is running.<br>
+
+ In our fuel exhaust controls, many functions and parts such as punctures, cracks, deformations, leaks, irregular operation, black smoke, raw fuel consumption are checked and reported in the exhaust and fuel components of the vehicle. During this control, the following control points are checked.
+                    </P>
+                    <ul>
+  <li>Oxygen Sensor</li>
+  <li>Fuel Pipeline</li>
+  <li>Fuel Filter</li>
+  <li>Fuel Cooler</li>
+  <li>Exhaust Manifold</li>
+  <li>Catalyser</li>
+  <li>Exhaust Pipe</li>
+  <li>Exhaust Sprayer</li>
+  <li>Medium Silencer</li>
+  <li>Rear Silencer</li>
+  <li>Fuel Tank Pipe</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Internal Expertise/Electronic Controls",
+    content: `<div class="who-we-are">
+                <h2>Internal Expertise/Electronic Controls</h2>
+                <p>In 2nd hand vehicle purchases and sales, internal expertise controls have an important place in auto expertise. 2. Internal expertise / electronic controls are one of the frequently preferred auto expertise control points by our customers in the purchase and sale of used vehicles. Thanks to the controls made before buying the vehicle, the vehicle buyers have detailed information about the vehicle. Thanks to this information, it knows the instant status of the vehicle and buys the vehicle accordingly. It does not encounter an extra surprise after the purchase.</p>
+                
+                <h2>What is looked at in Dynomark Auto Expertise in Internal Expertise / Electronic Controls?</h2>
+                <p>
+                    In Dynomark Auto Expertise, Internal Expertise / Electronic Controls are examined by our masters in a professional, impartial and detailed manner. Each control point is checked and reported whether it is deformed, torn, scratched, broken and in working condition according to its function. If there is a change at any point, it is reported with visuals and explained during the presentation.<br>
+
+In Dynomark Auto Expertise, the following checkpoints are checked when performing internal expertise / electronic checks.
+                    </P>
+                   <ul>
+  <li>Instrument panel</li>
+  <li>Horn</li>
+  <li>Left Front Door Button Assembly</li>
+  <li>Glass Buttons</li>
+  <li>Headlight Control Buttons</li>
+  <li>Mirror Control Buttons</li>
+  <li>Interior Rear View Mirror</li>
+  <li>Radio CD Player</li>
+  <li>Air Conditioner Heating Control Panel</li>
+  <li>Ventilation Grilles</li>
+  <li>Sunshade</li>
+  <li>Seat Belt</li>
+  <li>Interior Lighting</li>
+  <li>Steering Wheel</li>
+  <li>Gear</li>
+  <li>Flashlight-Parking Brake Switch</li>
+  <li>Hand Brake Lever</li>
+  <li>Torpedo</li>
+  <li>Parking Sensor</li>
+  <li>Door Interior Trim</li>
+  <li>Left Front Seat</li>
+  <li>Right Front Seat</li>
+  <li>Rear Seats</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "DYNO Test",
+    content: `<div class="who-we-are">
+                <h2>DYNO Test</h2>
+                <p>During this test, the vehicle engine is taken from the lowest revolutions to the upper revolutions. During the test, gear shifts, cooling system, exhaust gas, engine noise and vibration controls are performed. Engine performance is determined by comparing the factory power value with the test result.<br>
+
+According to the traction system feature of the vehicle taken to the dyno power test, the operating conditions of the drivetrain such as 4x4 / 4x2 or front wheel drive / rear wheel drive are checked. The dynamometer test also allows us to determine how much power generated by the vehicle engine is transmitted to the wheels. It also allows us to troubleshoot elements such as clutch clutch system, transmission, differential, shaft, axle, which are parts of the drivetrain.<br>
+
+During the dyno power test, engine vibration, wheel balls, vibration inside the vehicle are also checked. Dyno power test is a driving simulation that allows us to see the reactions of your vehicle while driving.</p>
+              </div>`
+  },
+    {
+    title: "External Expertise Controls",
+    content: `<div class="who-we-are">
+                <h2>External Expertise Controls</h2>
+                <p>In 2nd hand vehicle purchases and sales, external expertise controls have an important place in auto expertise. 2. In the purchase and sale of used vehicles, external expertise controls are one of the frequently preferred auto expertise control points by our customers. Thanks to the controls made before buying the vehicle, the people who will buy the vehicle have detailed information about the vehicle. Thanks to this information, they know the instant status of the vehicle and buy the vehicle accordingly. In this way, it does not encounter an extra surprise after the purchase.</p>
+                
+                <h2>Why is Dynomark Auto Expertise Important in External Expertise Controls?</h2>
+                <p>
+                    It is the section where the parts that enable the users to communicate with the environment during driving are controlled. With the regular operation of these parts, a controlled driving takes place and can inform other vehicles in motion about the movements and manoeuvres to be made in rainy, snowy and foggy weather conditions. In this way, we minimise the risk of accident.
+                    </P>
+               <h2>What is looked at in Dynomark Auto Expertise Exterior Expertise Controls?</h2>
+               <p>
+                In Dynomark Auto Expertise, external expertise checks are examined by our masters in a professional, impartial and detailed manner.  Each control point is checked and reported according to its function, whether it is deformed, torn, scratched, broken and in working condition. If there is a non-working situation or a change at any point, it is reported with visuals and explained during the presentation.</p>
+                    <ul>
+  <li>Chassis Number Check</li>
+  <li>Front Window</li>
+  <li>Rear Window</li>
+  <li>Left Front Window</li>
+  <li>Left Rear Window</li>
+  <li>Right Front Window</li>
+  <li>Right Rear Window</li>
+  <li>Left Butterfly Window</li>
+  <li>Sunroof Glass Roof</li>
+  <li>External Door Handles</li>
+  <li>Left Rear View Mirror</li>
+  <li>Right Rear View Mirror</li>
+  <li>Left Headlamp</li>
+  <li>Right Headlamp</li>
+  <li>Left Fog Light</li>
+  <li>Right Fog Light</li>
+  <li>Left Signal</li>
+  <li>Right Signal</li>
+  <li>Right Stop</li>
+  <li>Sol Stop</li>
+  <li>Right Inner Stop</li>
+  <li>Left Inner Stop</li>
+  <li>Parking Sensor</li>
+  <li>Number Plate Lighting</li>
+  <li>Wipers</li>
+  <li>Headlight Wash</li>
+  <li>Trunk Interior Controls</li>
+  <li>Luggage Shock Absorber</li>
+  <li>Spare Tyre</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Engine Top Controls",
+    content: `<div class="who-we-are">
+                <h2>Engine Top Controls</h2>
+                <p>Dynomark Auto Expertise is one of the control points during auto expertise checks in second-hand vehicle purchases and sales.<br>
+
+Engine Top Controls: It is the section where the upper parts of the engine, which we encounter by opening the bonnet part of the vehicle, are checked. Our Engine Top Controls are professionally examined by our engine mechanics in a detailed and impartial manner. The defects found during these inspections are photographed and reported in detail.</p>
+                
+                <h2>What is looked at in Dynomark Auto Expertise Engine Checks?</h2>
+                <p>
+                   During the examinations, our engine mechanic masters, engine top checks; Many details such as engine oil level, antifreeze degree, engine oil leaks, balls, loud operation of the engine, sounds from the engine, engine operation status, battery measurement are examined.<br>
+
+2.We emphasise the importance of our customers who will buy a used car to come to Dynomark Auto Expertise Branches before buying the vehicle and have the engine top checks of the vehicle.
+                    </P>
+                   <ul>
+  <li>Control Points</li>
+  <li>Bonnet Heat and Sound Insulator</li>
+  <li>Engine Dust Cover</li>
+  <li>Air Filter Cabinet</li>
+  <li>Injector</li>
+  <li>Injector Fuel Line</li>
+  <li>Fuel Pump</li>
+  <li>V-Belt Pulley and Computer</li>
+  <li>Air Conditioner Pipe</li>
+  <li>Steering Pump</li>
+  <li>Thermostat Housing</li>
+  <li>Engine Coolant Pipe</li>
+  <li>M. Cooling Indicator</li>
+  <li>Oil Level Control Bar</li>
+  <li>Brake Hydraulic Oil Tank</li>
+  <li>Power Steering Oil Tank</li>
+  <li>Oil Cooler</li>
+  <li>Valve Rocker Valve Cover</li>
+  <li>Oil Leakage</li>
+  <li>Engine Front Cover</li>
+  <li>Oil Filter Billet</li>
+  <li>Engine Front Gasket</li>
+  <li>Engine Vapour Oil Burning</li>
+  <li>Motor Electrical Installation</li>
+  <li>AKU</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Engine and Drive Train Control",
+    content: `<div class="who-we-are">
+                <h2>Engine and Drive Train Control</h2>
+                <p>Dynomark Auto Expertise is another point of control points during auto expertise checks in used car purchases and sales is the engine top control.<br>
+
+Engine and Transmission Group Controls: Our Engine and Transmission Group Controls are professionally examined by our engine mechanics in a detailed and impartial manner. Defects found during these examinations are photographed and reported in detail.</p>
+                
+                <h2>What is looked at in Engine and Transmission Group Controls in Dynomark Auto Expertise?</h2>
+                <p>
+                   During the inspections, our engine mechanics check the engine and transmission group; Many details such as broken, damage, gear shifts, clutch clutch, leaks in the intercooler and hoses, oil leaks in the engine block are examined.<br>
+
+2. We emphasise the importance of our customers who will buy a used vehicle to come to Dynomark Auto Expertise branches before buying the vehicle and have the engine and transmission group controls of the vehicle.
+                    </P>
+                    <ul>
+  <li>Control Points</li>
+  <li>Left Front Hood</li>
+  <li>Right Front Hood</li>
+  <li>Left Rear Hood</li>
+  <li>Right Rear Hood</li>
+  <li>Engine Water Radiator</li>
+  <li>Turbo</li>
+  <li>Intercooler</li>
+  <li>Engine Front Cover</li>
+  <li>Engine Block</li>
+  <li>Cylinder Head</li>
+  <li>Oil Pan</li>
+  <li>Sump Plug</li>
+  <li>Crank Seal</li>
+  <li>Crank Rear Seal</li>
+  <li>Gearbox Sleeve Section</li>
+  <li>Clutch Ball</li>
+  <li>Clutch Fork</li>
+  <li>Clutch Pressure</li>
+  <li>Clutch Lining</li>
+  <li>Flywheel</li>
+</ul>
+
+              </div>`
+  },
+    {
+    title: "Diagnostic Test (Brain Test)",
+    content: `<div class="who-we-are">
+                <h2>Diagnostic Test (Brain Test)</h2>
+                <p>With the diagnostic test, the control units that manage all electronic and electro-mechanical systems of your vehicle are contacted. All passive and active fault notifications registered in the vehicle control unit (brain) are detected and a report is generated.<br>
+
+After these checks, it is determined whether the vehicle's electronic and electro-mechanical systems such as ENGINE INJECTION, ENGINE, POWER GENERATION, ABS, ESP, ASR, EDC, AIRBAG, AUTOMATIC TRANSMISSION, TRANSMISSION TRACTION SYSTEM are ACTIVE or PASSIVE and whether they operate within the correct range of values.<br>
+
+Diagnostic test also checks all signalling, comfort and safety systems of your vehicle. Abs modulator, Airbag trigger and inflator system, Seat belts locking system, Under-seat passenger detection nets, Airbag collision sensors, Airbag cable, socket and line connected to the resistance and high voltage manipulations are also detected. All short circuits on the system are determined.<br>
+
+The 4x4 traction system control of your vehicle, automatic transmission solenoid valves and transmission gear shift lower and upper limit exceedances are also checked. <br>
+
+With the diagnostic test, the operating conditions of the comfort features of your vehicle can also be determined. Window buttons, modular steering wheel control buttons, lane tracking system, parking assist, headlights, signals, stops, interior lighting, number plate lights, audio system, immobiliser, remote control, key code, steering angle sensor, headlight washing system, sunroof, headlight and rain sensor, hill start support, all systems that your vehicle has and make your vehicle different are also checked.<br>
+
+It is very important that the quality of the test device used when performing diagnostic tests on your vehicle and the licensed programme used. Dynomark Auto Expertise uses the HELLA GUTMANN SOLUTIONS test device preferred by EUROPE in all its branches. </p>
+              </div>`
+  },
+    {
+    title: "Debt/Damage/Changed/Km/Vehicle Detail Query",
+    content: `<div class="who-we-are">
+                <h2>Debt/Damage/Changed/Km/Vehicle Detail Query</h2>
+                <p>It allows you to get information about the damage and damage cost of the vehicle you intend to purchase, if any, retrospective damage and damage cost, changing parts inquiry and inspection-based mileage query. Results are obtained from SBM (Insurance Information and Surveillance Centre).</p>
+              </div>`
+  },
+    {
+    title: "Brake/Suspension/Side Slip Test",
+    content: `<div class="who-we-are">
+                <h2>Brake Test</h2>
+                <p>With the Brake Test in Auto Expertise Services, the braking force transmitted to the wheels of the vehicle is determined. The deflection rate during braking is determined. This distribution is very important for a safe stop. The operation of the shock absorbers, which are one of the basic parts of the suspension system, is checked. This test is very important for a safe driving. With the Lateral Slip Test, the deflection resistances applied by the wheels to the road are determined. This test is very important for safe handling.<br>
+
+With the brake test, the grip of the vehicle tyres, brake pads and brake discs are detected. The operation of the hand brake system and the braking power distribution over the entire brake system are determined. The correct operation of the brake systems of the vehicles is vital for driving safety.</p>
+                
+                <h2>Shock Absorber Test</h2>
+                <p>
+                    General controls of the shock absorber system and all parts of the vehicles entering the shock absorber test station are provided. Shock absorber upper wedge and lower connection bushings, as well as the sounds and operating values of the entire system during operation are determined. The way the shock absorbers work is very important in terms of road holding and the vehicle's resistance to wind.
+                    </P>
+                 <h2>Lateral Shear Test</h2>
+                <p>
+                    With the lateral slip measurement, the angles of all wheels of the vehicle are determined. All angular distortions on the front and rear axle group are determined. All front and rear axle group curvatures and deviations that occur after an accident or during hard pothole and speed bump passages are also determined by the lateral slip test.
+                    </P>
+                    
+              </div>`
+  },
+    {
+    title: "Carbon Leakage Test",
+    content: `<div class="who-we-are">
+                <h2>Carbon Leakage Test</h2>
+                <p>Carbon Leakage Test is a test and detection of leaks and cracks that may occur on the block and cylinder head surfaces of your vehicle with a special chemical liquid. This test is one of the vital tests for a vehicle's engine, which is used to determine whether your vehicle has seen a gasket-related problem or overheating problem in the past, and whether these malfunctions are instantly available.</p>
+              </div>`
+  },
+    {
+    title: "Road Driving Test",
+    content: `<div class="who-we-are">
+                <h2>Road Driving Test</h2>
+                <p>With this test, the seller and the buyer of the vehicle, whose all controls are completed in the workshop, are invited to the road driving test. The braking system, shock absorber system, road holding, sound insulation inside the vehicle, engine traction and transmission systems of the vehicle are checked once again and the report is created.<br>
+
+Damage Query/Change Query/Km Query<br>
+
+It allows you to get information about the past damage and damage cost of the vehicle you intend to purchase, if any. The results are obtained from SBM (Insurance Information and Surveillance Centre). In addition, plastic and mechanical parts changes recorded by tramer records are also confirmed in the changed parts query. The vehicle's FENNI inspection registration dates and KM information are accessed. The results are received via PTT AVM system.</p>
+              </div>`
+  },
+    {
+    title: "1 Year-2500 km Paint Detection Warranty",
+    content: `<div class="who-we-are">
+                <h2>1 Year-2500 km Paint Detection Warranty (Dynomark Warranty)</h2>
+                <p>With Dynomark Guarantee, your vehicle's body paint controls are under guarantee in your second-hand vehicle purchases and sales.</p>
+                               <h2>Dynomark Warranty (Paint Detection Warranty Coverage);</h2>
+                <p>Roof, Bonnet, Left Front Fender, Left Front Door, Left Front Door, Left Rear Door, Left Rear Fender, Left Centre Pillar, Left Front Pillar, Left Upper Pillar, Left Rear Inner Pillar, Trunk, Pool Sheet, Rear Panel, Right Rear Fender, Right Rear Door, Right Front Door, Right Front Door, Right Front Fender, Right Front Pillar, Right Centre Pillar, Right Upper Pillar, Right Rear Inner Pillar, Front Panel, Left Front Chassis, Right Front Chassis, Left Rifle Plate, Right Rifle Plate, Left Rear Chassis, Right Rear Chassis, Left Floor Plate, Right Floor Plate, Left Rocker Panel, Right Rocker Panel control points.</p> 
+                                <h2>Dynomark Warranty (Paint Detection Warranty Terms and Scope);</h2>
+                <p>1 year or 2,500 kilometres from the mileage specified for the vehicle in the expertise report.<br>
+
+Vehicles that are over 20 years old at the time of the appraisal process or over 20 years old after the appraisal process will not be covered by the warranty.<br>
+
+Even if the vehicle subject to the contract has not completed 1 year or has not covered 2,500 kilometres, in order to benefit from the warranty conditions, it must not be involved in an accident within this period or mileage, and must not have a tramer file opened or concluded.<br>
+
+Likewise, dents, scratches, dimple repairs, ceramic coating, paint protection, paintless dent correction, local paint, retouching operations should not be performed after the expertise report, and operations, adjustment, disassembly and assembly operations should not be performed on screws, clips, snap rings, rivets, bolts fixing the body parts. The micron paint thickness values specified in the expertise report should not be different.<br>
+
+For detailed information, you can read our guarantee policy.</p>
+              </div>`
+  },
+      {
+    title: "Mechanical Guarantee(Tur Assist)",
+    content: `<div class="who-we-are">
+                <h2>Tur Assist engine mechanical warranty</h2>
+                <p>Dynomark Auto Expertise offers its customers an engine mechanical guarantee with Tur Assist after the auto expertise service in second-hand vehicle purchases and sales. Tur Assist engine mechanical warranty; It is a type of warranty that covers your vehicle against possible malfunctions and can be seen as private health insurance of automobiles.<br>
+
+In second-hand vehicles, the engine mechanical warranty covers the elimination of malfunctions that may occur by guaranteeing expensive parts such as engine and gearbox, which cause the biggest expense in your vehicle, in case the malfunctions occur within the promised period.<br>
+
+You can benefit from two services offered by Tur Assist. According to our auto expertise packages you will choose;<br>
+
+<b>1 Month 1000 km Engine Mechanical Warranty and</b><br>
+<b>3 Months 5000 km Engine Mechanical Warranty You can benefit from two different engine mechanical warranties.</b>
+</p>
+                               <h2>Benefits of Tur Assist Guarantee to Our Customers</h2>
+                <p> - 2nd Hand Car Warranty "Tur Assist Warranty" product saves you from the financial burden of mechanical and electrical failures that your vehicle may encounter.<br>
+ - It covers the most critical parts of the vehicle, labour charges and road assistance services.<br>
+
+ - The guarantee can be applied to the vehicles listed below, provided that they meet the relevant criteria.<br>
+
+Passenger Cars and Light Commercial Vehicles;<br>
+
+. No more than 8 years old and<br>
+
+.160.000 km must be less.<br>
+
+1 Month 1000 km limit (1 month for engine-mechanical warranty)<br>
+
+3 Months 5000 km limit (3 months for engine-mechanical warranty) does not exceed.</p> 
+                                <h2>WARRANTY COVERED POINTS<br>
+                                    Engine<br>
+                                    Manual Transmission</h2>
+                                    <p></p>
+                                    <ul>
+  <li>Cylinder head and gasket</li>
+  <li>Intake and exhaust valves (except burnt ones)</li>
+  <li>Valve tappets (including hydraulic adjusters)</li>
+  <li>Valve springs and valve glands</li>
+  <li>Camshaft and tappets</li>
+  <li>Timing belts, sprockets and chains</li>
+  <li>Oil pump</li>
+  <li>Pistons and piston rings</li>
+  <li>Cylinder liners</li>
+  <li>Crankshaft and bearings</li>
+  <li>Intake manifold</li>
+  <li>Engine block</li>
+  <li>Internal gear gears</li>
+  <li>Synchromesh yellows and nests</li>
+  <li>Gear selectors</li>
+  <li>Shafts</li>
+  <li>Bearings and bushings</li>
+  <li>Transfer gears</li>
+</ul>
+
+<h2>Automatic Transmission</h2>
+    <p></p>
+    <ul>
+  <li>Inner shafts</li>
+  <li>Gears</li>
+  <li>Braking bands</li>
+  <li>Reducer</li>
+  <li>Oil pressure pump</li>
+  <li>Bearings and bushings</li>
+  <li>Servo and plate</li>
+  <li>Transfer gears</li>
+</ul>
+
+<h2>'CTX / CVT / POWERSHIFT / DURASHIFT AND OTHER AUTOMATIC / SEMI-AUTOMATIC TRANSMISSIONS</h2>
+    <p></p>
+<ul>
+  <li>Planetary gears</li>
+  <li>Reducer gears</li>
+  <li>Shafts</li>
+  <li>Variable coils</li>
+  <li>Pressure rings</li>
+  <li>Internal seals</li>
+  <li>Bearing and bushings</li>
+  <li>Hydro-electronic gear shift unit</li>
+</ul>
+
+<h2>TORQUE CONVERTER & TURBOCHARGER</h2>
+    <p></p>
+    <ul>
+  <li>In case of any mechanical internal part failure. (Provided that it is revised firstly</li></ul>
+
+  <h2>ELECTRICITY SYSTEM</h2>
+    <p></p>
+<ul>
+  <li>Starter motor</li>
+  <li>Starter motor top solenoid</li>
+  <li>Workers</li>
+  <li>Shafts</li>
+  <li>Bearing and bushings</li>
+</ul>
+
+
+  <h2>DIFFERENTIAL</h2>
+    <p></p>
+<ul>
+  <li>Ring and pinion gears</li>
+  <li>Gears</li>
+  <li>Shafts</li>
+  <li>Bearing and bushings</li>
+</ul>
+
+  <h2>ROADSIDE ASSISTANCE BENEFITS</h2>
+    <p></p>
+<ul>
+  <li>Roadside assistance organisation – Transport 50 km</li>
+  <li>Towing the vehicle – 500 TL</li>
+  <li>Travelling back to Permanent Residence or continuing the journey – Unlimited</li>
+  <li>Accommodation due to unavailability of the vehicle – 150 TL / Night (Max. 2 Nights)</li>
+  <li>Travelling to pick up the repaired vehicle – Unlimited</li>
+</ul>
+
+
+</div>`
+  },
+];
+
+// 2. Grab all buttons
+const cardButtons = document.querySelectorAll('.grid-card .card-btn');
+const modal = document.getElementById('card-modal');
+const modalBody = document.getElementById('modal-body');
+const modalClose = document.getElementById('modal-close');
+
+// 3. Open modal on button click
+cardButtons.forEach((btn, index) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault(); // prevent default link behavior
+    modalBody.innerHTML = cardContents[index].content || "<p>No content defined</p>";
+    modal.style.display = 'flex';
+  });
+});
+
+// 4. Close modal
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+// 5. Close modal if click outside content
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.style.display = 'none';
+});
+</script>
+
+<div class="the-back-btn">
+<a class="news-detail-back" href="index.html" style="text-decoration: none; color: white;">Back</a>
+</div>
+
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; House No. 56, Between Street 5 &6, Kulola Poshta, Opposite of FMFB, PD 04, Kabul, Afghanistan
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp;0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">Packets</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.html">Micro Package Auto Expertise</a></li> 
+  <li><a href="pro-package-auto-expertise.html">Pro Package Auto Expertise</a></li>
+  <li><a href="pro-plus-package-auto-expertise.html">Pro Plus Package Auto Expertise</a></li>
+  <li><a href="gold-package-auto-expertise.html">Gold Package Auto Expertise</a></li>
+  <li><a href="gold-plus-package-auto-expertise.html">Gold Plus Package Auto Expertise</a></li>
+  <li><a href="airbag-control-package.html">Airbag Control Package</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">International Branches</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284"> Morroco</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292"> Iraq</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">  Turkey</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302"> Kosovo</a></li>
+</ul>
+<!--
+<button class="showall">Show all</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="facebook"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="instagram"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="youtube"></a>
+    </div>
+    <p>	&copy; Copyright 2020 - 2025 DYNOMARK AUTO EXPERTISE All Rights Reserved | Developed by <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">Maryam Hanif Balkhi</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>

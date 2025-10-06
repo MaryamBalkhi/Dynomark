@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>افغانستان - داینومارک</title>
+    <link rel="icon" href="stuff/icons/speedometer.png" type="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="stylesheet" href="stuff/styles/home.css">
+</head>
+<body>
+    
+  <!--top-header-->
+    <div class="top-headline">
+  <div class="the-text">
+    <h1>پیش از دفتر اسناد رسمی<span style="color: red;">&nbsp;داینومارک&nbsp;</span>تضمین</h1>
+  </div>
+
+  <div class="info-and-languages-options">
+<div class="info">
+  <a href="tel:0731170170" style="display: flex; align-items: center; text-decoration: none;">
+    <img src="stuff/icons/phone-call.png" alt="آیکون تلفن" style="margin-right: 8px;">
+    <p style="margin: 0;">0731 170 170</p>
+  </a>
+
+  <a href="tel:0786000075" style="display: flex; align-items: center; text-decoration: none; margin-top: 5px;">
+    <span style="color: red; font-style: italic; margin-right: 5px;">یا</span>
+    <p style="margin: 0;">0786 000 075</p>
+  </a>
+</div>
+
+    <div class="separator"></div>
+
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="language-selector">
+  <div class="custom-select">
+    <div class="selected">
+      <img src="stuff/icons/united-states-flag.png" alt="انگلیسی" class="flag" />
+      <span>انگلیسی</span>
+    </div>
+    <ul class="options">
+      <li data-value="en" data-url="index.html">
+        <img src="stuff/icons/united-states-flag.png" class="flag" alt="انگلیسی" /> انگلیسی
+      </li>
+      <li data-value="fa" data-url="index.fa.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="فارسی" /> فارسی
+      </li>
+      <li data-value="ps" data-url="index.ps.html">
+        <img src="stuff/icons/afghanistan-flag.png" class="flag" alt="پشتو" /> پشتو
+      </li>
+      <li data-value="fr" data-url="index.fr.html">
+        <img src="stuff/icons/france-flag.png" class="flag" alt="فرانسوی" /> فرانسوی
+      </li>
+      <li data-value="tr" data-url="index.tr.html">
+        <img src="stuff/icons/turkey-flag.png" class="flag" alt="ترکی" /> ترکی
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.custom-select');
+  const selected = select.querySelector('.selected');
+  const options = select.querySelectorAll('.options li');
+
+  // Toggle dropdown visibility on click
+  selected.addEventListener('click', () => {
+    select.classList.toggle('open');
+  });
+
+  // Handle language selection
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const url = option.getAttribute('data-url');
+      const value = option.getAttribute('data-value');
+      const text = option.textContent.trim();
+      const imgSrc = option.querySelector('img').src;
+
+      // Update the selected option display
+      selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
+      
+      // Navigate to the selected URL
+      if (url) {
+        window.location.href = url;
+      }
+
+      // Close the dropdown
+      select.classList.remove('open');
+    });
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target)) {
+      select.classList.remove('open');
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Close all dropdowns helper
+  function closeAll() {
+    document.querySelectorAll('.custom-select .options').forEach(o => {
+      o.style.display = 'none';
+      const sel = o.closest('.custom-select')?.querySelector('.selected');
+      if (sel) {
+        sel.setAttribute('aria-expanded', 'false');
+        sel.classList.remove('open');
+      }
+    });
+  }
+
+  // Initialize each custom-select
+  document.querySelectorAll('.custom-select').forEach(custom => {
+    const selected = custom.querySelector('.selected');
+    const options = custom.querySelector('.options');
+    const items = Array.from(custom.querySelectorAll('.options li'));
+
+    if (!selected || !options) return;
+
+    // Ensure options start hidden
+    options.style.display = 'none';
+    selected.setAttribute('tabindex', '0');
+    selected.setAttribute('role', 'button');
+    selected.setAttribute('aria-expanded', 'false');
+
+    // Toggle open/close on click
+    selected.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = options.style.display === 'block';
+      closeAll();
+      if (!isOpen) {
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        selected.classList.add('open');
+        // focus first item for keyboard users
+        items[0]?.focus();
+      }
+    });
+
+    // Keyboard on the selected control
+    selected.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selected.click();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        options.style.display = 'block';
+        selected.setAttribute('aria-expanded', 'true');
+        items[0]?.focus();
+      } else if (e.key === 'Escape') {
+        closeAll();
+        selected.focus();
+      }
+    });
+
+    // Option click & keyboard support
+    items.forEach((item, idx) => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  // Replace the selected content visually
+  selected.innerHTML = item.innerHTML;
+  selected.dataset.value = item.dataset.value || '';
+  options.style.display = 'none';
+  selected.setAttribute('aria-expanded', 'false');
+  selected.classList.remove('open');
+
+  // Redirect to the page
+  const url = item.dataset.url;
+  if (url) window.location.href = url;
+});
+
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[idx + 1] || items[0]).focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[idx - 1] || items[items.length - 1]).focus();
+        } else if (e.key === 'Escape') {
+          closeAll();
+          selected.focus();
+        }
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select')) closeAll();
+  });
+
+  // Close on global Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+});
+</script>
+
+
+
+<!--header-->
+<script>
+const topHeader = document.querySelector(".top-headline");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY === 0) {
+    // Only at the very top → show top headline
+    topHeader.style.opacity = "1";
+    topHeader.style.pointerEvents = "auto";
+  } else {
+    // Anywhere else on the page → hide it
+    topHeader.style.opacity = "0";
+    topHeader.style.pointerEvents = "none";
+  }
+});
+</script>
+
+
+   <header>
+  <img src="stuff/logos/logo-white.png" alt="لوگو">
+  
+  <nav>
+    <ul>
+      <li><a href="index.fa.html">خانه</a></li>
+      <li>
+        <a href="#">شرکتی &#11206;</a>
+        <ul>
+          <li><a href="who-are-we.fa.html">ما کی هستیم</a></li>
+          <li><a href="photo-gallery.fa.html">گالری عکس</a></li>
+          <li><a href="news-from-us.fa.html">اخبار از ما</a></li>
+        </ul>
+      </li>
+      <li><a href="packets.fa.html">بسته‌ها</a></li>
+      <li><a href="auto-expertise.fa.html">تخصص خودرو</a></li>
+      <li><a href="checkpoints.fa.html">نقاط بررسی</a></li>
+      
+      <li><a href="contact.fa.html">تماس با ما</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Drop Menu -->
+<div class="drop-menu" id="dropMenu">
+  <!-- Close button inside drop menu -->
+  <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-box">
+    <img src="stuff/logos/logo-dark.png" alt="لوگو-تیره">
+    <h1>شعب بین‌المللی</h1>
+  </div>
+  <div class="separator"></div>
+  
+  <div class="capitalcites-and-options">
+    <section>
+      <h2>اروپا</h2>
+      <a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a>
+     
+    </section>
+
+    <section>
+      <h2>ترکیه</h2>
+      <a href="https://www.dynomark.com.tr/en/hatay-dealers/74">هاتای</a>
+      <a href="https://www.dynomark.com.tr/en/antalya-dealers/50">آنتالیا</a>
+      <a href="https://www.dynomark.com.tr/en/kutahya-simav-auto-expertise-dealer/184">کوتاهیا</a>
+      <a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">استانبول</a>
+      <a href="https://www.dynomark.com.tr/en/tokat-dealers/102">توکات</a>
+      <a href="https://www.dynomark.com.tr/en/kocaeli-dealers/83">کوجایلی</a>
+      <a href="https://www.dynomark.com.tr/en/ordu-dealers/94">اردو</a>
+      <a href="https://www.dynomark.com.tr/en/gaziantep-dealers/70">غازیانتپ</a>
+    </section>
+
+    <section>
+      <h2>خاورمیانه</h2>
+      <a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a>
+      <a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a>
+
+    </section>
+  </div>
+
+  <div class="drop-menu-contact-icons">
+  <div class="contact-item">
+    <img src="stuff/icons/placeholder.png" alt="آدرس">
+    <span>کولوله پشتا، مقابل بانک FMFB، منطقه ۰۴</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/phone-call.png" alt="تلفن">
+    <span>0731 170 170</span>
+  </div>
+  <div class="contact-item">
+    <img src="stuff/icons/email.png" alt="ایمیل">
+    <span>info@dynomark.af</span>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("dropMenu").classList.toggle("active");
+    document.getElementById("hamburger").classList.toggle("active");
+    document.getElementById("closeBtn").classList.toggle("active");
+  }
+</script>
+
+
+<section class="slider">
+    <div class="slides">
+      <img src="stuff/images/image-1.jpg" alt="اسلاید ۱">
+      <img src="stuff/images/image-2.jpg" alt="اسلاید ۲">
+    </div>
+    <button class="btn left"><img src="stuff/icons/left-arrow.png" alt="قبلی"></button>
+    <button class="btn right"><img src="stuff/icons/right-arrow.png" alt="بعدی"></button>
+  </section>
+
+  <script>
+    const slides = document.querySelector('.slides');
+    const images = document.querySelectorAll('.slides img');
+    const prevBtn = document.querySelector('.btn.left');
+    const nextBtn = document.querySelector('.btn.right');
+    let index = 0;
+    const total = images.length;
+
+    function showSlide(i) {
+      index = (i + total) % total; // loop around
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      showSlide(index - 1);
+      resetAutoSlide();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      showSlide(index + 1);
+      resetAutoSlide();
+    });
+
+    // Auto slide every 3s
+    let autoSlide = setInterval(() => {
+      showSlide(index + 1);
+    }, 3000);
+
+    function resetAutoSlide() {
+      clearInterval(autoSlide);
+      autoSlide = setInterval(() => {
+        showSlide(index + 1);
+      }, 3000);
+    }
+  </script>
+  <!--
+  <div class="search-container">
+        <div class="search-box">
+            <input type="search" class="search-input" placeholder="نمایندگی یا شهر را بنویسید">
+            <label class="floating-label">نمایندگی یا شهر را بنویسید</label>
+        </div>
+    </div>
+
+  -->
+    
+
+     <section class="grid-section">
+    <div class="grid-container">
+      <a href="services.fa.html" class="grid-card">
+        <div class="ribbon"></div>
+        <div class="icon"><img src="stuff/icons/gear.png" alt="خدمات"></div>
+        <div class="title">خدمات</div>
+      </a>
+      <a href="questions-and-answers.fa.html" class="grid-card">
+        <div class="ribbon"></div>
+        <div class="icon"><img src="stuff/icons/question-sign.png" alt="سوالات متداول"></div>
+        <div class="title">سوالات متداول</div>
+      </a>
+      <a href="checkpoints.fa.html" class="grid-card">
+        <div class="ribbon"></div>
+        <div class="icon"><img src="stuff/icons/check-list.png" alt="نقاط بررسی"></div>
+        <div class="title">نقاط بررسی</div>
+      </a>
+    </div>
+  </section>
+
+   <script>
+    const cards = document.querySelectorAll('.grid-card');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // observer.unobserve(entry.target); // Keep observing in case of repeated scrolls
+        }
+      });
+    }, { threshold: 0.3 });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+
+
+<!--our package and the cards-->
+<h1 class="our-packages">بسته‌های ما</h1>
+<div id="react-carousel"></div>
+<script type="text/babel">
+const { useEffect, useRef, useState } = React;
+
+const packages = [
+  {
+    title: "بسته میکرو تخصص خودرو",
+    ribbon: "اقتصادی",
+    ribbonColor: "#099140",
+    img: "stuff/icons/mikro-paket-oto-ekspertiz_k_2.png",
+    price: "۳,۵۰۰ لیره",
+        detailUrl: "micro-package-auto-expertise.fa.html",
+    features: [
+      "آزمایش عملکرد موتور",
+      "تخصص مکانیکی موتور",
+      "آزمایش اندازه‌گیری باتری",
+      "آزمایش اندازه‌گیری ضد یخ",
+      "آزمایش نشتی واشر",
+      "گزارش‌دهی",
+    ],
+  },
+  {
+    title: "بسته کنترل ایربگ",
+    img: "stuff/icons/pro-plus-paket-oto-ekspertiz_k_33.png",
+    price: "۵,۱۰۰ لیره",
+        detailUrl: "airbag-control-package.fa.html",
+    features: [
+      "بررسی فیزیکی ایربگ",
+      "کنترل الکترونیکی ایربگ",
+    ],
+  },
+  {
+    title: "بسته طلایی پلاس تخصص خودرو",
+    ribbon: "صادراتی",
+    ribbonColor: "#e10613",
+    img: "stuff/icons/gold-paket-oto-ekspertiz_k_5.png",
+    price: "۶,۷۰۰ لیره",
+        detailUrl: "gold-plus-package-auto-expertise.fa.html",
+    features: [
+      "آزمایش مکانیکی موتور",
+      "آزمایش عملکرد موتور",
+      "ارزیابی بدنه",
+      "ارزیابی رنگ",
+      "کنترل ستون-شاسی-پنل",
+      "کنترل مکانیکی پایین و جلو روی بالابر",
+      "آزمایش نشتی واشر",
+      "آزمایش مغز OBD",
+      "آزمایش تعلیق",
+      "آزمایش برش جانبی",
+      "آزمایش ترمز",
+      "آزمایش ترمز دستی",
+      "گزارش‌دهی",
+    ],
+  },
+  {
+    title: "بسته حرفه‌ای تخصص خودرو",
+    img: "stuff/icons/pro-paket-oto-ekspertiz_k_52.png",
+    price: "۵,۱۰۰ لیره",
+        detailUrl: "pro-package-auto-expertise.fa.html",
+    features: [
+      "آزمایش عملکرد موتور",
+      "ارزیابی بدنه",
+      "ارزیابی رنگ",
+      "کنترل ستون-شاسی-پنل",
+      "گزارش‌دهی",
+    ],
+  },
+  {
+    title: "بسته طلایی تخصص خودرو",
+    img: "stuff/icons/pro-paket-oto-ekspertiz_k_52.png",
+    price: "۵,۱۰۰ لیره",
+        detailUrl: "gold-package-auto-expertise.fa.html",
+    features: [
+      "آزمایش عملکرد موتور",
+      "ارزیابی بدنه",
+      "ارزیابی رنگ",
+      "کنترل ستون-شاسی-پنل",
+      "گزارش‌دهی",
+      "کنترل مکانیکی پایین و جلو روی بالابر",
+      "آزمایش تعلیق",
+      "آزمایش برش جانبی",
+      "آزمایش ترمز",
+      "آزمایش ترمز دستی",
+      "گزارش‌دهی",
+    ],
+  },
+  {
+    title: "بسته حرفه‌ای پلاس تخصص خودرو",
+    ribbon: "محبوب",
+    ribbonColor: "#0cc6c9",
+    img: "stuff/icons/pro-plus-paket-oto-ekspertiz_k_33.png",
+    price: "۵,۱۰۰ لیره",
+        detailUrl: "gold-plus-package-auto-expertise.fa.html",
+    features: [
+      "آزمایش مکانیکی موتور",
+      "آزمایش عملکرد موتور",
+      "ارزیابی بدنه",
+      "ارزیابی رنگ",
+      "کنترل ستون-شاسی-پنل",
+      "کنترل مکانیکی پایین و جلو روی بالابر",
+      "آزمایش نشتی واشر",
+      "آزمایش مغز OBD",
+      "آزمایش تعلیق",
+      "آزمایش برش جانبی",
+      "آزمایش ترمز",
+      "آزمایش ترمز دستی",
+      "گزارش‌دهی",
+    ],
+  },
+];
+
+
+function Carousel() {
+  const trackRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [overlayWidth, setOverlayWidth] = useState(0);
+
+  const moveLeft = () => trackRef.current.appendChild(trackRef.current.firstElementChild);
+  const moveRight = () => trackRef.current.prepend(trackRef.current.lastElementChild);
+
+  useEffect(() => {
+    if (!isHovered) {
+      const interval = setInterval(moveLeft, 4000);
+      return () => clearInterval(interval);
+    }
+  }, [isHovered]);
+
+  useEffect(() => {
+    const updateOverlay = () => {
+      const track = trackRef.current;
+      if (track && track.children.length > 0) {
+        const firstCard = track.children[0];
+        const lastCard = track.children[2]; // 3 cards visible
+        const wrapperRect = wrapperRef.current.getBoundingClientRect();
+        const firstCardRect = firstCard.getBoundingClientRect();
+        const lastCardRect = lastCard.getBoundingClientRect();
+        const leftOverlay = firstCardRect.left - wrapperRect.left;
+        const rightOverlay = wrapperRect.right - lastCardRect.right;
+        setOverlayWidth({ left: leftOverlay, right: rightOverlay });
+      }
+    };
+    updateOverlay();
+    window.addEventListener("resize", updateOverlay);
+    return () => window.removeEventListener("resize", updateOverlay);
+  }, []);
+
+  return (
+    <div
+      className="carousel-wrapper"
+      ref={wrapperRef}
+      style={{ position: "relative", overflow: "hidden" }}
+    >
+      {/* Left and right overlay rectangles */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: overlayWidth.left,
+          height: "100%",
+          background: "#fff",
+          zIndex: 1,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: overlayWidth.right,
+          height: "100%",
+          background: "#fff",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Buttons (keep original design, above overlays) */}
+      <button className="carousel-btn left" onClick={moveLeft} style={{ zIndex: 2 }}>
+        &#10094;
+      </button>
+      <button className="carousel-btn right" onClick={moveRight} style={{ zIndex: 2 }}>
+        &#10095;
+      </button>
+
+      <div className="carousel-track-wrapper" style={{ overflow: "hidden" }}>
+        <div
+          className="carousel-track"
+          ref={trackRef}
+          style={{ display: "flex", transition: "all 0.5s ease" }}
+        >
+          {packages.map((pkg, i) => (
+            <div
+              key={i}
+              className="carousel-card"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {pkg.ribbon && (
+                <div
+                  className="ribbon-card"
+                  style={{ background: pkg.ribbonColor }}
+                >
+                  {pkg.ribbon}
+                </div>
+              )}
+              <div className="card-inner">
+                <img src={pkg.img} alt={pkg.title} />
+                <b>{pkg.title}</b>
+                <ul>{pkg.features.map((f, idx) => <li key={idx}>{f}</li>)}</ul>
+                <div className="card-footer">
+                  <div>
+                    <button className="detail-btn" style={{ marginRight: 10 }}>
+                      <a href={pkg.detailUrl} target="_blank" rel="noopener noreferrer">جزئیات</a>
+                    </button>
+              {/*   <button className="appointment-btn">
+                    <a href="#">نوبت</a>
+                    </button>
+                     */}
+
+                  </div>
+                  <div style={{ fontWeight: "bold", color: "red" }}>
+                    {pkg.price}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("react-carousel")).render(<Carousel />);
+</script>
+
+<!--red box ad-->
+<div class="full">
+  <div class="box banner">
+    <div class="arrows">
+      <span>➤</span><span>➤</span><span>➤</span>
+    </div>
+    داینومارک | آیا مایل به پیشنهاد ویژه هستید؟
+    <a href="packets.fa.html" class="btn-bounce">
+      مشتری ما باشید <i class="fa-solid fa-angles-right"></i>
+    </a>
+  </div>
+</div>
+
+<!--section of text and video-->
+
+<section class="txt-vid">
+  <div>
+    <h1 class="dealer-concept">مفهوم نمایندگی</h1>
+    <p>داینومارک یک کسب‌وکار نوآورانه است که تجربه خریدی منحصربه‌فرد و به‌یادماندنی را به مشتریان خود ارائه می‌دهد. با مفهوم نمایندگی ما، مشتریان را در فضایی جذاب پذیرایی می‌کنیم و محصولات باکیفیت به آن‌ها ارائه می‌دهیم. ما محصولات با دقت انتخاب‌شده خود را با تجربه ارزیابی تجربی ترکیب می‌کنیم تا رضایت مشتری را به حداکثر برسانیم.</p>
+    <button class="more-btn"><a class="more-btn-a" href="stuff/pdfs-etc/dynomark-english.pdf">بیشتر</a><img style="width: 35px;" src="stuff/icons/arrow-pointing-to-right-in-a-circle.png"></button>
+  </div>
+  <div>
+    <iframe width="500px" height="300px" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);"  src="https://www.youtube.com/embed/Qs28WYozxaU" title="ویدیو یوتیوب" frameborder="0" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section class="grid-options">
+    <h1 class="dealer-concept">تراکنش‌های آنلاین</h1>
+
+    <div class="online-works">
+  <a href="packets.fa.html" class="grid-txt">بهترین بسته‌ها</a>
+  <a href="auto-expertise.fa.html" class="grid-txt">خدمات تخصصی حرفه‌ای خودرو</a>
+ <!--
+ <a href="#" class="grid-txt">استعلام بدهی</a>
+  <a href="#" class="grid-txt">دفتر اسناد رسمی در حال خدمت</a>
+  <a href="#" class="grid-txt">شبکه نمایندگی‌های ما</a>
+
+  <a href="#" class="grid-txt">لیست قیمت</a>
+  <a href="#" class="grid-txt">استعلام بدهی مالیاتی خودرو</a>
+  <a href="#" class="grid-txt">پرداخت مالیات خودرو</a>
+
+  <div class="last-row">
+    <a href="#" class="grid-txt">نوبت بازرسی خودرو</a>
+     -->
+    <a href="how-is-vehicle-value-loss-calculated.fa.html" class="grid-txt">چگونه کاهش ارزش خودرو محاسبه می‌شود؟</a> 
+
+  </div>
+</div>
+</section>
+
+<script>
+  // Intersection Observer to fade in items
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll(".grid-txt");
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target); // animate only once
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  items.forEach(item => observer.observe(item));
+});
+
+</script>
+
+
+<footer>
+  <div class="footer-contents">
+<div>
+    <img src="stuff/logos/logo-white.png" width="250px" style="margin: 20px;">
+    
+    <a href="#" style="color: white;"><img src="stuff/icons/gps.png" width="20px">&nbsp; خانه شماره ۵۶، بین خیابان‌های ۵ و ۶، کولوله پشتا، مقابل بانک FMFB، منطقه ۰۴، کابل، افغانستان
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/phone-call-white.png" width="20px">&nbsp; 0731 170 170
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/whatsapp (1).png" width="20px">&nbsp; 0786 000 075
+</a>
+    <a href="#" style="color: white;"><img src="stuff/icons/mail.png" width="20px">&nbsp; info@dynomark.af
+</a>
+  </div>
+  <div>
+        <h2 style="color: white;">بسته‌ها</h2>
+<ul class="arrow-list">
+  <li><a href="micro-package-auto-expertise.fa.html">بسته میکرو تخصص خودرو</a></li> 
+  <li><a href="pro-package-auto-expertise.fa.html">بسته حرفه‌ای تخصص خودرو</a></li>
+  <li><a href="pro-plus-package-auto-expertise.fa.html">بسته حرفه‌ای پلاس تخصص خودرو</a></li>
+  <li><a href="gold-package-auto-expertise.fa.html">بسته طلایی تخصص خودرو</a></li>
+  <li><a href="gold-plus-package-auto-expertise.fa.html">بسته طلایی پلاس تخصص خودرو</a></li>
+  <li><a href="airbag-control-package.fa.html">بسته کنترل ایربگ</a></li>
+</ul>
+  </div>
+  <div>
+    <h2 style="color: white;">شعب بین‌المللی</h2>
+    <ul class="arrow-list">
+  <li><a href="https://www.dynomark.com.tr/en/morocco-overseas-dealer-list/284">مراکش</a></li> 
+  <li><a href="https://www.dynomark.com.tr/en/iraq-overseas-dealer-list/292">عراق</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/istanbul-dealers/41">ترکیه</a></li>
+  <li><a href="https://www.dynomark.com.tr/en/kosovo-overseas-dealer-list/302">کوزوو</a></li>
+</ul>
+<!--
+<button class="showall">نمایش همه</button>
+-->
+  </div>
+  </div>
+  
+  <div class="footer-media">
+    <div class="media">
+      <a href="#"><img src="stuff/icons/facebook.png" alt="فیسبوک"></a>
+      <a href="#"><img src="stuff/icons/twitter.png" alt="توییتر"></a>
+      <a href="#"><img src="stuff/icons/instagram.png" alt="اینستاگرام"></a>
+      <a href="#"><img src="stuff/icons/youtube.png" alt="یوتیوب"></a>
+    </div>
+    <p>	&copy; کپی‌رایت ۲۰۲۰ - ۲۰۲۵ تخصص خودرویی داینومارک، تمامی حقوق محفوظ است | توسعه‌یافته توسط <a style="color: white; text-decoration: none;" href="https://www.linkedin.com/in/maryam-hanif-balkhi">مریم حنیف بلخی</a> </p>
+  </div>
+</footer>
+
+</body>
+</html>
