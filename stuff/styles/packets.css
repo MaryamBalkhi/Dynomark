@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center; /* keeps everything aligned */
+  align-items: center; 
   height: 60px;
   background-color: rgb(255, 255, 255);
   padding: 0 15px;
@@ -45,20 +45,20 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px; /* space between phone + dealership */
+  gap: 20px;
 }
 
 .info a {
   display: flex;
   align-items: center;
-  gap: 8px; /* space between icon + text */
+  gap: 8px; 
   color: black;
   text-decoration: none;
   font-size: 14px;
 }
 
 .info a p {
-  margin: 0; /* remove default spacing */
+  margin: 0; 
 }
 
 .info img {
@@ -89,8 +89,6 @@
   background-color: gray;
 }
 
-
-/* styles.css */
   .language-selector {
       position: relative;
       display: inline-block;
@@ -160,7 +158,6 @@
     }
 
 /*header*/
-/* Sticky Header */
 header {
   position: sticky;
   top: 0;
@@ -178,7 +175,6 @@ header img {
   height: 40px;
 }
 
-/* Navigation */
 nav ul {
   list-style: none;
   display: flex;
@@ -201,31 +197,27 @@ nav ul li a:hover {
   color: #ff0000;
 }
 
-/* Responsive for top-headline */
+
 @media (max-width: 992px) {
-  /* Keep H1 visible */
+ 
   .the-text h1 {
-    display: flex; /* ensure it's visible */
+    display: flex; 
   }
 
-  /* Hide other .the-text elements if there were any */
   .the-text > :not(h1) {
     display: none;
   }
 
-  /* Hide info links (phone, dealership) */
   .info-and-languages-options .info {
     display: none;
   }
 
-  /* Keep language selector and media icons visible */
   .info-and-languages-options .language,
   .info-and-languages-options .media {
     display: flex;
   }
 }
 
-/* On larger screens, show all normally */
 @media (min-width: 993px) {
   .the-text,
   .info-and-languages-options .info,
@@ -236,35 +228,33 @@ nav ul li a:hover {
 }
 
 
-/* Dropdown Menus */
 nav ul li ul {
   position: absolute;
-  top: 100%; /* dropdown appears below header/parent li */
+  top: 100%; 
   left: 0;
   background: #ffffff;
   display: none;
   flex-direction: column;
   min-width: 200px;
-  padding: 0; /* remove extra space from ul */
+  padding: 0;
   border-radius: 6px;
   z-index: 1000;
 }
 
 nav ul li ul li a {
-  color: #222; /* black text */
-  padding: 10px 16px; /* spacing for each item */
+  color: #222; 
+  padding: 10px 16px; 
   text-decoration: none;
   display: block;
-  border-bottom: 1px solid #ccc; /* line between items */
-  line-height: normal; /* remove extra height */
+  border-bottom: 1px solid #ccc; 
+  line-height: normal; 
   transition: background 0.3s, color 0.3s;
 }
 
 nav ul li ul li:last-child a {
-  border-bottom: none; /* remove line for last item */
+  border-bottom: none; 
 }
 
-/* Show submenu on hover */
 nav ul li:hover ul {
   display: flex;
 }
@@ -273,7 +263,6 @@ nav ul li:hover ul {
 
 
 
-    /* Hamburger Menu */
     .hamburger {
       width: 30px;
       height: 20px;
@@ -292,7 +281,6 @@ nav ul li:hover ul {
       transition: all 0.4s ease;
     }
 
-    /* Animate to X */
     .hamburger.active span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
@@ -303,16 +291,15 @@ nav ul li:hover ul {
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Drop Menu Full Screen */
     .drop-menu {
       position: fixed;
       top: -100%;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(54, 54, 54, 0.25); /* semi-transparent white */
-  backdrop-filter: blur(8px);           /* blur effect */
-  -webkit-backdrop-filter: blur(8px);   /* for Safari support */
+      background: rgba(54, 54, 54, 0.25); 
+  backdrop-filter: blur(8px);          
+  -webkit-backdrop-filter: blur(8px);  
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -321,7 +308,7 @@ nav ul li:hover ul {
       z-index: 2000;
       overflow-y: auto;
       transition: top 0.5s ease;
-        overflow: hidden; /* remove scroll */
+      overflow: hidden; 
     }
 
 
@@ -329,7 +316,6 @@ nav ul li:hover ul {
       top: 0;
     }
 
-    /* Close button inside drop-menu */
     .drop-menu .close-btn {
       position: absolute;
       top: 20px;
@@ -337,7 +323,7 @@ nav ul li:hover ul {
     }
 
     .drop-menu .close-btn span {
-      background: #000; /* dark bars on white bg */
+      background: #000; 
     }
 
     .drop-menu > div.logo-box {
@@ -345,7 +331,7 @@ nav ul li:hover ul {
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      margin-top: 60px; /* leave space for close button */
+      margin-top: 60px; 
       margin-bottom: 20px;
     }
 
@@ -397,7 +383,7 @@ nav ul li:hover ul {
 
 .drop-menu-contact-icons {
   display: flex;
-  gap: 20px; /* spacing between items */
+  gap: 20px; 
   justify-content: center;
   margin-top: 10px;
   align-items: center;
@@ -406,8 +392,8 @@ nav ul li:hover ul {
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 0; /* initial gap between icon and hidden text */
-  overflow: hidden; /* hides text when collapsed */
+  gap: 0; 
+  overflow: hidden; 
   transition: gap 0.3s ease;
   cursor: pointer;
   color: white;
@@ -420,19 +406,17 @@ nav ul li:hover ul {
 
 .contact-item span {
   white-space: nowrap;
-  max-width: 0; /* hide text initially */
+  max-width: 0; 
   overflow: hidden;
   opacity: 0;
   transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
 }
 
-/* On hover, reveal text and push next item */
 .contact-item:hover {
-  gap: 10px; /* spacing between icon and text */
-}
+  gap: 10px; }
 
 .contact-item:hover span {
-  max-width: 300px; /* adjust according to text length */
+  max-width: 300px; 
   opacity: 1;
   margin-left: 5px;
 }
@@ -441,27 +425,22 @@ nav ul li:hover ul {
 
 
 
-    /* Hide the nav on smaller screens */
+    
 @media (max-width: 992px) {
   nav {
-    display: none; /* hide full menu */
+    display: none; 
   }
 
   .hamburger {
-    display: flex; /* make sure hamburger is visible */
+    display: flex; 
   }
 }
 
-/* Optional: on larger screens, show nav and hide hamburger if needed */
 @media (min-width: 993px) {
   nav {
     display: flex;
   }
 }
-
-
-
-  /*footer*/
 
   footer{
     background-color: #222;
@@ -493,7 +472,7 @@ nav ul li:hover ul {
 
 
 .arrow-list {
-  list-style: none; /* remove default bullets */
+  list-style: none; 
   padding-left: 0;
   font-family: Arial, sans-serif;
   font-size: 16px;
@@ -502,7 +481,7 @@ nav ul li:hover ul {
 
 .arrow-list li {
   position: relative;
-  padding-left: 25px; /* space for the arrow */
+  padding-left: 25px; 
   margin: 5px 0;
   padding-top: 5px;
 }
@@ -557,13 +536,6 @@ footer .media{
   font-size: 10px;
 }
 
-
-
-
-
-
-/*head title*/
-
 .title-of-page{
     background-image: linear-gradient(to bottom, red, rgb(185, 0, 0));
     display: flex;
@@ -575,11 +547,11 @@ footer .media{
     justify-content: center;
 
         clip-path: polygon(
-        0 0,          /* top-left */
-        100% 0,       /* top-right */
-        100% 80%,     /* bottom-right start cut */
-        80% 100%,     /* inward cut */
-        0 100%        /* bottom-left */
+        0 0,          
+        100% 0,       
+        100% 80%,     
+        80% 100%,     
+        0 100%        
     );
 }
 
@@ -617,12 +589,12 @@ footer .media{
 }
 
 .carousel-track-wrapper {
-    overflow: visible; /* allow hover pop-up */
+    overflow: visible; 
     flex-grow: 1;
-    margin: 0 80px; /* space for buttons */
+    margin: 0 80px; 
 }
 
-/* Buttons */
+
 .carousel-btn {
     background: rgba(0,0,0,0.6);
     border: none;
@@ -649,9 +621,8 @@ footer .media{
     transition: transform 0.5s ease-in-out;
 }
 
-/* Card */
 .carousel-card {
-  flex: 0 0 calc((100% - 50px)/3); /* 3 cards visible */
+  flex: 0 0 calc((100% - 50px)/3); 
   transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
   min-height: 550px;
   display: flex;
@@ -659,75 +630,68 @@ footer .media{
   background: #ececec;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  padding: 20px; /* inner padding */
+  padding: 20px; 
   box-sizing: border-box;
-  position: relative; /* for ribbon positioning */
-  overflow: hidden; /* ensures ribbon stays inside */
+  position: relative;
+  overflow: hidden;
 }
 
-
-
-/* Fade-in animation */
 .carousel-card.visible { opacity: 1; transform: translateY(0); }
 .carousel-card:hover {
   transform: translateY(-15px) scale(1.05);
-  z-index: 900;               /* <<<<< much higher than overlays */
+  z-index: 900;   
   box-shadow: 0 20px 30px rgba(0,0,0,0.3);
 }
 
-/* Ribbon */
+
 .ribbon-card {
     position: absolute;
     top: 85px;
-    right: -20px; /* top-right */
+    right: -20px;
     background: red;
     color: #fff;
     font-weight: bold;
     padding: 5px 45px;
     transform: rotate(45deg);
-    transform-origin: right top; /* pivot inside the card */
+    transform-origin: right top;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     font-size: 14px;
     pointer-events: none;
 }
 
-/* Specific colors */
 .ribbon-card.expert { background: #e10613; }
 .ribbon-card.economic { background: #099140; }
 .ribbon-card.popular { background: #0cc6c9; }
 
-/* Card inner flex */
 .card-inner {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-/* Image */
+
 .carousel-card img {
     display: block;
-    margin: 0 auto 15px auto; /* center and spacing below */
+    margin: 0 auto 15px auto; 
     max-width: 80%;
     border-radius: 10px;
 }
 
-/* Title fixed height */
 .carousel-card b {
     font-weight: 600;
     color: #303030;
     display: block;
     margin-bottom: 10px;
     flex-shrink: 0;
-    height: 40px; /* fixed title height */
+    height: 40px; 
 }
 
-/* List area flex-grow to fill space */
 .carousel-card ul {
     list-style: none;
     padding-left: 0;
     margin-bottom: 15px;
     text-align: left;
-    flex-grow: 1; /* pushes footer to bottom */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -756,7 +720,6 @@ footer .media{
     user-select: none;
 }
 
-/* Footer */
 .card-footer {
     display: flex;
     justify-content: space-between;
@@ -764,7 +727,6 @@ footer .media{
     flex-shrink: 0;
 }
 
-/* Responsive */
 @media (max-width: 992px) {
     .carousel-card { flex: 0 0 calc((100% - 25px)/2); min-height: 500px; }
 }
@@ -808,30 +770,27 @@ footer .media{
 
 .carousel-wrapper {
   position: relative;
-  overflow: visible; /* allow pop-out */
+  overflow: visible; 
 }
 
 .carousel-track-wrapper {
   overflow: visible;
 }
 
-/* overlay masks at the left/right edges */
 .carousel-overlay {
   position: absolute;
   top: 0;
   height: 100%;
   background: #fff;
-  pointer-events: none; /* allow hover/click to pass through to cards */
-  z-index: 300;         /* above normal cards but below hovered card (which is 900) */
+  pointer-events: none; 
+  z-index: 300;     
 }
 
-/* keep your original button styles, but ensure they're on top */
 .carousel-btn {
-  position: absolute; /* you already have these */
-  z-index: 1000;      /* keep buttons above overlays and hovered card if desired */
+  position: absolute;
+  z-index: 1000;     
 }
 
-/* small safety: ensure images/shadows are visible */
 .carousel-card img { display:block; max-width:100%; }
 
  .who-we-are {
@@ -870,7 +829,6 @@ footer .media{
         line-height: 1.8;
     }
 
-    /* Why Dynomark section */
     .why-dynomark {
         max-width: 1000px;
         margin: 50px auto;
@@ -912,7 +870,6 @@ footer .media{
     }
 
 
-    /* Container layout for cards + text */
 .packets {
   display: flex;
   justify-content: space-between;
@@ -924,12 +881,10 @@ footer .media{
   margin: 0 auto;
 }
 
-/* Left side grid */
 .grid-wrapper {
   flex: 1 1 60%;
 }
 
-/* Use your existing .carousel-card styles but arrange them in grid */
 .grid-view {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr);
@@ -937,12 +892,10 @@ footer .media{
   gap: 25px;
 }
 
-/* Right side text section */
 .why-dynomark {
   flex: 1 1 35%;
 }
 
-/* Responsive layout */
 @media (max-width: 992px) {
   .grid-view {
     grid-template-columns: repeat(2, 1fr);
@@ -965,10 +918,8 @@ footer .media{
   }
 
 
-  /* Phone (max-width: 600px) */
 @media (max-width: 600px) {
 
-  /* Top Headline */
   .top-headline {
     flex-direction: column;
     height: auto;
@@ -978,7 +929,6 @@ footer .media{
   .the-text h1 { font-size: 14px; }
   .info-and-languages-options { flex-direction: column; gap: 5px; }
 
-  /* Header */
   header {
     padding: 0 10px;
     height: 50px;
@@ -990,7 +940,6 @@ footer .media{
     flex-direction: row !important;
   }
 
-  /* Drop Menu */
   .drop-menu .logo-box img { height: 50px; }
   .capitalcites-and-options {
     grid-template-columns: 1fr;
@@ -998,13 +947,11 @@ footer .media{
   }
   .drop-menu h1 { font-size: 22px; }
 
-  /* Slider */
   .slider {
     height: 60vh;
   }
   .btn img { width: 20px; height: 20px; }
 
-  /* Cards */
   .grid-container {
     grid-template-columns: 1fr;
   }
@@ -1012,7 +959,6 @@ footer .media{
     padding: 1rem;
   }
 
-  /* Footer */
   footer {
     padding: 10px;
   }
@@ -1025,12 +971,6 @@ footer .media{
   }
 }
 
-
-/* =========================================================
-   🍔 HAMBURGER DROP MENU — Responsive Adjustments
-   ========================================================= */
-
-/* Tablet view (max-width: 992px) */
 @media (max-width: 992px) {
   .hamburger {
     width: 28px;
@@ -1086,7 +1026,6 @@ footer .media{
   }
 }
 
-/* Phone view (max-width: 600px) */
 @media (max-width: 600px) {
   .hamburger {
     width: 26px;
@@ -1154,4 +1093,38 @@ footer .media{
   }
 }
 
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
 
+  header nav {
+    display: block !important; 
+    flex: 1;
+    font-size: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  header nav {
+    display: block !important;
+    flex: 1;
+    font-size: 13px !important;
+  }
+
+  header nav ul > li:nth-child(1),  
+  header nav ul > li:nth-child(2),  
+  header nav ul > li:nth-child(3),  
+  header nav ul > li:nth-child(5) { 
+    display: none !important;
+  }
+
+}

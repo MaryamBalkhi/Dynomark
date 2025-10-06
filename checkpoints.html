@@ -85,12 +85,12 @@
   const selected = select.querySelector('.selected');
   const options = select.querySelectorAll('.options li');
 
-  // Toggle dropdown visibility on click
+
   selected.addEventListener('click', () => {
     select.classList.toggle('open');
   });
 
-  // Handle language selection
+
   options.forEach(option => {
     option.addEventListener('click', () => {
       const url = option.getAttribute('data-url');
@@ -98,20 +98,20 @@
       const text = option.textContent.trim();
       const imgSrc = option.querySelector('img').src;
 
-      // Update the selected option display
+   
       selected.innerHTML = `<img src="${imgSrc}" alt="${text}" class="flag" /> <span>${text}</span>`;
       
-      // Navigate to the selected URL
+    
       if (url) {
         window.location.href = url;
       }
 
-      // Close the dropdown
+   
       select.classList.remove('open');
     });
   });
 
-  // Close dropdown if clicking outside
+
   document.addEventListener('click', (e) => {
     if (!select.contains(e.target)) {
       select.classList.remove('open');
@@ -121,7 +121,7 @@
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Close all dropdowns helper
+
   function closeAll() {
     document.querySelectorAll('.custom-select .options').forEach(o => {
       o.style.display = 'none';
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initialize each custom-select
+  
   document.querySelectorAll('.custom-select').forEach(custom => {
     const selected = custom.querySelector('.selected');
     const options = custom.querySelector('.options');
@@ -141,13 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!selected || !options) return;
 
-    // Ensure options start hidden
+    
     options.style.display = 'none';
     selected.setAttribute('tabindex', '0');
     selected.setAttribute('role', 'button');
     selected.setAttribute('aria-expanded', 'false');
 
-    // Toggle open/close on click
+   
     selected.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = options.style.display === 'block';
@@ -156,12 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
         options.style.display = 'block';
         selected.setAttribute('aria-expanded', 'true');
         selected.classList.add('open');
-        // focus first item for keyboard users
+     
         items[0]?.focus();
       }
     });
 
-    // Keyboard on the selected control
+    
     selected.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -177,19 +177,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Option click & keyboard support
+  
     items.forEach((item, idx) => {
       item.setAttribute('tabindex', '0');
       item.addEventListener('click', (ev) => {
   ev.stopPropagation();
-  // Replace the selected content visually
+ 
   selected.innerHTML = item.innerHTML;
   selected.dataset.value = item.dataset.value || '';
   options.style.display = 'none';
   selected.setAttribute('aria-expanded', 'false');
   selected.classList.remove('open');
 
-  // Redirect to the page
+
   const url = item.dataset.url;
   if (url) window.location.href = url;
 });
@@ -213,12 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Close dropdowns when clicking outside
+
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.custom-select')) closeAll();
   });
 
-  // Close on global Escape
+
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
 });
 </script>
@@ -231,11 +231,11 @@ const topHeader = document.querySelector(".top-headline");
 
 window.addEventListener("scroll", () => {
   if (window.scrollY === 0) {
-    // Only at the very top → show top headline
+   
     topHeader.style.opacity = "1";
     topHeader.style.pointerEvents = "auto";
   } else {
-    // Anywhere else on the page → hide it
+  
     topHeader.style.opacity = "0";
     topHeader.style.pointerEvents = "none";
   }
@@ -265,7 +265,7 @@ window.addEventListener("scroll", () => {
     </ul>
   </nav>
 
-  <!-- Hamburger Menu -->
+
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span>
     <span></span>
@@ -275,7 +275,7 @@ window.addEventListener("scroll", () => {
 
 <!-- Drop Menu -->
 <div class="drop-menu" id="dropMenu">
-  <!-- Close button inside drop menu -->
+
   <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
     <span></span>
     <span></span>
@@ -1041,27 +1041,27 @@ Passenger Cars and Light Commercial Vehicles;<br>
   },
 ];
 
-// 2. Grab all buttons
+
 const cardButtons = document.querySelectorAll('.grid-card .card-btn');
 const modal = document.getElementById('card-modal');
 const modalBody = document.getElementById('modal-body');
 const modalClose = document.getElementById('modal-close');
 
-// 3. Open modal on button click
+
 cardButtons.forEach((btn, index) => {
   btn.addEventListener('click', (e) => {
-    e.preventDefault(); // prevent default link behavior
+    e.preventDefault(); 
     modalBody.innerHTML = cardContents[index].content || "<p>No content defined</p>";
     modal.style.display = 'flex';
   });
 });
 
-// 4. Close modal
+
 modalClose.addEventListener('click', () => {
   modal.style.display = 'none';
 });
 
-// 5. Close modal if click outside content
+
 modal.addEventListener('click', (e) => {
   if (e.target === modal) modal.style.display = 'none';
 });

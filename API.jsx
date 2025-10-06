@@ -1,7 +1,7 @@
 // App.js
 import React, { useState } from "react";
 import axios from "axios";
-import "./App.css"; // For styling flags
+import "./App.css"; 
 
 const initialText = {
   heading: "Hello! This is the index page.",

@@ -250,7 +250,7 @@ window.addEventListener("scroll", () => {
     <ul>
       <li><a href="index.html">Home</a></li>
       <li>
-        <a href="#">Corporate &#11206;</a>
+        <a href="#" >Corporate &#11206;</a>
         <ul>
           <li><a href="who-are-we.html">Who we are</a></li>
           <li><a href="photo-gallery.html">Photo Gallery</a></li>
@@ -275,7 +275,7 @@ window.addEventListener("scroll", () => {
 
 <!-- Drop Menu -->
 <div class="drop-menu" id="dropMenu">
-  <!-- Close button inside drop menu -->
+
   <div class="hamburger close-btn" id="closeBtn" onclick="toggleMenu()">
     <span></span>
     <span></span>
@@ -360,7 +360,7 @@ window.addEventListener("scroll", () => {
     const total = images.length;
 
     function showSlide(i) {
-      index = (i + total) % total; // loop around
+      index = (i + total) % total;
       slides.style.transform = `translateX(-${index * 100}%)`;
     }
 
@@ -374,7 +374,7 @@ window.addEventListener("scroll", () => {
       resetAutoSlide();
     });
 
-    // Auto slide every 3s
+   
     let autoSlide = setInterval(() => {
       showSlide(index + 1);
     }, 3000);
@@ -424,7 +424,7 @@ window.addEventListener("scroll", () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          // observer.unobserve(entry.target); // Keep observing in case of repeated scrolls
+   
         }
       });
     }, { threshold: 0.3 });
@@ -568,7 +568,7 @@ function Carousel() {
       const track = trackRef.current;
       if (track && track.children.length > 0) {
         const firstCard = track.children[0];
-        const lastCard = track.children[2]; // 3 cards visible
+        const lastCard = track.children[2];
         const wrapperRect = wrapperRef.current.getBoundingClientRect();
         const firstCardRect = firstCard.getBoundingClientRect();
         const lastCardRect = lastCard.getBoundingClientRect();
@@ -588,7 +588,7 @@ function Carousel() {
       ref={wrapperRef}
       style={{ position: "relative", overflow: "hidden" }}
     >
-      {/* Left and right overlay rectangles */}
+   
       <div
         style={{
           position: "absolute",
@@ -612,7 +612,7 @@ function Carousel() {
         }}
       />
 
-      {/* Buttons (keep original design, above overlays) */}
+
       <button className="carousel-btn left" onClick={moveLeft} style={{ zIndex: 2 }}>
         &#10094;
       </button>
@@ -723,7 +723,7 @@ ReactDOM.createRoot(document.getElementById("react-carousel")).render(<Carousel 
 </section>
 
 <script>
-  // Intersection Observer to fade in items
+
 document.addEventListener("DOMContentLoaded", () => {
   const items = document.querySelectorAll(".grid-txt");
 
@@ -731,7 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("show");
-        observer.unobserve(entry.target); // animate only once
+        observer.unobserve(entry.target); 
       }
     });
   }, {

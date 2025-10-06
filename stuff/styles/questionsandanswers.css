@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center; /* keeps everything aligned */
+  align-items: center; 
   height: 60px;
   background-color: rgb(255, 255, 255);
   padding: 0 15px;
@@ -45,20 +45,20 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px; /* space between phone + dealership */
+  gap: 20px;
 }
 
 .info a {
   display: flex;
   align-items: center;
-  gap: 8px; /* space between icon + text */
+  gap: 8px; 
   color: black;
   text-decoration: none;
   font-size: 14px;
 }
 
 .info a p {
-  margin: 0; /* remove default spacing */
+  margin: 0; 
 }
 
 .info img {
@@ -90,7 +90,6 @@
 }
 
 
-/* styles.css */
   .language-selector {
       position: relative;
       display: inline-block;
@@ -160,7 +159,6 @@
     }
 
 /*header*/
-/* Sticky Header */
 header {
   position: sticky;
   top: 0;
@@ -178,7 +176,6 @@ header img {
   height: 40px;
 }
 
-/* Navigation */
 nav ul {
   list-style: none;
   display: flex;
@@ -201,31 +198,25 @@ nav ul li a:hover {
   color: #ff0000;
 }
 
-/* Responsive for top-headline */
 @media (max-width: 992px) {
-  /* Keep H1 visible */
   .the-text h1 {
-    display: flex; /* ensure it's visible */
+    display: flex; 
   }
 
-  /* Hide other .the-text elements if there were any */
   .the-text > :not(h1) {
     display: none;
   }
 
-  /* Hide info links (phone, dealership) */
   .info-and-languages-options .info {
     display: none;
   }
 
-  /* Keep language selector and media icons visible */
   .info-and-languages-options .language,
   .info-and-languages-options .media {
     display: flex;
   }
 }
 
-/* On larger screens, show all normally */
 @media (min-width: 993px) {
   .the-text,
   .info-and-languages-options .info,
@@ -239,32 +230,31 @@ nav ul li a:hover {
 /* Dropdown Menus */
 nav ul li ul {
   position: absolute;
-  top: 100%; /* dropdown appears below header/parent li */
+  top: 100%; 
   left: 0;
   background: #ffffff;
   display: none;
   flex-direction: column;
   min-width: 200px;
-  padding: 0; /* remove extra space from ul */
+  padding: 0; 
   border-radius: 6px;
   z-index: 1000;
 }
 
 nav ul li ul li a {
-  color: #222; /* black text */
-  padding: 10px 16px; /* spacing for each item */
+  color: #222; 
+  padding: 10px 16px; 
   text-decoration: none;
   display: block;
-  border-bottom: 1px solid #ccc; /* line between items */
-  line-height: normal; /* remove extra height */
+  border-bottom: 1px solid #ccc; 
+  line-height: normal; 
   transition: background 0.3s, color 0.3s;
 }
 
 nav ul li ul li:last-child a {
-  border-bottom: none; /* remove line for last item */
+  border-bottom: none; 
 }
 
-/* Show submenu on hover */
 nav ul li:hover ul {
   display: flex;
 }
@@ -292,7 +282,6 @@ nav ul li:hover ul {
       transition: all 0.4s ease;
     }
 
-    /* Animate to X */
     .hamburger.active span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
@@ -303,16 +292,15 @@ nav ul li:hover ul {
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Drop Menu Full Screen */
     .drop-menu {
       position: fixed;
       top: -100%;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(54, 54, 54, 0.25); /* semi-transparent white */
-  backdrop-filter: blur(8px);           /* blur effect */
-  -webkit-backdrop-filter: blur(8px);   /* for Safari support */
+      background: rgba(54, 54, 54, 0.25);
+  backdrop-filter: blur(8px);           
+  -webkit-backdrop-filter: blur(8px);   
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -321,7 +309,7 @@ nav ul li:hover ul {
       z-index: 2000;
       overflow-y: auto;
       transition: top 0.5s ease;
-        overflow: hidden; /* remove scroll */
+        overflow: hidden; 
     }
 
 
@@ -329,7 +317,6 @@ nav ul li:hover ul {
       top: 0;
     }
 
-    /* Close button inside drop-menu */
     .drop-menu .close-btn {
       position: absolute;
       top: 20px;
@@ -337,7 +324,7 @@ nav ul li:hover ul {
     }
 
     .drop-menu .close-btn span {
-      background: #000; /* dark bars on white bg */
+      background: #000; 
     }
 
     .drop-menu > div.logo-box {
@@ -345,7 +332,7 @@ nav ul li:hover ul {
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      margin-top: 60px; /* leave space for close button */
+      margin-top: 60px; 
       margin-bottom: 20px;
     }
 
@@ -397,7 +384,7 @@ nav ul li:hover ul {
 
 .drop-menu-contact-icons {
   display: flex;
-  gap: 20px; /* spacing between items */
+  gap: 20px;
   justify-content: center;
   margin-top: 10px;
   align-items: center;
@@ -406,8 +393,8 @@ nav ul li:hover ul {
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 0; /* initial gap between icon and hidden text */
-  overflow: hidden; /* hides text when collapsed */
+  gap: 0; 
+  overflow: hidden;
   transition: gap 0.3s ease;
   cursor: pointer;
   color: white;
@@ -420,19 +407,19 @@ nav ul li:hover ul {
 
 .contact-item span {
   white-space: nowrap;
-  max-width: 0; /* hide text initially */
+  max-width: 0; 
   overflow: hidden;
   opacity: 0;
   transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
 }
 
-/* On hover, reveal text and push next item */
+
 .contact-item:hover {
-  gap: 10px; /* spacing between icon and text */
+  gap: 10px; 
 }
 
 .contact-item:hover span {
-  max-width: 300px; /* adjust according to text length */
+  max-width: 300px; 
   opacity: 1;
   margin-left: 5px;
 }
@@ -441,18 +428,17 @@ nav ul li:hover ul {
 
 
 
-    /* Hide the nav on smaller screens */
+   
 @media (max-width: 992px) {
   nav {
-    display: none; /* hide full menu */
+    display: none; 
   }
 
   .hamburger {
-    display: flex; /* make sure hamburger is visible */
+    display: flex; 
   }
 }
 
-/* Optional: on larger screens, show nav and hide hamburger if needed */
 @media (min-width: 993px) {
   nav {
     display: flex;
@@ -460,8 +446,6 @@ nav ul li:hover ul {
 }
 
 
-
-  /*footer*/
 
   footer{
     background-color: #222;
@@ -493,7 +477,7 @@ nav ul li:hover ul {
 
 
 .arrow-list {
-  list-style: none; /* remove default bullets */
+  list-style: none; 
   padding-left: 0;
   font-family: Arial, sans-serif;
   font-size: 16px;
@@ -502,7 +486,7 @@ nav ul li:hover ul {
 
 .arrow-list li {
   position: relative;
-  padding-left: 25px; /* space for the arrow */
+  padding-left: 25px; 
   margin: 5px 0;
   padding-top: 5px;
 }
@@ -559,11 +543,6 @@ footer .media{
 
 
 
-
-
-
-/*head title*/
-
 .title-of-page{
     background-image: linear-gradient(to bottom, red, rgb(185, 0, 0));
     display: flex;
@@ -575,11 +554,11 @@ footer .media{
     justify-content: center;
 
         clip-path: polygon(
-        0 0,          /* top-left */
-        100% 0,       /* top-right */
-        100% 80%,     /* bottom-right start cut */
-        80% 100%,     /* inward cut */
-        0 100%        /* bottom-left */
+        0 0,          
+        100% 0,       
+        100% 80%,     
+        80% 100%,     
+        0 100%        
     );
 }
 
@@ -595,7 +574,6 @@ footer .media{
 
 
 
-/* Center container using flex */
 .packages-accordion-wrapper{
   display: flex;
   flex-direction: row;
@@ -604,30 +582,27 @@ footer .media{
 }
 .packages-accordion-container {
   display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: flex-start; /* top alignment for scroll */
+  justify-content: center;
+  align-items: flex-start;
   padding: 40px 20px;
-  min-height: 100vh; /* fill viewport height */
+  min-height: 100vh; 
   box-sizing: border-box;
   background-color: #f2f2f2;
 }
 
-/* Accordion wrapper */
 .packages-accordion {
   width: 100%;
-  max-width: 800px; /* limits width */
+  max-width: 800px; 
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 
-/* Individual accordion items */
 .package-item {
   border-bottom: 1px solid #ddd;
 }
 
-/* Accordion header/button */
 .package-button {
   display: flex;
   justify-content: space-between;
@@ -642,12 +617,10 @@ footer .media{
   transition: background-color 0.3s ease;
 }
 
-/* Hover effect on button */
 .package-button:hover {
   background-color: #f0f0f0;
 }
 
-/* Plus/minus indicator */
 .package-button::after {
   content: '+';
   font-weight: bold;
@@ -658,7 +631,6 @@ footer .media{
   content: '−';
 }
 
-/* Accordion body */
 .package-body {
   padding: 0 20px;
   background-color: #ffffff;
@@ -671,7 +643,7 @@ footer .media{
 
 .package-body.open {
   padding: 15px 20px;
-  max-height: 2000px; /* large enough for content */
+  max-height: 2000px; 
 }
 
 .package-button{
@@ -690,7 +662,7 @@ footer .media{
   }
 
   .news-detail-back:hover {
-    background: #b30000; /* darker on hover */
+    background: #b30000; 
   }
 
   .the-back-btn{
@@ -764,14 +736,13 @@ footer .media{
         }
 
         .faq-item.open .answer {
-            max-height: 200px; /* Adjust based on expected answer height */
+            max-height: 200px; 
             padding: 15px;
         }
 
 
 
         
-/* Responsive layout */
 @media (max-width: 992px) {
   .grid-view {
     grid-template-columns: repeat(2, 1fr);
@@ -797,7 +768,6 @@ footer .media{
   /* Phone (max-width: 600px) */
 @media (max-width: 600px) {
 
-  /* Top Headline */
   .top-headline {
     flex-direction: column;
     height: auto;
@@ -807,7 +777,6 @@ footer .media{
   .the-text h1 { font-size: 14px; }
   .info-and-languages-options { flex-direction: column; gap: 5px; }
 
-  /* Header */
   header {
     padding: 0 10px;
     height: 50px;
@@ -819,7 +788,6 @@ footer .media{
     flex-direction: row !important;
   }
 
-  /* Drop Menu */
   .drop-menu .logo-box img { height: 50px; }
   .capitalcites-and-options {
     grid-template-columns: 1fr;
@@ -827,13 +795,11 @@ footer .media{
   }
   .drop-menu h1 { font-size: 22px; }
 
-  /* Slider */
   .slider {
     height: 60vh;
   }
   .btn img { width: 20px; height: 20px; }
 
-  /* Cards */
   .grid-container {
     grid-template-columns: 1fr;
   }
@@ -841,7 +807,6 @@ footer .media{
     padding: 1rem;
   }
 
-  /* Footer */
   footer {
     padding: 10px;
   }
@@ -854,10 +819,6 @@ footer .media{
   }
 }
 
-
-/* =========================================================
-   🍔 HAMBURGER DROP MENU — Responsive Adjustments
-   ========================================================= */
 
 /* Tablet view (max-width: 992px) */
 @media (max-width: 992px) {
@@ -984,3 +945,39 @@ footer .media{
 }
 
 
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important; 
+  }
+
+  header nav {
+    display: block !important;
+    flex: 1; 
+    font-size: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  header nav {
+    display: block !important;
+    flex: 1;
+    font-size: 13px !important;
+  }
+
+  header nav ul > li:nth-child(1), 
+  header nav ul > li:nth-child(2), 
+  header nav ul > li:nth-child(3),  
+    header nav ul > li:nth-child(5) { 
+    display: none !important;
+  }
+
+}

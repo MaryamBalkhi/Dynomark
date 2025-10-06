@@ -283,7 +283,7 @@
     </div>
    <div class="packages-accordion-wrapper">
     <div class="packages-accordion" id="packagesAccordion">
-      <!-- Items injected here via JS -->
+
     </div>
   </div>
 
@@ -297,27 +297,27 @@
     </script>
     
   <script>
-    // Function to render accordion items for a given language's tests
+
     function renderAccordion(tests) {
       const accordion = document.getElementById('packagesAccordion');
-      // Clear existing content
+    
       accordion.innerHTML = '';
 
       tests.forEach((item) => {
         const accordionItem = document.createElement('div');
         accordionItem.classList.add('package-item');
 
-        // Header button
+   
         const button = document.createElement('button');
         button.classList.add('package-button');
         button.textContent = item.title;
 
-        // Body
+  
         const body = document.createElement('div');
         body.classList.add('package-body');
         body.innerHTML = item.content;
 
-        // Toggle functionality
+ 
         button.addEventListener('click', () => {
           const currentlyOpen = accordion.querySelector('.package-body.open');
 
@@ -336,14 +336,12 @@
       });
     }
 
-    // Specify the language to display
     const selectedLanguage = 'Pashto';
 
-    // Fetch JSON data and render tests for the selected language
     fetch('packages-data.json')
       .then(res => res.json())
       .then(data => {
-        // Find the tests for the selected language
+      
         const tests = data.find(item => item.language === selectedLanguage).tests;
         renderAccordion(tests);
       })
