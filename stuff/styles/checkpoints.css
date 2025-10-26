@@ -1042,3 +1042,138 @@ footer .media {
     display: none !important;
   }
 }
+
+
+/* -------------------------------------------------
+   KEEP .info (phone + WhatsApp) ALWAYS VISIBLE
+   ------------------------------------------------- */
+.info,
+.info a,
+.info p,
+.info img,
+.info span {
+  display: flex !important;      /* keep the flex layout */
+  visibility: visible !important;
+  opacity:  scalability 1 !important;
+}
+
+/* ---- Phones (≤ 600 px) ---- */
+@media (max-width: 600px) {
+  .info a { font-size: 12px; }            /* same size you already use elsewhere */
+  .info img { width: 18px; height: 18px; }/* keep the icons from shrinking */
+}
+
+/* ---- Tablets (≤ 992 px) ---- */
+@media (max-width: 992px) {
+  .info a { font-size: 12px; }
+  .info img { width: 18px; height: 18px; }
+}
+
+/* ---- Larger tablets / small desktops (768‑1024 px) ---- */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .info a { font-size: 13px; }   /* a little bigger on tablets */
+  .info img { width: 20px; height: 20px; }
+}
+
+/* -------------------------------------------------
+   PHONE LAYOUT (≤600px): 
+   - Phone → OR → WhatsApp (each on own line)
+   - Keep original 12px font
+   - All centered, no separators
+   ------------------------------------------------- */
+@media (max-width: 600px) {
+  .info-and-languages-options {
+    flex-direction: column !important;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 8px;
+  }
+
+  /* Order: info → media → language */
+  .info              { order: 1; }
+  .media             { order: 2; }
+  .language-selector { order: 3; }
+
+  /* HIDE SEPARATORS */
+  .separator {
+    display: none !important;
+  }
+
+  /* RESTRUCTURE .info: one item per line */
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .info a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px !important;   /* Keep original size */
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    margin: 0;
+  }
+
+  .info img {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+
+  .info p {
+    margin: 0;
+    font-family: sans-serif;
+  }
+
+  /* "OR" — make it a centered standalone line */
+  .info a:nth-child(2) {
+    margin: 4px 0;
+    font-style: italic;
+    color: red;
+  }
+
+  .info a:nth-child(2) span {
+    margin: 0 6px;
+    font-size: 11px;
+  }
+
+  /* Remove default margin-top from second <a> */
+  .info a:nth-child(2) {
+    margin-top: 0 !important;
+  }
+
+  /* SOCIAL ICONS */
+  .media {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  .media img {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* LANGUAGE SELECTOR */
+  .language-selector {
+    display: flex;
+    justify-content: center;
+  }
+  .custom-select .selected {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .custom-select .flag {
+    width: 16px;
+    height: 16px;
+  }
+}
